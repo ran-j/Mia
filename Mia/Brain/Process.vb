@@ -7,14 +7,17 @@
     Dim Action As New Act 'Toda a parte de ação que responde a usuário
     Dim Interpreter As New Interpreter ' interpretador de texto
 
+    Public Event LoadCompleted()
 
     Sub Init1() 'Starta o processamento
         Thinking.ReceiveConversation(TheMemory.LoadConversation())
         Thinking.ReceiveQuestions(TheMemory.LoadQuestions)
         Thinking.Dates(TheMemory.LoadDates())
         Thinking.Preferences(TheMemory.LoadPreferences())
-        Main.AFKDetector.Enabled = True
+
+        RaiseEvent LoadCompleted() 'termiona o processamento e avisa
     End Sub
+
 
     Sub Init5() 'Significa o fim do programa
 
