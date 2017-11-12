@@ -20,3 +20,15 @@ C:\Users\Ran-pc\Documents\Gitprojects\Mia\Mia\bin\Debug\Mia.exe.config
 C:\Users\Ran-pc\Documents\Gitprojects\Mia\Mia\bin\Debug\Mia.exe
 C:\Users\Ran-pc\Documents\Gitprojects\Mia\Mia\bin\Debug\Mia.pdb
 C:\Users\Ran-pc\Documents\Gitprojects\Mia\Mia\bin\Debug\Mia.xml
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\Mia.exe.config
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\Mia.exe
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\Mia.pdb
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\Mia.xml
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.vbprojResolveAssemblyReference.cache
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.Main.resources
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.Resources.resources
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.vbproj.GenerateResource.Cache
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.vbproj.CoreCompileInputs.cache
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.exe
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.xml
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.pdb
