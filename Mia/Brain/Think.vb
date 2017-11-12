@@ -3,7 +3,7 @@
     Dim QuestionHandle As Questions
     Dim WarningsHandles As New Warnings
 
-    Sub New(time)
+    Sub New(time As String)
         TimeStarted = time
     End Sub
 

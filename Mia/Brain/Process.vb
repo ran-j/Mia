@@ -3,7 +3,7 @@
 
     'Controladores, cada um responsavel por uma coisa
     Dim TheMemory As New Memory 'Salva e busca dados salvos
-    Dim Thinking As New Think(1020) 'Processa comandos do usuário
+    Dim Thinking As New Think(TimeOfDay.ToString("h:mm:ss tt")) 'Processa comandos do usuário
     Dim Action As New Act 'Toda a parte de ação que responde a usuário
     Dim Interpreter As New Interpreter ' interpretador de texto
 
