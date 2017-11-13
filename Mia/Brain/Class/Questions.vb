@@ -2,7 +2,7 @@
     'Faz perguntas
     Dim Questions As New List(Of String)()
     Dim Rand As New Random()
-    Dim ValueGerated As Integer
+    Dim ValueGenerated As Integer
     Dim CacheValue As Integer
 
     Sub New(QuestionsReceved As List(Of String))
@@ -24,14 +24,14 @@
             CacheValue = ValueGerated
         End If
 
-        ValueGerated = Nothing
+        ValueGenerated = Nothing
 
-        ValueGerated = Rand.Next(Val)
+        ValueGenerated = Rand.Next(Val)
 
-        If (ValueGerated = CacheValue) Then
+        If (ValueGenerated = CacheValue) Then
 
-            ValueGerated = Rand.Next(Val)
-            If (ValueGerated = CacheValue) Then
+            ValueGenerated = Rand.Next(Val)
+            If (ValueGenerated = CacheValue) Then
                 If (CacheValue = 0) Then
                     CacheValue = Rand.Next(Val)
                     If (CacheValue = 0) Then
@@ -44,11 +44,11 @@
                 Return CacheValue
 
             Else
-                CacheValue = ValueGerated
-                Return ValueGerated
+                CacheValue = ValueGenerated
+                Return ValueGenerated
             End If
         Else
-            Return ValueGerated
+            Return ValueGenerated
         End If
 
     End Function
