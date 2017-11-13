@@ -33,10 +33,7 @@
             ValueGenerated = Rand.Next(Val)
             If (ValueGenerated = CacheValue) Then
                 If (CacheValue = 0) Then
-                    CacheValue = Rand.Next(Val)
-                    If (CacheValue = 0) Then
-                        CacheValue = Rand.Next(Val)
-                    End If
+                      CacheValue = Rand.Next(1,Val)
                 Else
                     CacheValue = Rand.Next(CacheValue + (Val - CacheValue))
                 End If
