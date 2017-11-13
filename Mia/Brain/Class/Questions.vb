@@ -18,7 +18,7 @@
     End Function
 
 
-    Public Function GenerateNunber(ByVal Val As Integer)
+    Public Function GenerateNumber(ByVal Val As Integer)
         'gera numero aletorio
         If (ValueGerated > 0) Then
             CacheValue = ValueGerated
