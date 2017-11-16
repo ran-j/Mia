@@ -14,14 +14,14 @@
     End Sub
 
     Public Function AskAQuestion() As String 'faz uma pergunta para interagir com o usuário
-        Return Questions(GenerateNunber(Questions.Count))
+        Return Questions(GenerateNumber(Questions.Count))
     End Function
 
 
     Public Function GenerateNumber(ByVal Val As Integer)
         'gera numero aletorio
-        If (ValueGerated > 0) Then
-            CacheValue = ValueGerated
+        If (ValueGenerated > 0) Then
+            CacheValue = ValueGenerated
         End If
 
         ValueGenerated = Nothing
@@ -33,13 +33,14 @@
             ValueGenerated = Rand.Next(Val)
             If (ValueGenerated = CacheValue) Then
                 If (CacheValue = 0) Then
-                      CacheValue = Rand.Next(1,Val)
+                    CacheValue = Rand.Next(1, Val)
                 Else
-                    CacheValue = Rand.Next(CacheValue + (Val - CacheValue))
+                    Dim i = Rand.Next(CacheValue + (Val - CacheValue))
+                    If (i = CacheValue) Then
+                        Return Rand.Next(Val)
+                    End If
                 End If
-
                 Return CacheValue
-
             Else
                 CacheValue = ValueGenerated
                 Return ValueGenerated
