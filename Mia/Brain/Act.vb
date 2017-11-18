@@ -1,6 +1,20 @@
 ﻿Imports System.Net
+Imports System.Security.Permissions
 
+<PermissionSet(SecurityAction.Demand, Name:="FullTrust")>
+<Runtime.InteropServices.ComVisibleAttribute(True)>
 Public Class Act
+    Dim WithEvents WebBrowser2 As New WebBrowser
+
+    Dim searchText As String
+
+    Sub New()
+        'Configura o web Browser
+        Me.WebBrowser2.ObjectForScripting = Me
+        Me.WebBrowser2.ScriptErrorsSuppressed = True
+        Me.WebBrowser2.Dock = DockStyle.Fill
+        Me.WebBrowser2.ScrollBarsEnabled = True
+    End Sub
 
     Function GetWeather()
         'Retorna temperatura
@@ -41,6 +55,49 @@ Public Class Act
         End Using
     End Function
 
+    Sub SearchGoogle(Search As String)
+        Dim query As String = "https://www.google.com.br/search?q=" + Search.Replace(" ", "+")
+
+        Dim WebForm As New Form With {
+            .Height = 800,
+            .Width = 1000,
+            .Text = "Pesquisa Web"
+        }
+
+        Me.WebBrowser2.Height = WebForm.Height
+        Me.WebBrowser2.Width = WebForm.Width
+
+        WebForm.Controls.Add(WebBrowser2)
+
+        WebBrowser2.Navigate(query)
+
+        WebForm.Show()
+
+    End Sub
+
+    Private Sub WebBrowser2_DocumentCompleted(ByVal sender As Object, ByVal e As System.Windows.Forms.WebBrowserDocumentCompletedEventArgs) Handles WebBrowser2.DocumentCompleted
+        Debug.Print("Pagina carregada")
+    End Sub
+
+    Function Clickbyid(ByVal id)
+        On Error Resume Next
+        If WebBrowser2.Document.GetElementById(id) IsNot Nothing Then
+            Dim Headers As String = "" 'insert headers if you want to
+
+            WebBrowser2.Navigate("javascript:document.getElementById('" & id & "').click();", "_self", Nothing, Headers)
+
+            'This keeps the function active until the browser has finished loading
+            Do While WebBrowser2.ReadyState <> WebBrowserReadyState.Complete
+                Application.DoEvents()
+            Loop
+            Return 1
+        Else
+
+            MessageBox.Show("Could not find link by id" & id)
+            Return Nothing
+        End If
+
+    End Function
 
 
 

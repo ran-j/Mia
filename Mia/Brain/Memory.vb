@@ -2,7 +2,7 @@
 Imports System.Text
 
 Public Class Memory
-    Dim QuestionPath = Application.StartupPath & "\perlist.dll"
+    Dim QuestionPath As String = Application.StartupPath & "\perlist.dll"
 
     Sub SaveContent(Target As Object)
         'Salvar conteudo na memoria

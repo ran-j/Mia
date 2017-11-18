@@ -28,7 +28,7 @@ Partial Class Main
         '
         'AFKDetector
         '
-        Me.AFKDetector.Interval = 7000
+        Me.AFKDetector.Interval = 19000
         '
         'Main
         '

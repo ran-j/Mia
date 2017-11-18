@@ -9,6 +9,8 @@
 
     Public Event LoadCompleted()
 
+
+
     Sub Init1() 'Starta o processamento
         Thinking.ReceiveConversation(TheMemory.LoadConversation())
         Thinking.ReceiveQuestions(TheMemory.LoadQuestions)
@@ -44,6 +46,5 @@
         'verifica o texto corrige e retorna ele redondo
         Return Interpreter.VerifyText(text)
     End Function
-
 
 End Class

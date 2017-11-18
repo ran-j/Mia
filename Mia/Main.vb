@@ -1,5 +1,5 @@
 ﻿Public Class Main
-    Dim MiaBrain As New Process 'Cria instancia do controlador principal do cerebro
+    Public Shared MiaBrain As New Process 'Cria instancia do controlador principal do cerebro
 
     Dim arguments As String() = Environment.GetCommandLineArgs() 'pega os argumentos
     Public OldmousePosition As Integer = 0
