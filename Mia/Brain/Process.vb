@@ -45,9 +45,20 @@
         Return Thinking.RequestQuestion()
     End Function
 
-    Function RequestVerifyText(text)
+    Function RequestVerifyText(text) As String
         'verifica o texto corrige e retorna ele redondo
         Return Interpreter.VerifyText(text)
     End Function
+
+    Function RequestWeather() As String
+        'Retorna a previ'zão do tempo
+        Dim response As String = Action.GetWeather()
+        If (response.Contains("Vazio")) Then
+            Return "Erro"
+        Else
+            Return response
+        End If
+    End Function
+
 
 End Class
