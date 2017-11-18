@@ -9,8 +9,6 @@
 
     Public Event LoadCompleted()
 
-
-
     Sub Init1() 'Starta o processamento
         Thinking.ReceiveConversation(TheMemory.LoadConversation())
         Thinking.ReceiveQuestions(TheMemory.LoadQuestions)
@@ -33,8 +31,13 @@
     End Function
 
     Function RequestWarnings(WarningCode As Integer) As String
-        'reorna uma aviso
-        Return Thinking.RequestWarnings(WarningCode)
+        If (WarningCode > 0) Then
+            'reorna uma aviso
+            Return Thinking.RequestWarnings(WarningCode)
+        Else
+            Return "Erro"
+        End If
+
     End Function
 
     Function RequestQuestion() As String

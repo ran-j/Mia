@@ -6,6 +6,10 @@ Imports System.Security.Permissions
 Public Class Act
     Dim WithEvents WebBrowser2 As New WebBrowser
 
+    Private Sub WebBrowser2_DocumentCompleted(ByVal sender As Object, ByVal e As System.Windows.Forms.WebBrowserDocumentCompletedEventArgs) Handles WebBrowser2.DocumentCompleted
+        Debug.Print("Pagina carregada")
+    End Sub
+
     Dim searchText As String
 
     Sub New()
@@ -75,11 +79,8 @@ Public Class Act
 
     End Sub
 
-    Private Sub WebBrowser2_DocumentCompleted(ByVal sender As Object, ByVal e As System.Windows.Forms.WebBrowserDocumentCompletedEventArgs) Handles WebBrowser2.DocumentCompleted
-        Debug.Print("Pagina carregada")
-    End Sub
-
     Function Clickbyid(ByVal id)
+        'Clica em um botão
         On Error Resume Next
         If WebBrowser2.Document.GetElementById(id) IsNot Nothing Then
             Dim Headers As String = "" 'insert headers if you want to
