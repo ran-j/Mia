@@ -44,8 +44,21 @@
 
     End Function
 
-    Sub BuildDict()
+    Sub BuildDict(Optional AdictionalDict = "default")
         'Como usar: primeiro palavra errada, segundo palavra certa
+        Dim Type As Boolean = TypeOf (AdictionalDict) Is List(Of String)
+
+        If (Type) Then
+            If (AdictionalDict.count >= 0) Then
+                For Each DictWords In AdictionalDict
+                    Dict.Add(DictWords)
+                Next
+                Debug.Print("Adicionado extras")
+            Else
+                Debug.Print("Array Vazio")
+            End If
+        End If
+
         Dict.Add("abri,abrir")
         Dict.Add("abir,abrir")
         Dict.Add("finaliza,finalizar")
