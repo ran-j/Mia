@@ -32,3 +32,4 @@ C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.vbproj.Cor
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.exe
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.xml
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.pdb
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\OpenHardwareMonitorLib.dll

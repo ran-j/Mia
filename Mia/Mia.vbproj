@@ -48,6 +48,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="OpenHardwareMonitorLib, Version=0.7.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenHardwareMonitor.0.7.1\lib\net40\OpenHardwareMonitorLib.dll</HintPath>
     </Reference>
@@ -78,6 +81,7 @@
   <ItemGroup>
     <Compile Include="Brain\Act.vb" />
     <Compile Include="Brain\Class\Interpreter.vb" />
+    <Compile Include="Brain\Class\JsonClass.vb" />
     <Compile Include="Brain\Class\Network.vb" />
     <Compile Include="Brain\Class\Power.vb" />
     <Compile Include="Brain\Class\Questions.vb" />
