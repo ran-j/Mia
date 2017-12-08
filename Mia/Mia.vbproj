@@ -48,6 +48,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenHardwareMonitorLib, Version=0.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenHardwareMonitor.0.7.1\lib\net40\OpenHardwareMonitorLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -75,12 +78,15 @@
   <ItemGroup>
     <Compile Include="Brain\Act.vb" />
     <Compile Include="Brain\Class\Interpreter.vb" />
+    <Compile Include="Brain\Class\Network.vb" />
+    <Compile Include="Brain\Class\Power.vb" />
     <Compile Include="Brain\Class\Questions.vb" />
+    <Compile Include="Brain\Class\SystemInteract.vb" />
     <Compile Include="Brain\Class\Warnings.vb" />
     <Compile Include="Brain\Memory.vb" />
     <Compile Include="Brain\Process.vb" />
     <Compile Include="Brain\Think.vb" />
-    <Compile Include="Fixer\FixNet.vb" />
+    <Compile Include="Brain\Class\Fixer\FixNet.vb" />
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -103,8 +109,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Protection\Defender.vb" />
-    <Compile Include="Protection\Scanner.vb" />
+    <Compile Include="Brain\Class\Protection\Defender.vb" />
+    <Compile Include="Brain\Class\Protection\Scanner.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Main.resx">
@@ -128,6 +134,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
