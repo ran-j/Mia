@@ -7,7 +7,7 @@
     Dim usu As String = "Rola"
 
     'Avisos
-    Protected minimizadoav As String() = New String() {"Senhor estou ativo aqui no canto.", "Senhor estou aberto em em segundo plano se precisar", "Senhor se Precisar de algo estou em segundo plano"}
+    Protected minimizadoav As String() = New String() {"Senhor estou ativa aqui no canto.", "Senhor estou aberta em em segundo plano se precisar", "Senhor se Precisar de algo estou em segundo plano"}
     Protected avisanetvoltou As String() = New String() {"Senhor " + usu + " a conexção com a internet foi restabelecida", "Senhor" + usu + "a conexção com a internet foi restaurada", "Senhor" + usu + "a conexção com a internet retornou"}
     Protected avisanetcaiu As String() = New String() {"Senhor " + usu + " a conexção com a internet foi perdida", "Senhor" + usu + "a conexção com a internet caiu", "Senhor" + usu + "a internet caiu"}
     Protected boamadrugada As String() = New String() {"Bom dia senhor " + usu + ", poise já e dia", "Bom dia senhor " + usu + ", acordou cedo hoje", "Bom dia senhor " + usu + ", apesar de ainda está um pocuo escuro"}

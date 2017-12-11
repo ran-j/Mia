@@ -28,7 +28,7 @@ Public Class Main
         Me.DesktopLocation = New Point(x, y)
 
         'Tooltip com saldaçao
-        ToolTip1.SetToolTip(Me.PictureBox1, "Olá")
+        ToolTip.SetToolTip(Me.PictureBox1, "Olá")
 
         AddHandler MiaBrain.LoadCompleted, AddressOf LoadC 'adiciona evento de carregamento
 
@@ -81,13 +81,46 @@ Public Class Main
             'Desabilita o AFK detector
             AFKDetector.Enabled = False
 
+            'Ocultar o programa
+            Me.Hide()
+
+            'Solta notificação
+            NotifyIcon.ShowBalloonTip("5000", "Aviso", MiaBrain.RequestWarnings(1), ToolTipIcon.Info)
+
+            'Troca o contexte menu
+            NotifyIcon.ContextMenuStrip = CMS
+
             Debug.Print("Minimizou")
         ElseIf (Me.WindowState = FormWindowState.Normal) Then
             'Ativa AFK Detector
             AFKDetector.Enabled = True
 
+            'Mostrar o programa
+            Me.Show()
+
+            'Troca o contexte menu
+            NotifyIcon.ContextMenuStrip = CMSVazio
+
             Debug.Print("Maximizou")
         End If
+    End Sub
+
+    Private Sub NotifyIcon_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon.MouseDoubleClick
+        'evento de maximizar pelo Notifyicon
+        Me.Show()
+        Me.WindowState = FormWindowState.Normal
+        Me.Activate()
+        Me.Focus()
+    End Sub
+
+    Private Sub RestaurarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RestaurarToolStripMenuItem.Click
+        'Restaura o programa
+        Me.WindowState = FormWindowState.Normal
+    End Sub
+
+    Private Sub FecharToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FecharToolStripMenuItem.Click
+        'fechar o programa
+        Me.Close()
     End Sub
 
 #End Region
