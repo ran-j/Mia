@@ -10,6 +10,9 @@
         AddHandler MiaBrain.LoadCompleted, AddressOf LoadC 'adiciona evento de carregamento
 
         MiaBrain.Init1() 'Starta o processamento
+
+        'Deixar transparente
+        Me.BackColor = Color.FromArgb(255, 255, 255)
     End Sub
 
     Private Sub AFKDetector_Tick(sender As Object, e As EventArgs) Handles AFKDetector.Tick

@@ -33,3 +33,11 @@ C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.exe
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.xml
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.pdb
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\OpenHardwareMonitorLib.dll
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\aa\Mia.resources.dll
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\pt\Mia.resources.dll
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.Main.aa.resources
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.Main.pt.resources
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\aa\Mia.resources.dll
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\pt\Mia.resources.dll

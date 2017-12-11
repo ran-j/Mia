@@ -117,6 +117,12 @@
     <Compile Include="Brain\Class\Protection\Scanner.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Main.aa.resx">
+      <DependentUpon>Main.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main.pt.resx">
+      <DependentUpon>Main.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.vb</DependentUpon>
     </EmbeddedResource>
