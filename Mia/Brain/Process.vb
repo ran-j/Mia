@@ -7,6 +7,9 @@
     Dim Action As New Act 'Toda a parte de ação que responde a usuário
     Dim Interpreter As New Interpreter ' interpretador de texto
 
+    'Classes Secundarias
+    Dim Sys As New SystemInteract 'interaçao com o sistema
+
     Public Event LoadCompleted()
 
     Sub Init1() 'Starta o processamento
@@ -59,6 +62,13 @@
             Return response
         End If
     End Function
+
+    Function RequestResolutionOff(monitor As Integer)
+        'retorna a resoluçao de um monitor
+        Return Sys.GetResolutionOf(monitor)
+
+    End Function
+
 
 
 End Class

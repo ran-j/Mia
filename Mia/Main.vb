@@ -17,27 +17,25 @@ Public Class Main
     Public Shared Function ReleaseCapture() As Boolean
     End Function
 
-    Dim Sys As New SystemInteract
-
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         OldmousePosition = MousePosition.X 'pega a posição do mouse
+
+        'Spaw position
+        Dim resolution As String() = MiaBrain.RequestResolutionOff(0).ToString.Split(",")
+        Dim x As Integer = CInt(resolution(0)) - 280
+        Dim y As Integer = CInt(resolution(1)) - 300
+        Me.DesktopLocation = New Point(x, y)
+
+        'Tooltip com saldaçao
+        ToolTip1.SetToolTip(Me.PictureBox1, "Olá")
 
         AddHandler MiaBrain.LoadCompleted, AddressOf LoadC 'adiciona evento de carregamento
 
         MiaBrain.Init1() 'Starta o processamento
 
-        'Tooltip com saldaçao
-        ToolTip1.SetToolTip(Me.PictureBox1, "Olá")
-
         'Deixar transparente
         Me.BackColor = Color.FromArgb(255, 255, 255)
-
-        'Spaw position
-        Dim resolution As String() = Sys.GetResolutionOf(0).ToString.Split(",")
-        Dim x As Integer = CInt(resolution(0)) - 280
-        Dim y As Integer = CInt(resolution(1)) - 300
-        Me.DesktopLocation = New Point(x, y)
     End Sub
 
     Private Sub AFKDetector_Tick(sender As Object, e As EventArgs) Handles AFKDetector.Tick
@@ -45,12 +43,14 @@ Public Class Main
             If (OldmousePosition = MousePosition.X) Then 'verificar se o mouse esta no mesmo lugar ou ele se movimento.
 
                 AFKDetector.Enabled = False
-                MsgBox("Hey, esta ai ?")
+
+                MsgBox(MiaBrain.RequestWarnings(14))
+
                 OldmousePosition = 0
                 Me.WindowState = FormWindowState.Minimized
             Else
                 OldmousePosition = MousePosition.X 'pegar movimento
-                Debug.Print(OldmousePosition)
+                Debug.Print("Posiçao do mouse: " + OldmousePosition.ToString)
             End If
         End If
     End Sub
@@ -78,14 +78,15 @@ Public Class Main
 
     Private Sub Main_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         If (Me.WindowState = FormWindowState.Minimized) Then
-            'reseta AFK Detector e reseta tempo
-            AFKDetector.Interval = 50000
+            'Desabilita o AFK detector
             AFKDetector.Enabled = False
 
+            Debug.Print("Minimizou")
         ElseIf (Me.WindowState = FormWindowState.Normal) Then
             'Ativa AFK Detector
             AFKDetector.Enabled = True
 
+            Debug.Print("Maximizou")
         End If
     End Sub
 

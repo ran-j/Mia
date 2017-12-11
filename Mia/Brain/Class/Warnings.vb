@@ -19,7 +19,9 @@
     Protected vaijogar As String() = New String() {"Reparei que o senhor vai jogar e verifiquei o ping para o senhor.", "Senhor " + usu + " já que o senhor vai jogar eu verifiquei o ping para o senhor", "Senhor " + usu + " verifiquei o ping para o senhor"}
     Protected oususaiu As String() = New String() {"Até mais senhor " + usu, "Espero o seu retorno senhor " + usu, "Até logo mais senhor " + usu}
     Protected ousuvoltou As String() = New String() {"Olá senhor " + usu, "Bem vindo de volta senhor " + usu, "Bom ter o senhor de volta senhor " + usu}
-    Protected avisatempo As String() = New String() {"Certo senhor estou consultando a previsão do tempo agora", "Tudo bem estou verificando a previsão do tempo para o senhor", "Entendido senhor " + usu + " estou baixando a previsão de hoje"}
+    Protected avisatempo As String() = New String() {"Certo senho r" + usu + " estou consultando a previsão do tempo agora", "Tudo bem estou verificando a previsão do tempo para o senhor", "Entendido senhor " + usu + " estou baixando a previsão de hoje"}
+    Protected avisaAFK As String() = New String() {"Está ai senhor " + usu + "?", "Senhor " + usu + ", o senhor está ae ?", "Senhor ?"}
+
 
 
     Public Function AnwserWarning(ByVal operaçao As Integer)
@@ -51,6 +53,8 @@
             Output = ousuvoltou(GenerateNunber(ousuvoltou.Length))
         ElseIf (operaçao = 13) Then
             Output = avisatempo(GenerateNunber(avisatempo.Length))
+        ElseIf (operaçao = 14) Then
+            Output = avisaAFK(GenerateNunber(avisaAFK.Length))
         Else
             Output = "Erro de código"
         End If

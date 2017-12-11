@@ -21,7 +21,7 @@ Public Class Act
         Me.WebBrowser2.ScrollBarsEnabled = True
     End Sub
 
-    Function GetWeather()
+    Function GetWeather() As String
         'Retorna temperatura
         Try
             Using wc As New System.Net.WebClient
@@ -35,7 +35,7 @@ Public Class Act
 
             End Using
         Catch ex As Exception
-            Return "0"
+            Return "Vazio"
         End Try
 
     End Function
