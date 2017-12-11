@@ -91,6 +91,25 @@ Public Class SystemInteract
         Return WidthMonitor.ToString + "," + HeightMonitor.ToString + "," + monitores
     End Function
 
+    Function GetResolutionOf(Monitor As Integer) As String
+        Try
+            'pegar resoluçao da tela ou telas
+            Dim numberofmonitors As Integer = Screen.AllScreens.Length
+
+            Dim WidthMonitor As Integer = 0
+            Dim HeightMonitor As Integer = 0
+
+            WidthMonitor = WidthMonitor + Screen.AllScreens(Monitor).Bounds.Width
+            HeightMonitor = HeightMonitor + Screen.AllScreens(Monitor).Bounds.Height
+
+            Return WidthMonitor.ToString + "," + HeightMonitor.ToString
+        Catch ex As Exception
+            Return "530,550"
+        End Try
+
+    End Function
+
+
     Function GetTempSize()
         'pegar o tamanho da pasta temp
         Dim temp As String = Path.GetTempPath() 'pasta temp
