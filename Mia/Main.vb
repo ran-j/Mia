@@ -6,6 +6,8 @@ Public Class Main
     Dim arguments As String() = Environment.GetCommandLineArgs() 'pega os argumentos
     Public OldmousePosition As Integer = 0
 
+    Private WithEvents Net As MyNetwork = MiaBrain.RequestIstanceOfNetClass()
+
     Public Const WM_NCLBUTTONDOWN As Integer = &HA1
     Public Const HT_CAPTION As Integer = &H2
 
@@ -59,13 +61,18 @@ Public Class Main
         'evento de quando termina de carregar os arquivos
         AFKDetector.Enabled = True
         Debug.Print("Carregamento completo")
+
+        Net.StartMonitoring()
     End Sub
+
+
 
 
 
 #Region " Form Control "
 
     Private Sub Form1_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown, PictureBox1.MouseDown
+        'Mover o programa com o click do mouse
         If e.Button = Windows.Forms.MouseButtons.Left Then
             ReleaseCapture()
             SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0)
@@ -73,7 +80,9 @@ Public Class Main
     End Sub
 
     Private Sub PictureBox1_DoubleClick(sender As Object, e As EventArgs) Handles PictureBox1.DoubleClick
+        'Minimizar com click na foto
         Me.WindowState = FormWindowState.Minimized
+        NetSpeed()
     End Sub
 
     Private Sub Main_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
@@ -122,7 +131,57 @@ Public Class Main
         'fechar o programa
         Me.Close()
     End Sub
+#End Region
+
+#Region "Net"
+
+    Private Sub NetSpeed()
+        Dim resp As Integer = MiaBrain.RequestNetSpeed()
+
+        If (resp = 0) Then
+            MsgBox("net otima")
+        ElseIf (resp = 1) Then
+            MsgBox("net razoavel")
+        ElseIf (resp = 2) Then
+            MsgBox("net bem ruim")
+        ElseIf (resp = 3) Then
+            MsgBox("net muito ruim")
+        Else
+            MsgBox("carai maluco muito fucking alto")
+        End If
+    End Sub
+
+    Delegate Sub AddToList1Callback(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
+    Delegate Sub AddToList2Callback(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
+
+    Sub AddToList1(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
+        If Me.InvokeRequired = True Then
+            Dim d As New AddToList1Callback(AddressOf AddToList1)
+            Me.Invoke(d, ConnectionState, IsStable)
+        Else
+            Debug.Print(Now & " - State: " & ConnectionState.ToString() & ", Stable: " & IsStable)
+        End If
+    End Sub
+
+    Sub AddToList2(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
+        If Me.InvokeRequired = True Then
+            Dim d As New AddToList2Callback(AddressOf AddToList2)
+            Me.Invoke(d, ConnectionState, IsStable)
+        Else
+            Debug.Print(Now & " - State: " & ConnectionState.ToString() & ", Stable: " & IsStable)
+            Debug.Print(Now & " - State: " & ConnectionState.ToString() & ", Stable: " & IsStable)
+        End If
+    End Sub
+
+    Private Sub Conn_InternetConnectionStableChanged(IsStable As Boolean, ConnectionState As InternetConnectionState) Handles Net.InternetConnectionStableChanged
+        AddToList2(ConnectionState, IsStable)
+    End Sub
+
+    Private Sub Conn_InternetConnectionStateChanged(ConnectionState As InternetConnectionState) Handles Net.InternetConnectionStateChanged
+        AddToList1(ConnectionState, False)
+    End Sub
 
 #End Region
+
 
 End Class

@@ -12,11 +12,11 @@ Public Enum InternetConnectionState
     Disconnected
 End Enum
 
-Public Class Network
+Public Class MyNetwork
 
     Implements IDisposable
 
-    Public Shared Property CheckHostName As String = "www.google.com"
+    Public Shared Property CheckHostName As String = "www.google.com.br"
     Public Property ConnectionStableAfterSec As Integer = 10
 
     Private MonitoringStarted As Boolean = False
@@ -25,8 +25,8 @@ Public Class Network
     Private wConnectionIsStable As Boolean
     Private PrevInternetConnectionState As InternetConnectionState = InternetConnectionState.Disconnected
 
-    Public Event InternetConnectionStateChanged(ByVal ConnectionState As InternetConnectionState)
-    Public Event InternetConnectionStableChanged(ByVal IsStable As Boolean, ByVal ConnectionState As InternetConnectionState)
+    Public Shared Event InternetConnectionStateChanged(ByVal ConnectionState As InternetConnectionState)
+    Public Shared Event InternetConnectionStableChanged(ByVal IsStable As Boolean, ByVal ConnectionState As InternetConnectionState)
 
     Public Sub StartMonitoring()
         If MonitoringStarted = False Then
@@ -120,18 +120,24 @@ Public Class Network
 
 #Region "Netspeed"
     Public Function Getnetspeed()
+        'retorna o ping do pc
         Dim ping1 As Integer = pingnet()
         Dim ping2 As Integer = pingnet()
         Dim ping3 As Integer = pingnet()
         Dim ping4 As Integer = pingnet()
 
-        Dim output As Integer = ping1 + ping2 + ping3 + ping4 / 4
+        Dim output As Integer = (ping1 + ping2 + ping3 + ping4) / 4
 
-        Debug.Print(output.ToString)
+        Debug.Print("Ping 1: " + ping1.ToString)
+        Debug.Print("Ping 2: " + ping2.ToString)
+        Debug.Print("Ping 3: " + ping3.ToString)
+        Debug.Print("Ping 4: " + ping4.ToString)
 
-        If (output <= 50) Then
+        Debug.Print("Ping total : " + output.ToString)
+
+        If (output <= 69) Then
             Return 0
-        ElseIf (output <= 90) Then
+        ElseIf (output <= 80) Then
             Return 1
         ElseIf (output <= 200) Then
             Return 2

@@ -21301,19 +21301,19 @@
     <value>351, 17</value>
   </metadata>
   <data name="RestaurarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>123, 22</value>
   </data>
   <data name="RestaurarToolStripMenuItem.Text" xml:space="preserve">
     <value>Restaurar</value>
   </data>
   <data name="FecharToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>123, 22</value>
   </data>
   <data name="FecharToolStripMenuItem.Text" xml:space="preserve">
     <value>Fechar</value>
   </data>
   <data name="CMS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 70</value>
+    <value>124, 48</value>
   </data>
   <data name="&gt;&gt;CMS.Name" xml:space="preserve">
     <value>CMS</value>

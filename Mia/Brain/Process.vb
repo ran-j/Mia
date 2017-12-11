@@ -9,6 +9,8 @@
 
     'Classes Secundarias
     Dim Sys As New SystemInteract 'interaçao com o sistema
+    Dim Net As New MyNetwork 'Interaçao com internet como verificaçoes e velocidade
+
 
     Public Event LoadCompleted()
 
@@ -68,6 +70,18 @@
         Return Sys.GetResolutionOf(monitor)
 
     End Function
+
+    Function RequestNetSpeed() As Integer
+        'Returna a felocidade em 4 valores melhor para pior : 0 1 2 3 4
+        Return Net.Getnetspeed
+    End Function
+
+    Function RequestIstanceOfNetClass() As MyNetwork
+        'Retorna instancia da classe network
+        Return Net
+    End Function
+
+
 
 
 
