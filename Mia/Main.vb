@@ -4,6 +4,7 @@ Public Class Main
     Public Shared MiaBrain As New Process 'Cria instancia do controlador principal do cerebro
 
     Dim arguments As String() = Environment.GetCommandLineArgs() 'pega os argumentos
+
     Public OldmousePosition As Integer = 0
 
     Private WithEvents Net As MyNetwork = MiaBrain.RequestIstanceOfNetClass()
@@ -30,7 +31,7 @@ Public Class Main
         Me.DesktopLocation = New Point(x, y)
 
         'Tooltip com saldaçao
-        ToolTip.SetToolTip(Me.PictureBox1, "Olá")
+        ToolTip.SetToolTip(Me.UI, "Olá")
 
         AddHandler MiaBrain.LoadCompleted, AddressOf LoadC 'adiciona evento de carregamento
 
@@ -65,15 +66,14 @@ Public Class Main
         'Iniciar o monitoramento da net
         Net.StartMonitoring()
         'Net.StopMonitoring 
+
     End Sub
-
-
 
 
 
 #Region " Form Control "
 
-    Private Sub Form1_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown, PictureBox1.MouseDown
+    Private Sub Form1_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown, UI.MouseDown
         'Mover o programa com o click do mouse
         If e.Button = Windows.Forms.MouseButtons.Left Then
             ReleaseCapture()
@@ -81,10 +81,34 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub PictureBox1_DoubleClick(sender As Object, e As EventArgs) Handles PictureBox1.DoubleClick
+    Private Sub UI_DoubleClick(sender As Object, e As EventArgs) Handles UI.DoubleClick
         'Minimizar com click na foto
         Me.WindowState = FormWindowState.Minimized
         NetSpeed()
+    End Sub
+
+    Private Sub UI_MouseClick(sender As Object, e As MouseEventArgs) Handles UI.MouseClick
+        'Mostra o botão para abrir o menu
+        Config.Visible = True
+    End Sub
+
+    Private Sub Config_Click(sender As Object, e As EventArgs) Handles Config.Click
+        'Oculta o botão para abrir o menu
+        Config.Visible = False
+    End Sub
+
+    Private Sub Alert_Click(sender As Object, e As EventArgs) Handles Alert.Click
+        'Dispara o alerta salvo
+        Dim text = MiaBrain.GetAlertText()
+
+        MsgBox(text(0), MsgBoxStyle.Critical)
+
+        MiaBrain.ClearAlertTextTextbyName(text(0))
+
+        If (MiaBrain.GetArrayTextSize() = 0) Then
+            Alert.Visible = False
+        End If
+
     End Sub
 
     Private Sub Main_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
@@ -167,11 +191,13 @@ Public Class Main
 
             If Not (ConnectionState.ToString().Equals("Connected")) Then
                 UmaVez = 1
-                MsgBox("Desconectado")
+                MiaBrain.SetAlertText("Desconectado")
+                Alert.Visible = True
             Else
                 If (UmaVez = 1) Then
-                    MsgBox("Conectado de novo")
                     UmaVez = 0
+                    Alert.Visible = False
+                    MsgBox("Conectado de novo")
                 End If
             End If
 
@@ -189,7 +215,7 @@ Public Class Main
 
             If Not (ConnectionState.ToString().Equals("Connected")) Then
                 If (UmaVez = 0) Then
-                    MsgBox("Desconectado")
+                    Debug.Print("Desconectado")
                 End If
             End If
         End If
@@ -207,7 +233,6 @@ Public Class Main
         NotifyIcon.Visible = False
         NotifyIcon.Dispose()
     End Sub
-
 #End Region
 
 

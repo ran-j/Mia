@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Brain\Act.vb" />
+    <Compile Include="Brain\Class\AlertClass.vb" />
     <Compile Include="Brain\Class\Interpreter.vb" />
     <Compile Include="Brain\Class\JsonClass.vb" />
     <Compile Include="Brain\Class\MyNetwork.vb" />

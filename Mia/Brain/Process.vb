@@ -11,6 +11,7 @@
     Dim Sys As New SystemInteract 'interaçao com o sistema
     Dim Net As New MyNetwork 'Interaçao com internet como verificaçoes e velocidade
     Dim PW As New Power 'Classe para interação com energia
+    Dim AlertSet As New AlertClass
 
 
     Public Event LoadCompleted()
@@ -141,5 +142,28 @@
         'Seta velocidade do mouse
         Sys.SetMouseSpeed(Speed)
     End Sub
+
+    Sub SetAlertText(Text As String)
+        'Seta um alerta para o texto
+        AlertSet.AppendValue(Text)
+    End Sub
+
+    Function GetAlertText()
+        'retorna o texto de alerta
+        Return AlertSet.GetArrayText()
+    End Function
+
+    Sub ClearAlertTextTextbyName(Name As String)
+        'Remover valor do array
+        AlertSet.ClearArrayTextByName(Name)
+    End Sub
+
+    Function GetArrayTextSize()
+        'Retorna o tamanho do array
+        Return AlertSet.GetArraySize
+    End Function
+
+
+
 
 End Class

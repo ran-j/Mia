@@ -25,26 +25,30 @@ Partial Class Main
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.AFKDetector = New System.Windows.Forms.Timer(Me.components)
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.UI = New System.Windows.Forms.PictureBox()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.NotifyIcon = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.CMS = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.RestaurarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FecharToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CMSVazio = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Alert = New System.Windows.Forms.PictureBox()
+        Me.Config = New System.Windows.Forms.PictureBox()
+        CType(Me.UI, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CMS.SuspendLayout()
+        CType(Me.Alert, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Config, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'AFKDetector
         '
         Me.AFKDetector.Interval = 50000
         '
-        'PictureBox1
+        'UI
         '
-        resources.ApplyResources(Me.PictureBox1, "PictureBox1")
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.TabStop = False
+        resources.ApplyResources(Me.UI, "UI")
+        Me.UI.Name = "UI"
+        Me.UI.TabStop = False
         '
         'NotifyIcon
         '
@@ -77,29 +81,47 @@ Partial Class Main
         Me.CMSVazio.Name = "CMS"
         resources.ApplyResources(Me.CMSVazio, "CMSVazio")
         '
+        'Alert
+        '
+        resources.ApplyResources(Me.Alert, "Alert")
+        Me.Alert.Name = "Alert"
+        Me.Alert.TabStop = False
+        '
+        'Config
+        '
+        resources.ApplyResources(Me.Config, "Config")
+        Me.Config.Name = "Config"
+        Me.Config.TabStop = False
+        '
         'Main
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
-        Me.Controls.Add(Me.PictureBox1)
+        Me.Controls.Add(Me.Config)
+        Me.Controls.Add(Me.Alert)
+        Me.Controls.Add(Me.UI)
         Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "Main"
         Me.TopMost = True
         Me.TransparencyKey = System.Drawing.Color.Transparent
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.UI, System.ComponentModel.ISupportInitialize).EndInit()
         Me.CMS.ResumeLayout(False)
+        CType(Me.Alert, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Config, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents AFKDetector As Timer
-    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents UI As PictureBox
     Friend WithEvents ToolTip As ToolTip
     Friend WithEvents NotifyIcon As NotifyIcon
     Friend WithEvents CMS As ContextMenuStrip
     Friend WithEvents CMSVazio As ContextMenuStrip
     Friend WithEvents RestaurarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents FecharToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Alert As PictureBox
+    Friend WithEvents Config As PictureBox
 End Class
