@@ -148,7 +148,7 @@
         AlertSet.AppendValue(Text)
     End Sub
 
-    Function GetAlertText()
+    Function GetAlertText() As List(Of String)
         'retorna o texto de alerta
         Return AlertSet.GetArrayText()
     End Function
@@ -158,7 +158,7 @@
         AlertSet.ClearArrayTextByName(Name)
     End Sub
 
-    Function GetArrayTextSize()
+    Function GetArrayTextSize() As Integer
         'Retorna o tamanho do array
         Return AlertSet.GetArraySize
     End Function

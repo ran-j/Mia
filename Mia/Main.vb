@@ -101,7 +101,7 @@ Public Class Main
         'Dispara o alerta salvo
         Dim text = MiaBrain.GetAlertText()
 
-        MsgBox(text(0), MsgBoxStyle.Critical)
+        MsgBox(text(0), MsgBoxStyle.Exclamation)
 
         MiaBrain.ClearAlertTextTextbyName(text(0))
 
