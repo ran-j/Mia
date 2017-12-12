@@ -50,8 +50,8 @@
 
         If (Type) Then
             If (AdictionalDict.count >= 0) Then
-                For Each DictWords In AdictionalDict
-                    Dict.Add(DictWords)
+                For Each DictWord In AdictionalDict
+                    Dict.Add(DictWord)
                 Next
                 Debug.Print("Adicionado extras")
             Else
@@ -59,6 +59,7 @@
             End If
         End If
 
+        'Adiciona umas correçoes pre carregadas
         Dict.Add("abri,abrir")
         Dict.Add("abir,abrir")
         Dict.Add("finaliza,finalizar")

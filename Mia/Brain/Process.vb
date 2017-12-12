@@ -10,6 +10,7 @@
     'Classes Secundarias
     Dim Sys As New SystemInteract 'interaçao com o sistema
     Dim Net As New MyNetwork 'Interaçao com internet como verificaçoes e velocidade
+    Dim PW As New Power 'Classe para interação com energia
 
 
     Public Event LoadCompleted()
@@ -81,8 +82,64 @@
         Return Net
     End Function
 
+    Sub RequestHibernatePC()
+        'Faz o pc Hibernar
+        PW.HibernatePC()
+    End Sub
 
+    Sub RequestPowerPC()
+        'Faz o pc Desligar
+        PW.PowerOffPc()
+    End Sub
 
+    Sub RequestTurnOFFLCD()
+        'Desliga o monitor
+        PW.TurnOffLCD()
+    End Sub
 
+    Function RequestBaterryStatus() As String
+        'Retorna status da bateria
+        Return PW.BatteryStatus()
+    End Function
+
+    Function RequestBaterryPercent() As Integer
+        'Retorna porcentagem da bateria
+        Return PW.BatteryPercent()
+    End Function
+
+    Function RequestBootMode()
+        'Retorna o tipo de boot
+        Return Sys.GetBootMode()
+    End Function
+
+    Sub RequestEmptyRecycleBin(Handle)
+        'limpa a lixeira
+        Sys.EmptyRecycleBin(Handle)
+    End Sub
+
+    Function RequestGetAvailableMemory()
+        'Retorna total de memoria disponivel
+        Return Sys.GetAvailableMemory
+    End Function
+
+    Function RequestGetCPULoad()
+        'Retorna total de uso da CPU
+        Return Sys.GetCPULoad()
+    End Function
+
+    Function RequestGetTempSize()
+        'Retorna Temp Size
+        Return Sys.GetTempSize()
+    End Function
+
+    Function RequestGetMouseSpeed() As Integer
+        'Retorna velocidade do mouse
+        Return Sys.GetMouseSpeed
+    End Function
+
+    Sub RequestSetMouseSpeed(Speed As Integer)
+        'Seta velocidade do mouse
+        Sys.SetMouseSpeed(Speed)
+    End Sub
 
 End Class

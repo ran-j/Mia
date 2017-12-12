@@ -29,9 +29,9 @@ Partial Class Main
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.NotifyIcon = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.CMS = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.CMSVazio = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.RestaurarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FecharToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CMSVazio = New System.Windows.Forms.ContextMenuStrip(Me.components)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CMS.SuspendLayout()
         Me.SuspendLayout()
@@ -58,11 +58,6 @@ Partial Class Main
         Me.CMS.Name = "CMS"
         resources.ApplyResources(Me.CMS, "CMS")
         '
-        'CMSVazio
-        '
-        Me.CMSVazio.Name = "CMS"
-        resources.ApplyResources(Me.CMSVazio, "CMSVazio")
-        '
         'RestaurarToolStripMenuItem
         '
         Me.RestaurarToolStripMenuItem.BackColor = System.Drawing.SystemColors.ActiveCaptionText
@@ -76,6 +71,11 @@ Partial Class Main
         Me.FecharToolStripMenuItem.ForeColor = System.Drawing.Color.DeepPink
         Me.FecharToolStripMenuItem.Name = "FecharToolStripMenuItem"
         resources.ApplyResources(Me.FecharToolStripMenuItem, "FecharToolStripMenuItem")
+        '
+        'CMSVazio
+        '
+        Me.CMSVazio.Name = "CMS"
+        resources.ApplyResources(Me.CMSVazio, "CMSVazio")
         '
         'Main
         '

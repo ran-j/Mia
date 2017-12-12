@@ -62,7 +62,9 @@ Public Class Main
         AFKDetector.Enabled = True
         Debug.Print("Carregamento completo")
 
+        'Iniciar o monitoramento da net
         Net.StartMonitoring()
+        'Net.StopMonitoring 
     End Sub
 
 
@@ -154,13 +156,27 @@ Public Class Main
     Delegate Sub AddToList1Callback(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
     Delegate Sub AddToList2Callback(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
 
+    Dim UmaVez As Integer = 0
+
     Sub AddToList1(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
         If Me.InvokeRequired = True Then
             Dim d As New AddToList1Callback(AddressOf AddToList1)
             Me.Invoke(d, ConnectionState, IsStable)
         Else
             Debug.Print(Now & " - State: " & ConnectionState.ToString() & ", Stable: " & IsStable)
+
+            If Not (ConnectionState.ToString().Equals("Connected")) Then
+                UmaVez = 1
+                MsgBox("Desconectado")
+            Else
+                If (UmaVez = 1) Then
+                    MsgBox("Conectado de novo")
+                    UmaVez = 0
+                End If
+            End If
+
         End If
+
     End Sub
 
     Sub AddToList2(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
@@ -170,6 +186,12 @@ Public Class Main
         Else
             Debug.Print(Now & " - State: " & ConnectionState.ToString() & ", Stable: " & IsStable)
             Debug.Print(Now & " - State: " & ConnectionState.ToString() & ", Stable: " & IsStable)
+
+            If Not (ConnectionState.ToString().Equals("Connected")) Then
+                If (UmaVez = 0) Then
+                    MsgBox("Desconectado")
+                End If
+            End If
         End If
     End Sub
 
@@ -179,6 +201,11 @@ Public Class Main
 
     Private Sub Conn_InternetConnectionStateChanged(ConnectionState As InternetConnectionState) Handles Net.InternetConnectionStateChanged
         AddToList1(ConnectionState, False)
+    End Sub
+
+    Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        NotifyIcon.Visible = False
+        NotifyIcon.Dispose()
     End Sub
 
 #End Region

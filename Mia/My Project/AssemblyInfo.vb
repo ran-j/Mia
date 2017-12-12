@@ -9,8 +9,8 @@ Imports System.Runtime.InteropServices
 ' Revise os valores dos atributos do assembly
 
 <Assembly: AssemblyTitle("Mia")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyDescription("Assistent")>
+<Assembly: AssemblyCompany("Bluer Tech")>
 <Assembly: AssemblyProduct("Mia")>
 <Assembly: AssemblyCopyright("Copyright ©  2017")>
 <Assembly: AssemblyTrademark("")>

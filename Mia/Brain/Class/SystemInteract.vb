@@ -16,7 +16,6 @@ Public Class SystemInteract
     Private Const SHERB_NOCONFIRMATION = &H1
     Private Const SHERB_NOSOUND = &H4
 
-
     Const SPI_SETMOUSESPEED As Int32 = 113
     Const SPIF_UPDATEINIFILE As Int32 = &H1
 
