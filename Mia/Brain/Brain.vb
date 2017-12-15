@@ -1,4 +1,4 @@
-﻿Public Class Process
+﻿Public Class Brain
     'principal que controla as outras
 
     'Controladores, cada um responsavel por uma coisa

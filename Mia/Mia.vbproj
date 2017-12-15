@@ -92,7 +92,7 @@
     <Compile Include="Brain\Class\SystemInteract.vb" />
     <Compile Include="Brain\Class\Warnings.vb" />
     <Compile Include="Brain\Memory.vb" />
-    <Compile Include="Brain\Process.vb" />
+    <Compile Include="Brain\Brain.vb" />
     <Compile Include="Brain\Think.vb" />
     <Compile Include="Brain\Class\Fixer\FixNet.vb" />
     <Compile Include="Main.vb">

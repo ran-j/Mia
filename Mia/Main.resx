@@ -21300,6 +21300,15 @@
   <metadata name="CMS.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>351, 17</value>
   </metadata>
+  <data name="CMS.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 48</value>
+  </data>
+  <data name="&gt;&gt;CMS.Name" xml:space="preserve">
+    <value>CMS</value>
+  </data>
+  <data name="&gt;&gt;CMS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="RestaurarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>123, 22</value>
   </data>
@@ -21311,15 +21320,6 @@
   </data>
   <data name="FecharToolStripMenuItem.Text" xml:space="preserve">
     <value>Fechar</value>
-  </data>
-  <data name="CMS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 48</value>
-  </data>
-  <data name="&gt;&gt;CMS.Name" xml:space="preserve">
-    <value>CMS</value>
-  </data>
-  <data name="&gt;&gt;CMS.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <metadata name="CMSVazio.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>416, 18</value>
@@ -22866,6 +22866,9 @@
   <data name="&gt;&gt;Config.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <metadata name="CloseForm.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>523, 18</value>
+  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -29079,6 +29082,12 @@
   </data>
   <data name="&gt;&gt;FecharToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CloseForm.Name" xml:space="preserve">
+    <value>CloseForm</value>
+  </data>
+  <data name="&gt;&gt;CloseForm.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Main</value>

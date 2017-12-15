@@ -1,13 +1,13 @@
 ﻿Imports System.Runtime.InteropServices
 
 Public Class Main
-    Public Shared MiaBrain As New Process 'Cria instancia do controlador principal do cerebro
+    Public Shared MiaBrain As Brain 'Cria instancia do controlador principal do cerebro
 
     Dim arguments As String() = Environment.GetCommandLineArgs() 'pega os argumentos
 
     Public OldmousePosition As Integer = 0
 
-    Private WithEvents Net As MyNetwork = MiaBrain.RequestIstanceOfNetClass()
+    Private WithEvents Net As MyNetwork
 
     Public Const WM_NCLBUTTONDOWN As Integer = &HA1
     Public Const HT_CAPTION As Integer = &H2
@@ -22,23 +22,39 @@ Public Class Main
 
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        OldmousePosition = MousePosition.X 'pega a posição do mouse
+        Try
+            'So deixa abrir uma aplicação
+            Dim procs() As Process = Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName)
+            If procs.Length > 1 Then
+                MsgBox("A Aplicação já está sendo executada")
+                Debug.Print("Ja esta aberta")
+                CloseForm.Enabled = True
+            Else
+                MiaBrain = New Brain
+                Net = MiaBrain.RequestIstanceOfNetClass()
 
-        'Spaw position
-        Dim resolution As String() = MiaBrain.RequestResolutionOff(0).ToString.Split(",")
-        Dim x As Integer = CInt(resolution(0)) - 280
-        Dim y As Integer = CInt(resolution(1)) - 300
-        Me.DesktopLocation = New Point(x, y)
+                OldmousePosition = MousePosition.X 'pega a posição do mouse
 
-        'Tooltip com saldaçao
-        ToolTip.SetToolTip(Me.UI, "Olá")
+                'Spaw position
+                Dim resolution As String() = MiaBrain.RequestResolutionOff(0).ToString.Split(",")
+                Dim x As Integer = CInt(resolution(0)) - 280
+                Dim y As Integer = CInt(resolution(1)) - 300
+                Me.DesktopLocation = New Point(x, y)
 
-        AddHandler MiaBrain.LoadCompleted, AddressOf LoadC 'adiciona evento de carregamento
+                'Tooltip com saldaçao
+                ToolTip.SetToolTip(Me.UI, "Olá")
 
-        MiaBrain.Init1() 'Starta o processamento
+                AddHandler MiaBrain.LoadCompleted, AddressOf LoadC 'adiciona evento de carregamento
 
-        'Deixar transparente
-        Me.BackColor = Color.FromArgb(255, 255, 255)
+                MiaBrain.Init1() 'Starta o processamento
+
+                'Deixar transparente
+                Me.BackColor = Color.FromArgb(255, 255, 255)
+            End If
+        Catch ex As Exception
+            Debug.Print("Erro: " + ex.Message)
+            CloseForm.Enabled = True
+        End Try
     End Sub
 
     Private Sub AFKDetector_Tick(sender As Object, e As EventArgs) Handles AFKDetector.Tick
@@ -89,7 +105,12 @@ Public Class Main
 
     Private Sub UI_MouseClick(sender As Object, e As MouseEventArgs) Handles UI.MouseClick
         'Mostra o botão para abrir o menu
-        Config.Visible = True
+        If (Config.Visible) Then
+            Config.Visible = False
+        Else
+            Config.Visible = True
+        End If
+
     End Sub
 
     Private Sub Config_Click(sender As Object, e As EventArgs) Handles Config.Click
@@ -156,6 +177,12 @@ Public Class Main
     Private Sub FecharToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FecharToolStripMenuItem.Click
         'fechar o programa
         Me.Close()
+    End Sub
+    Private Sub Closer_Tick(sender As Object, e As EventArgs) Handles CloseForm.Tick
+        'Fecha o form
+        On Error Resume Next
+        Me.Close()
+        Me.Dispose()
     End Sub
 #End Region
 

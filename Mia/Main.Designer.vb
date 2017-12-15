@@ -34,6 +34,7 @@ Partial Class Main
         Me.CMSVazio = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.Alert = New System.Windows.Forms.PictureBox()
         Me.Config = New System.Windows.Forms.PictureBox()
+        Me.CloseForm = New System.Windows.Forms.Timer(Me.components)
         CType(Me.UI, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CMS.SuspendLayout()
         CType(Me.Alert, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -93,6 +94,10 @@ Partial Class Main
         Me.Config.Name = "Config"
         Me.Config.TabStop = False
         '
+        'CloseForm
+        '
+        Me.CloseForm.Interval = 10
+        '
         'Main
         '
         resources.ApplyResources(Me, "$this")
@@ -125,4 +130,5 @@ Partial Class Main
     Friend WithEvents FecharToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Alert As PictureBox
     Friend WithEvents Config As PictureBox
+    Friend WithEvents CloseForm As Timer
 End Class
