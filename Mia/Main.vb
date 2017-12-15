@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
+Imports Microsoft.Win32
 
 Public Class Main
     Public Shared MiaBrain As Brain 'Cria instancia do controlador principal do cerebro
@@ -33,13 +34,15 @@ Public Class Main
                 MiaBrain = New Brain
                 Net = MiaBrain.RequestIstanceOfNetClass()
 
-                OldmousePosition = MousePosition.X 'pega a posição do mouse
-
                 'Spaw position
                 Dim resolution As String() = MiaBrain.RequestResolutionOff(0).ToString.Split(",")
                 Dim x As Integer = CInt(resolution(0)) - 280
                 Dim y As Integer = CInt(resolution(1)) - 300
                 Me.DesktopLocation = New Point(x, y)
+                'Deixar transparente
+                Me.BackColor = Color.FromArgb(255, 255, 255)
+
+                OldmousePosition = MousePosition.X 'pega a posição do mouse
 
                 'Tooltip com saldaçao
                 ToolTip.SetToolTip(Me.UI, "Olá")
@@ -48,8 +51,9 @@ Public Class Main
 
                 MiaBrain.Init1() 'Starta o processamento
 
-                'Deixar transparente
-                Me.BackColor = Color.FromArgb(255, 255, 255)
+                'Quando o sistema bloquear
+                AddHandler SystemEvents.SessionSwitch, AddressOf CheckLockUnlock
+
             End If
         Catch ex As Exception
             Debug.Print("Erro: " + ex.Message)
@@ -183,6 +187,18 @@ Public Class Main
         On Error Resume Next
         Me.Close()
         Me.Dispose()
+    End Sub
+
+    Public Sub CheckLockUnlock(ByVal sender As Object, ByVal e As SessionSwitchEventArgs)
+        'Se o user bloquear
+        If e.Reason = SessionSwitchReason.SessionLock Then
+
+        Else
+
+
+        End If
+
+
     End Sub
 #End Region
 
