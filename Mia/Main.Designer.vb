@@ -104,6 +104,7 @@ Partial Class Main
         Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "Main"
+        Me.ShowInTaskbar = False
         Me.TopMost = True
         Me.TransparencyKey = System.Drawing.Color.Transparent
         CType(Me.UI, System.ComponentModel.ISupportInitialize).EndInit()
