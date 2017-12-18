@@ -61,6 +61,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Speech" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -119,6 +120,7 @@
     </Compile>
     <Compile Include="Brain\Class\Protection\Defender.vb" />
     <Compile Include="Brain\Class\Protection\Scanner.vb" />
+    <Compile Include="Voice.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Main.aa.resx">

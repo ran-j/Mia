@@ -26,7 +26,7 @@ Partial Class Main
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.AFKDetector = New System.Windows.Forms.Timer(Me.components)
         Me.UI = New System.Windows.Forms.PictureBox()
-        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.ToolTip2 = New System.Windows.Forms.ToolTip(Me.components)
         Me.NotifyIcon = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.CMS = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.RestaurarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -35,6 +35,7 @@ Partial Class Main
         Me.Alert = New System.Windows.Forms.PictureBox()
         Me.Config = New System.Windows.Forms.PictureBox()
         Me.CloseForm = New System.Windows.Forms.Timer(Me.components)
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.UI, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CMS.SuspendLayout()
         CType(Me.Alert, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -98,6 +99,14 @@ Partial Class Main
         '
         Me.CloseForm.Interval = 10
         '
+        'ToolTip
+        '
+        Me.ToolTip.BackColor = System.Drawing.SystemColors.Desktop
+        Me.ToolTip.ForeColor = System.Drawing.Color.Blue
+        Me.ToolTip.IsBalloon = True
+        Me.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        Me.ToolTip.UseFading = False
+        '
         'Main
         '
         resources.ApplyResources(Me, "$this")
@@ -122,7 +131,7 @@ Partial Class Main
 
     Friend WithEvents AFKDetector As Timer
     Friend WithEvents UI As PictureBox
-    Friend WithEvents ToolTip As ToolTip
+    Friend WithEvents ToolTip2 As ToolTip
     Friend WithEvents NotifyIcon As NotifyIcon
     Friend WithEvents CMS As ContextMenuStrip
     Friend WithEvents CMSVazio As ContextMenuStrip
@@ -131,4 +140,5 @@ Partial Class Main
     Friend WithEvents Alert As PictureBox
     Friend WithEvents Config As PictureBox
     Friend WithEvents CloseForm As Timer
+    Friend WithEvents ToolTip As ToolTip
 End Class

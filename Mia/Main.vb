@@ -4,11 +4,13 @@ Imports Microsoft.Win32
 Public Class Main
     Public Shared MiaBrain As Brain 'Cria instancia do controlador principal do cerebro
 
+    Private WithEvents Net As MyNetwork
+
+    Dim Voz As New Voice 'Inicia sistema de voz
+
     Dim arguments As String() = Environment.GetCommandLineArgs() 'pega os argumentos
 
     Public OldmousePosition As Integer = 0
-
-    Private WithEvents Net As MyNetwork
 
     Public Const WM_NCLBUTTONDOWN As Integer = &HA1
     Public Const HT_CAPTION As Integer = &H2
@@ -82,6 +84,20 @@ Public Class Main
         'evento de quando termina de carregar os arquivos
         AFKDetector.Enabled = True
         Debug.Print("Carregamento completo")
+
+        'Comprimento inicial
+        Select Case TimeOfDay
+
+            Case "00:00" To "5:30"
+                Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(4))
+            Case "00:00 " To "11:59"
+                Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(5))
+            Case "12:00" To "17:59"
+                Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(6))
+            Case "16:00" To "23:59"
+                Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(7))
+
+        End Select
 
         'Iniciar o monitoramento da net
         Net.StartMonitoring()
@@ -198,9 +214,9 @@ Public Class Main
 
         End If
 
-
     End Sub
 #End Region
+
 
 #Region "Net"
 
@@ -221,7 +237,6 @@ Public Class Main
     End Sub
 
     Delegate Sub AddToList1Callback(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
-    Delegate Sub AddToList2Callback(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
 
     Dim UmaVez As Integer = 0
 
@@ -246,26 +261,6 @@ Public Class Main
 
         End If
 
-    End Sub
-
-    Sub AddToList2(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
-        If Me.InvokeRequired = True Then
-            Dim d As New AddToList2Callback(AddressOf AddToList2)
-            Me.Invoke(d, ConnectionState, IsStable)
-        Else
-            Debug.Print(Now & " - State: " & ConnectionState.ToString() & ", Stable: " & IsStable)
-            Debug.Print(Now & " - State: " & ConnectionState.ToString() & ", Stable: " & IsStable)
-
-            If Not (ConnectionState.ToString().Equals("Connected")) Then
-                If (UmaVez = 0) Then
-                    Debug.Print("Desconectado")
-                End If
-            End If
-        End If
-    End Sub
-
-    Private Sub Conn_InternetConnectionStableChanged(IsStable As Boolean, ConnectionState As InternetConnectionState) Handles Net.InternetConnectionStableChanged
-        AddToList2(ConnectionState, IsStable)
     End Sub
 
     Private Sub Conn_InternetConnectionStateChanged(ConnectionState As InternetConnectionState) Handles Net.InternetConnectionStateChanged
