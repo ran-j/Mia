@@ -1,4 +1,6 @@
-﻿Public Class Brain
+﻿Imports Microsoft.Win32
+
+Public Class Brain
     'principal que controla as outras
 
     'Controladores, cada um responsavel por uma coisa
@@ -163,7 +165,43 @@
         Return AlertSet.GetArraySize
     End Function
 
+    Function AddtoWindowsStart()
+        'Adiciona a aplicaçao com o iniciar o windows
+        Try
+            Using key As RegistryKey = My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Run", True)
+                If Not key.GetValue(My.Application.Info.Title) Is My.Application.Info.DirectoryPath & "\" & My.Application.Info.Title & ".exe" Then
 
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run", My.Application.Info.Title, My.Application.Info.DirectoryPath & "\" & My.Application.Info.Title & ".exe")
+
+                    Return 1 'Sucesso
+                End If
+            End Using
+        Catch ex As Exception
+            Return 3 'erro
+            Debug.Print(ex.Message)
+        Finally
+            My.Computer.Registry.CurrentUser.Close()
+        End Try
+    End Function
+
+    Function RemovetoWindowsStart()
+        'Remove a aplicaçao com o iniciar o windows
+        Try
+            Using key As RegistryKey = My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Run", True)
+                If key.GetValue(My.Application.Info.Title) Is My.Application.Info.DirectoryPath & "\" & My.Application.Info.Title & ".exe" Then
+                    key.DeleteValue(My.Application.Info.Title)
+                    Return 1 'Sucesso
+                Else
+                    Return 2 'Nao inicia com o windows
+                End If
+            End Using
+        Catch ex As Exception
+            Return 3 'erro
+            Debug.Print(ex.Message)
+        Finally
+            My.Computer.Registry.CurrentUser.Close()
+        End Try
+    End Function
 
 
 End Class

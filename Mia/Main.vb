@@ -23,7 +23,6 @@ Public Class Main
     Public Shared Function ReleaseCapture() As Boolean
     End Function
 
-
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
             'So deixa abrir uma aplicação
@@ -33,22 +32,13 @@ Public Class Main
                 Debug.Print("Ja esta aberta")
                 CloseForm.Enabled = True
             Else
-                MiaBrain = New Brain
-                Net = MiaBrain.RequestIstanceOfNetClass()
-
-                'Spaw position
-                Dim resolution As String() = MiaBrain.RequestResolutionOff(0).ToString.Split(",")
-                Dim x As Integer = CInt(resolution(0)) - 280
-                Dim y As Integer = CInt(resolution(1)) - 300
-                Me.DesktopLocation = New Point(x, y)
-                'Deixar transparente
-                Me.BackColor = Color.FromArgb(255, 255, 255)
-
                 OldmousePosition = MousePosition.X 'pega a posição do mouse
 
                 'Tooltip com saldaçao
                 ToolTip.SetToolTip(Me.UI, "Olá")
 
+                MiaBrain = New Brain
+                Net = MiaBrain.RequestIstanceOfNetClass()
                 AddHandler MiaBrain.LoadCompleted, AddressOf LoadC 'adiciona evento de carregamento
 
                 MiaBrain.Init1() 'Starta o processamento
@@ -69,7 +59,7 @@ Public Class Main
 
                 AFKDetector.Enabled = False
 
-                MsgBox(MiaBrain.RequestWarnings(14))
+                'Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(14))
 
                 OldmousePosition = 0
                 Me.WindowState = FormWindowState.Minimized
@@ -115,6 +105,13 @@ Public Class Main
             ReleaseCapture()
             SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0)
         End If
+    End Sub
+
+    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+        'Deixar transparente
+        Me.BackColor = Color.FromArgb(255, 255, 255)
+        'Spaw position
+        Me.Location = New Point(Screen.PrimaryScreen.WorkingArea.Width - 280, Screen.PrimaryScreen.WorkingArea.Height - 270)
     End Sub
 
     Private Sub UI_DoubleClick(sender As Object, e As EventArgs) Handles UI.DoubleClick
@@ -249,13 +246,13 @@ Public Class Main
 
             If Not (ConnectionState.ToString().Equals("Connected")) Then
                 UmaVez = 1
-                MiaBrain.SetAlertText("Desconectado")
+                Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(3))
                 Alert.Visible = True
             Else
                 If (UmaVez = 1) Then
                     UmaVez = 0
                     Alert.Visible = False
-                    MsgBox("Conectado de novo")
+                    Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(2))
                 End If
             End If
 
