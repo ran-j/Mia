@@ -96,6 +96,12 @@
     <Compile Include="Brain\Brain.vb" />
     <Compile Include="Brain\Think.vb" />
     <Compile Include="Brain\Class\Fixer\FixNet.vb" />
+    <Compile Include="EspecialForm\FrmNotification.Designer.vb">
+      <DependentUpon>FrmNotification.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EspecialForm\FrmNotification.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
     </Compile>

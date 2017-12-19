@@ -2,13 +2,14 @@
 Imports Microsoft.Win32
 
 Public Class Main
+
+#Region "Variaveis"
     Public Shared MiaBrain As Brain 'Cria instancia do controlador principal do cerebro
-
     Private WithEvents Net As MyNetwork
-
+    Dim scan As Scanner
     Dim Voz As New Voice 'Inicia sistema de voz
 
-    Dim arguments As String() = Environment.GetCommandLineArgs() 'pega os argumentos
+    Dim Arguments As String() = Environment.GetCommandLineArgs() 'pega os argumentos
 
     Public OldmousePosition As Integer = 0
 
@@ -22,6 +23,7 @@ Public Class Main
     <DllImportAttribute("user32.dll")>
     Public Shared Function ReleaseCapture() As Boolean
     End Function
+#End Region
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
@@ -39,7 +41,9 @@ Public Class Main
 
                 MiaBrain = New Brain
                 Net = MiaBrain.RequestIstanceOfNetClass()
+                scan = MiaBrain.RequestIstanceOfScanClass()
                 AddHandler MiaBrain.LoadCompleted, AddressOf LoadC 'adiciona evento de carregamento
+                AddHandler scan.ScanCompleted, AddressOf ScanCompleted
 
                 MiaBrain.Init1() 'Starta o processamento
 
@@ -59,7 +63,7 @@ Public Class Main
 
                 AFKDetector.Enabled = False
 
-                'Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(14))
+                'Debug.Print(MiaBrain.RequestWarnings(14))
 
                 OldmousePosition = 0
                 Me.WindowState = FormWindowState.Minimized
@@ -95,6 +99,13 @@ Public Class Main
 
     End Sub
 
+    Sub ScanCompleted(Results As List(Of String))
+        MsgBox(Results.Count.ToString)
+
+        For Each result In Results
+            Debug.Print(result)
+        Next
+    End Sub
 
 
 #Region " Form Control "

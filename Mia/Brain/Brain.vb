@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Win32
+﻿Imports System.Threading
+Imports Microsoft.Win32
 
 Public Class Brain
     'principal que controla as outras
@@ -14,7 +15,7 @@ Public Class Brain
     Dim Net As New MyNetwork 'Interaçao com internet como verificaçoes e velocidade
     Dim PW As New Power 'Classe para interação com energia
     Dim AlertSet As New AlertClass
-
+    Dim Scan As New Scanner("f9af76130ab62113a8ce2e022b9b61604a6717fdb0ca1d6cb2eb392835d4ea89") 'Classe responsavel por scanear arquivos
 
     Public Event LoadCompleted()
 
@@ -78,6 +79,11 @@ Public Class Brain
     Function RequestNetSpeed() As Integer
         'Returna a felocidade em 4 valores melhor para pior : 0 1 2 3 4
         Return Net.Getnetspeed
+    End Function
+
+    Function RequestIstanceOfScanClass() As Scanner
+        'Retorna instancia da classe Scanner
+        Return Scan
     End Function
 
     Function RequestIstanceOfNetClass() As MyNetwork
@@ -202,6 +208,25 @@ Public Class Brain
             My.Computer.Registry.CurrentUser.Close()
         End Try
     End Function
+
+    Public Sub ShowCustonsNotification(ByVal Config As Object)
+        'Cria notificação customizada
+        Dim FRM As New FrmNotification With {
+            .Titulo = Config(0),
+            .Icon = Config(1),
+            .Nome = Config(2),
+            .Deteccao = Config(3)
+        }
+        Application.Run(FRM)
+    End Sub
+
+    Sub RequestScanofFiles(File As String)
+        'Solicita scan de file
+        Dim t1 As Thread
+        Scan.SetFile(File)
+        t1 = New Thread(AddressOf Scan.ScanFile)
+        t1.Start()
+    End Sub
 
 
 End Class
