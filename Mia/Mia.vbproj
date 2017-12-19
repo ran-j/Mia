@@ -126,7 +126,7 @@
     </Compile>
     <Compile Include="Brain\Class\Protection\Defender.vb" />
     <Compile Include="Brain\Class\Protection\Scanner.vb" />
-    <Compile Include="Voice.vb" />
+    <Compile Include="Brain\Class\Voice.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Main.aa.resx">

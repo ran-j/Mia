@@ -245,30 +245,53 @@ Public Class Main
     End Sub
 
     Delegate Sub AddToList1Callback(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
+    Delegate Sub AddToList2Callback(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
 
     Dim UmaVez As Integer = 0
+    Dim UmaVezStable As Integer = 0
 
     Sub AddToList1(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
         If Me.InvokeRequired = True Then
             Dim d As New AddToList1Callback(AddressOf AddToList1)
             Me.Invoke(d, ConnectionState, IsStable)
         Else
-            Debug.Print(Now & " - State: " & ConnectionState.ToString() & ", Stable: " & IsStable)
+            Debug.Print(Now & " - State: " & ConnectionState.ToString())
 
             If Not (ConnectionState.ToString().Equals("Connected")) Then
                 UmaVez = 1
                 Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(3))
-                Alert.Visible = True
             Else
                 If (UmaVez = 1) Then
-                    UmaVez = 0
-                    Alert.Visible = False
                     Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(2))
+                    UmaVez = 0
                 End If
             End If
-
         End If
 
+    End Sub
+
+    Sub AddToList2(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
+        If Me.InvokeRequired = True Then
+            Dim d As New AddToList2Callback(AddressOf AddToList2)
+            Me.Invoke(d, ConnectionState, IsStable)
+        Else
+            Debug.Print(Now & "Connection Stable: " & IsStable)
+            Debug.Print(Now & "Connection Stable: " & IsStable)
+
+            If Not (IsStable) Then
+                If (UmaVezStable = 0) Then
+                    Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(15))
+                End If
+            Else
+                If (UmaVezStable = 1) Then
+                    Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(16))
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub Conn_InternetConnectionStableChanged(IsStable As Boolean, ConnectionState As InternetConnectionState) Handles Net.InternetConnectionStableChanged
+        AddToList2(ConnectionState, IsStable)
     End Sub
 
     Private Sub Conn_InternetConnectionStateChanged(ConnectionState As InternetConnectionState) Handles Net.InternetConnectionStateChanged

@@ -21,7 +21,8 @@
     Protected ousuvoltou As String() = New String() {"Olá senhor " + usu, "Bem vindo de volta senhor " + usu, "Bom ter o senhor de volta senhor " + usu}
     Protected avisatempo As String() = New String() {"Certo senho r" + usu + " estou consultando a previsão do tempo agora", "Tudo bem estou verificando a previsão do tempo para o senhor", "Entendido senhor " + usu + " estou baixando a previsão de hoje"}
     Protected avisaAFK As String() = New String() {"Está ai senhor " + usu + "?", "Senhor " + usu + ", o senhor está ae ?", "Senhor ?"}
-
+    Protected InternetInstavel As String() = New String() {"Senhor " + usu + " a internet está instavel", "Senhor " + usu + ", verifiquei que a internet está instavel", "Senhor " + usu + " a internet ficou instavel"}
+    Protected InternetEnstavel As String() = New String() {"Senhor " + usu + " a internet está estavel de novo", "Senhor " + usu + ", a internet está normalizada", "Internet normalizada Senhor " + usu}
 
 
     Public Function AnwserWarning(ByVal operaçao As Integer)
@@ -55,6 +56,10 @@
             Output = avisatempo(GenerateNunber(avisatempo.Length))
         ElseIf (operaçao = 14) Then
             Output = avisaAFK(GenerateNunber(avisaAFK.Length))
+        ElseIf (operaçao = 15) Then
+            Output = InternetInstavel(GenerateNunber(InternetInstavel.Length))
+        ElseIf (operaçao = 16) Then
+            Output = InternetEnstavel(GenerateNunber(InternetEnstavel.Length))
         Else
             Output = "Erro de código"
         End If
