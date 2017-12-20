@@ -15,7 +15,7 @@ Public Class Brain
     Dim Net As New MyNetwork 'Interaçao com internet como verificaçoes e velocidade
     Dim PW As New Power 'Classe para interação com energia
     Dim AlertSet As New AlertClass
-    Dim Scan As New Scanner("f9af76130ab62113a8ce2e022b9b61604a6717fdb0ca1d6cb2eb392835d4ea89") 'Classe responsavel por scanear arquivos
+    Dim Scan As New Scanner(My.Settings.VirusTotalKey) 'Classe responsavel por scanear arquivos
 
     Public Event LoadCompleted()
 

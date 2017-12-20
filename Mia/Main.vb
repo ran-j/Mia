@@ -43,7 +43,7 @@ Public Class Main
                 Net = MiaBrain.RequestIstanceOfNetClass()
                 scan = MiaBrain.RequestIstanceOfScanClass()
                 AddHandler MiaBrain.LoadCompleted, AddressOf LoadC 'adiciona evento de carregamento
-                AddHandler scan.ScanCompleted, AddressOf ScanCompleted
+                AddHandler scan.ScanCompleted, AddressOf ScanCompleted 'adiciona evento de scan de virus
 
                 MiaBrain.Init1() 'Starta o processamento
 
@@ -162,6 +162,9 @@ Public Class Main
 
     Private Sub Main_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         If (Me.WindowState = FormWindowState.Minimized) Then
+            'Cancela oque o programa esta falando
+            Voz.CancelSpeeck()
+
             'Desabilita o AFK detector
             AFKDetector.Enabled = False
 

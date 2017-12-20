@@ -19,6 +19,7 @@ Public Class Scanner
     End Sub
 
     Sub New(RAPIKEY As String)
+        'MiaBrain.RequestScanofFiles("C:\me\Icordova.exe")
         APIKEY = RAPIKEY
     End Sub
 

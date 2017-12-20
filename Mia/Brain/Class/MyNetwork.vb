@@ -6,15 +6,21 @@ Imports System.Text
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Net
+Imports System.Net.Sockets
 
 Public Enum InternetConnectionState
     Connected
     Disconnected
 End Enum
 
+
+
 Public Class MyNetwork
 
     Implements IDisposable
+
+    Protected MACLIST As String() = New String() {"D0:17:c2", "F4:0E:22", "A8:96:75", "B8:27:EB", "DC:35:F1"}
+    Protected MACVendedor As String() = New String() {"Asus", "Samsung", "Motorola", "Raspberry Pi", "Positivo"}
 
     Public Shared Property CheckHostName As String = "www.google.com.br"
     Public Property ConnectionStableAfterSec As Integer = 10
@@ -24,6 +30,11 @@ Public Class MyNetwork
     Private IsFirstCheck As Boolean = True
     Private wConnectionIsStable As Boolean
     Private PrevInternetConnectionState As InternetConnectionState = InternetConnectionState.Disconnected
+
+    Dim Host As String = Dns.GetHostEntry(Dns.GetHostName()).AddressList _
+    .Where(Function(a As IPAddress) Not a.IsIPv6LinkLocal AndAlso Not a.IsIPv6Multicast AndAlso Not a.IsIPv6SiteLocal) _
+    .First() _
+    .ToString()
 
     Public Shared Event InternetConnectionStateChanged(ByVal ConnectionState As InternetConnectionState)
     Public Shared Event InternetConnectionStableChanged(ByVal IsStable As Boolean, ByVal ConnectionState As InternetConnectionState)
@@ -170,6 +181,48 @@ Public Class MyNetwork
 
         Return netspeed
     End Function
+#End Region
+
+#Region "IPs"
+    Public Function IsPortOpen(ByVal PortNumber As Integer) As Boolean
+        Dim Client As TcpClient = Nothing
+        Try
+            Client = New TcpClient(Host, PortNumber)
+            Return True
+        Catch ex As SocketException
+            Return False
+        Finally
+            If Not Client Is Nothing Then
+                Client.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function IsPortOpen2(ByVal PortNumber As Integer) As Boolean
+        Dim Client As UdpClient = Nothing
+        Try
+            Client = New UdpClient(Host, PortNumber)
+            Return True
+        Catch ex As SocketException
+            Return False
+        Finally
+            If Not Client Is Nothing Then
+                Client.Close()
+            End If
+        End Try
+    End Function
+
+    Function DiscoveryNameByMac(MAS As String)
+        'Descobrir nome do fabricante por MAC
+        For value As Integer = 0 To MACLIST.Length
+            If (MAS.StartsWith(MACLIST(value))) Then
+                Return MACVendedor(value)
+                Exit Function
+            End If
+        Next
+        Return "NULL"
+    End Function
+
 #End Region
 
 #Region "IDisposable Support"

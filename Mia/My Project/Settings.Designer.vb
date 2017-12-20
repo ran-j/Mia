@@ -53,6 +53,18 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("f9af76130ab62113a8ce2e022b9b61604a6717fdb0ca1d6cb2eb392835d4ea89")>  _
+        Public Property VirusTotalKey() As String
+            Get
+                Return CType(Me("VirusTotalKey"),String)
+            End Get
+            Set
+                Me("VirusTotalKey") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
