@@ -36,8 +36,10 @@ Partial Class Main
         Me.Config = New System.Windows.Forms.PictureBox()
         Me.CloseForm = New System.Windows.Forms.Timer(Me.components)
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.UI, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CMS.SuspendLayout()
+        Me.CMSVazio.SuspendLayout()
         CType(Me.Alert, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Config, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -80,6 +82,7 @@ Partial Class Main
         '
         'CMSVazio
         '
+        Me.CMSVazio.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1})
         Me.CMSVazio.Name = "CMS"
         resources.ApplyResources(Me.CMSVazio, "CMSVazio")
         '
@@ -107,6 +110,13 @@ Partial Class Main
         Me.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTip.UseFading = False
         '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.ToolStripMenuItem1.ForeColor = System.Drawing.Color.DeepPink
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        resources.ApplyResources(Me.ToolStripMenuItem1, "ToolStripMenuItem1")
+        '
         'Main
         '
         resources.ApplyResources(Me, "$this")
@@ -123,6 +133,7 @@ Partial Class Main
         Me.TransparencyKey = System.Drawing.Color.Transparent
         CType(Me.UI, System.ComponentModel.ISupportInitialize).EndInit()
         Me.CMS.ResumeLayout(False)
+        Me.CMSVazio.ResumeLayout(False)
         CType(Me.Alert, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Config, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -141,4 +152,5 @@ Partial Class Main
     Friend WithEvents Config As PictureBox
     Friend WithEvents CloseForm As Timer
     Friend WithEvents ToolTip As ToolTip
+    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
 End Class

@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Reflection
+Imports System.Runtime.InteropServices
 Imports OpenHardwareMonitor
 Imports OpenHardwareMonitor.Hardware
 Public Class SystemInteract
@@ -8,6 +9,9 @@ Public Class SystemInteract
 
     Private m_memoryCounter As System.Diagnostics.PerformanceCounter
     Private m_CPUCounter As System.Diagnostics.PerformanceCounter
+
+    <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Auto)> Private Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal Msg As UInteger, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
+    End Function
 
     Private Declare Function SystemParametersInfo Lib "user32.dll" Alias "SystemParametersInfoA" (ByVal uAction As Int32, ByVal uParam As Int32, ByVal lpvParam As Int32, ByVal fuWinIni As Int32) As Int32
     Private Declare Function SHEmptyRecycleBin Lib "shell32.dll" Alias "SHEmptyRecycleBinA" (ByVal hWnd As Int32, ByVal pszRootPath As String, ByVal dwFlags As Int32) As Int32
@@ -18,6 +22,11 @@ Public Class SystemInteract
 
     Const SPI_SETMOUSESPEED As Int32 = 113
     Const SPIF_UPDATEINIFILE As Int32 = &H1
+
+    Const WM_APPCOMMAND As UInteger = &H319
+    Const APPCOMMAND_VOLUME_UP As UInteger = &HA
+    Const APPCOMMAND_VOLUME_DOWN As UInteger = &H9
+    Const APPCOMMAND_VOLUME_MUTE As UInteger = &H8
 
     Public Sub New()
         m_memoryCounter = New System.Diagnostics.PerformanceCounter()
@@ -206,4 +215,18 @@ Public Class SystemInteract
         Cursor.Clip = New Rectangle(Location, Size)
     End Sub
 
+    Sub VolumeUp(Handle) 'Me.Handle
+        'Aumenta o volume
+        SendMessage(Handle, WM_APPCOMMAND, &H30292, APPCOMMAND_VOLUME_UP * &H10000)
+    End Sub
+
+    Sub VolumeDown(Handle) 'Me.Handle
+        'Diminui o volume
+        SendMessage(Handle, WM_APPCOMMAND, &H30292, APPCOMMAND_VOLUME_DOWN * &H10000)
+    End Sub
+
+    Sub MuteVolume(Handle) 'Me.Handle
+        'Mutar o volume
+        SendMessage(Handle, WM_APPCOMMAND, &H200EB0, APPCOMMAND_VOLUME_MUTE * &H10000)
+    End Sub
 End Class
