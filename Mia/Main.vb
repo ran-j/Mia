@@ -110,8 +110,7 @@ Public Class Main
 
         'Iniciar o monitoramento da net
         Net.StartMonitoring()
-        'Net.StopMonitoring 
-
+        'Net.StopMonitoring
     End Sub
 
     Sub ScanCompleted(Results As List(Of String))
@@ -173,8 +172,8 @@ Public Class Main
             Dim d As New AddToList2Callback(AddressOf AddToList2)
             Me.Invoke(d, ConnectionState, IsStable)
         Else
-            Debug.Print(Now & "Connection Stable: " & IsStable)
-            Debug.Print(Now & "Connection Stable: " & IsStable)
+            Debug.Print(Now & " - Connection Stable: " & IsStable)
+            Debug.Print(Now & " - Connection Stable: " & IsStable)
 
             If Not (IsStable) Then
                 If (UmaVezStable = 0) Then
@@ -362,6 +361,7 @@ Public Class Main
         End If
         MyBase.WndProc(M)
     End Sub
+
 #End Region
 
 End Class

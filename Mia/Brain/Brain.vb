@@ -228,5 +228,35 @@ Public Class Brain
         t1.Start()
     End Sub
 
+    Function RequestRemovableDrives() As String()
+        'Retorna a lista de dispositivos conectados
+        Return Sys.GetRemovableDrives()
+    End Function
+
+    Sub RequestUpvolume(Handle)
+        'Aumenta o volume
+        Sys.VolumeUp(Handle)
+    End Sub
+
+    Sub RequestDownvolume(Handle)
+        'Diminui o volume
+        Sys.VolumeDown(Handle)
+    End Sub
+
+    Sub RequestMutevolume(Handle)
+        'Mutar o volume
+        Sys.MuteVolume(Handle)
+    End Sub
+
+    Sub RequestDeleteAllFilesandFolders(Folder As String)
+        'Deleta arquivos de uma pasta
+        Sys.DeleteAllFilesandFolders(Folder)
+    End Sub
+
+    Function RequestAudioCardList() As List(Of String)
+        'Retorna lista de audio
+        Return Sys.GetAudioCardList()
+    End Function
+
 
 End Class

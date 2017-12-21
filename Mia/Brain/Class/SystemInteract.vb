@@ -3,6 +3,7 @@ Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports OpenHardwareMonitor
 Imports OpenHardwareMonitor.Hardware
+Imports System.Management
 Public Class SystemInteract
     'Atenção importar OpenHardwareMonitor do nuget
     Dim lngNumberOfDirectories As Integer
@@ -215,6 +216,21 @@ Public Class SystemInteract
         Cursor.Clip = New Rectangle(Location, Size)
     End Sub
 
+    Function GetRemovableDrives() As String()
+        'Saber unidade de pendrivers
+        Dim removableDrives() As String
+
+        removableDrives =
+            (From drv As IO.DriveInfo In IO.DriveInfo.GetDrives
+             Where drv.IsReady AndAlso
+                       drv.DriveType = IO.DriveType.Removable
+             Select drv.Name
+             Order By Name).ToArray
+
+        Return removableDrives
+
+    End Function
+
     Sub VolumeUp(Handle) 'Me.Handle
         'Aumenta o volume
         SendMessage(Handle, WM_APPCOMMAND, &H30292, APPCOMMAND_VOLUME_UP * &H10000)
@@ -229,4 +245,68 @@ Public Class SystemInteract
         'Mutar o volume
         SendMessage(Handle, WM_APPCOMMAND, &H200EB0, APPCOMMAND_VOLUME_MUTE * &H10000)
     End Sub
+
+    Sub DeleteAllFilesandFolders(path As String)
+        'deletar tudo de uma pasta
+        Dim file_open As Boolean = False
+        Dim stream As FileStream = Nothing
+
+        For Each foundFile As String In My.Computer.FileSystem.GetFiles(path, FileIO.SearchOption.SearchAllSubDirectories)
+
+            file_open = False
+
+            Try
+                stream = File.Open(foundFile, FileMode.Open, FileAccess.ReadWrite, FileShare.None)
+            Catch ex As Exception
+                If TypeOf ex Is IOException AndAlso IsFileLocked(ex) Then
+                    file_open = True
+                End If
+            Finally
+                If Not IsNothing(stream) Then
+                    stream.Close()
+                End If
+            End Try
+
+            If file_open = False Then
+                Try
+                    My.Computer.FileSystem.DeleteFile(foundFile, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.DeletePermanently, FileIO.UICancelOption.DoNothing)
+                Catch ex As Exception
+                End Try
+            End If
+
+        Next
+        Dim ErrosDirectoris As Integer = 0
+        For Each d In Directory.GetDirectories(path)
+            Try
+                Directory.Delete(d, True)
+            Catch ex As Exception
+                ErrosDirectoris = ErrosDirectoris + 1
+            End Try
+
+        Next
+        Debug.Print(" Foi encontrado " + ErrosDirectoris.ToString + " erro(s) ao apagar os diretorios ")
+
+    End Sub
+
+    Private Shared Function IsFileLocked(exception As Exception) As Boolean
+        'verifica se o arquivo esta preso
+        Dim errorCode As Integer = Marshal.GetHRForException(exception) And ((1 << 16) - 1)
+        Return errorCode = 32 OrElse errorCode = 33
+    End Function
+
+    Function GetAudioCardList() As List(Of String)
+        'Add a reference to System.Management dll
+        'Retorna lista de audio
+        Dim Questions As New List(Of String)()
+        Dim objSearcher As New ManagementObjectSearcher("SELECT * FROM Win32_SoundDevice")
+        Dim objCollection As ManagementObjectCollection = objSearcher.Get()
+
+        For Each obj As ManagementObject In objCollection
+            Questions.Add(obj.GetPropertyValue("Caption").ToString())
+        Next
+
+        Return Questions
+    End Function
+
+
 End Class
