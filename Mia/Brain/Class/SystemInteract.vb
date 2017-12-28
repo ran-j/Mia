@@ -297,16 +297,39 @@ Public Class SystemInteract
     Function GetAudioCardList() As List(Of String)
         'Add a reference to System.Management dll
         'Retorna lista de audio
-        Dim Questions As New List(Of String)()
+        Dim audioDivices As New List(Of String)()
         Dim objSearcher As New ManagementObjectSearcher("SELECT * FROM Win32_SoundDevice")
         Dim objCollection As ManagementObjectCollection = objSearcher.Get()
 
         For Each obj As ManagementObject In objCollection
-            Questions.Add(obj.GetPropertyValue("Caption").ToString())
+            audioDivices.Add(obj.GetPropertyValue("Caption").ToString())
         Next
 
-        Return Questions
+        Return audioDivices
     End Function
+
+    Private Sub ExecutCMDcomand(Comand As String)
+        Dim CMDprocess As New Process
+        Dim StartInfo As New System.Diagnostics.ProcessStartInfo With {
+            .FileName = "cmd", 'starts cmd window
+            .RedirectStandardInput = True,
+            .RedirectStandardOutput = True,
+            .UseShellExecute = False, 'required to redirect
+            .WindowStyle = ProcessWindowStyle.Hidden,
+            .CreateNoWindow = True
+        }
+        CMDprocess.StartInfo = StartInfo
+        CMDprocess.Start()
+
+        Dim SR As StreamReader = CMDprocess.StandardOutput
+        Dim SW As StreamWriter = CMDprocess.StandardInput
+
+        SW.WriteLine(Comand) 'the command you wish to run.....
+        SW.WriteLine("exit") 'exits command prompt window
+        MsgBox(SR.ReadToEnd) 'returns results of the command window
+        SW.Close()
+        SR.Close()
+    End Sub
 
 
 End Class

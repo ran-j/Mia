@@ -212,15 +212,84 @@ Public Class MyNetwork
         End Try
     End Function
 
-    Function DiscoveryNameByMac(MAS As String)
+    Function GetIPsConnected() As List(Of String)
+        Dim Ips As New List(Of String)()
+
+        Dim IPFormat As String() = Host.Split(".")
+        Dim Range As String = IPFormat(0) + "." + IPFormat(1) + "." + IPFormat(2) + ".{0}"
+
+        For value As Integer = 2 To 254
+            'Dim iap As String = range + value.ToString()
+            Dim ip = String.Format(Range, value.ToString)
+
+            If My.Computer.Network.Ping(ip, 4000) Then
+                Debug.Print("O IP " + ip + " está conectado.")
+                Ips.Add(ip)
+            End If
+
+            Debug.Print("Ping " + ip)
+        Next
+
+        Return Ips
+
+    End Function
+
+
+    Function GetHostNameFromIP(ByRef IP As String) As String
+        'Pega o nome do host por IP
+        Try
+            Dim host As System.Net.IPHostEntry
+
+            host = Net.Dns.GetHostEntry(IP)
+            Return host.HostName
+        Catch ex As Exception
+            Return DiscoveryNameByMac(GetMACByIP(IP))
+        End Try
+    End Function
+
+    Function DiscoveryNameByMac(MAC As String)
         'Descobrir nome do fabricante por MAC
         For value As Integer = 0 To MACLIST.Length
-            If (MAS.StartsWith(MACLIST(value))) Then
-                Return MACVendedor(value)
+            If (MAC.Contains(MACLIST(value).ToString)) Then
+                Return MACVendedor(value).ToString
                 Exit Function
             End If
         Next
         Return "NULL"
+    End Function
+
+    Private Function GetMACByIP(ip As String)
+        Try
+            Dim Output As String
+            Dim CMDprocess As New Process
+            Dim StartInfo As New ProcessStartInfo With {
+                .FileName = "cmd", 'starts cmd window
+                .RedirectStandardInput = True,
+                .RedirectStandardOutput = True,
+                .UseShellExecute = False, 'required to redirect
+                .WindowStyle = ProcessWindowStyle.Hidden,
+                .CreateNoWindow = True
+                }
+
+            CMDprocess.StartInfo = StartInfo
+            CMDprocess.Start()
+
+            Dim SR As StreamReader = CMDprocess.StandardOutput
+            Dim SW As StreamWriter = CMDprocess.StandardInput
+            SW.WriteLine("arp -a " + ip) 'the command you wish to run.....
+            SW.WriteLine("exit") 'exits command prompt window
+            Output = SR.ReadToEnd 'returns results of the command window
+            SW.Close()
+            SR.Close()
+
+            Dim Input = Output.ToString.Split("Type")
+            Dim Filter1 = Input(1).Replace(ip, "").Replace(" ", "").Replace("dynamic", "").Replace("ype", "").Split(vbNewLine)
+            Dim Filter2 = Filter1(1).Split("-")
+            Dim OutputFormated = (Filter2(0) + ":" + Filter2(1) + ":" + Filter2(2)).ToString().ToUpper()
+            Return OutputFormated
+        Catch ex As Exception
+            Return "Erro"
+        End Try
     End Function
 
 #End Region
