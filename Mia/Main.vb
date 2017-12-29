@@ -114,9 +114,6 @@ Public Class Main
 
         'Iniciar o monitoramento da net
         Net.StartMonitoring() 'Net.StopMonitoring
-
-        'Carrega a posiçao do form
-        FormPosition = Me.Location
     End Sub
 
     Sub ScanCompleted(Results As List(Of String))
@@ -256,6 +253,9 @@ Public Class Main
         Me.BackColor = Color.FromArgb(255, 255, 255)
         'Spaw position
         Me.Location = New Point(Screen.PrimaryScreen.WorkingArea.Width - 280, Screen.PrimaryScreen.WorkingArea.Height - 270)
+
+        'Carrega a posiçao do form
+        FormPosition = Me.Location
     End Sub
 
     Private Sub UI_DoubleClick(sender As Object, e As EventArgs) Handles UI.DoubleClick
