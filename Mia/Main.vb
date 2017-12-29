@@ -21,6 +21,8 @@ Public Class Main
     Public Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal Msg As Integer, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
     End Function
 
+    Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
+
     <DllImportAttribute("user32.dll")>
     Public Shared Function ReleaseCapture() As Boolean
     End Function
@@ -78,16 +80,22 @@ Public Class Main
 
     Private Sub AFKDetector_Tick(sender As Object, e As EventArgs) Handles AFKDetector.Tick
         If (Me.WindowState = FormWindowState.Normal) Then
-            If (OldmousePosition = MousePosition.X) Then 'verificar se o mouse esta no mesmo lugar ou ele se movimento.
+            If Not (Application.OpenForms().OfType(Of InteractForm).Any) Then
+                If (OldmousePosition = MousePosition.X) Then 'verificar se o mouse esta no mesmo lugar ou ele se movimento.
 
-                AFKDetector.Enabled = False
+                    AFKDetector.Enabled = False
 
-                'Debug.Print(MiaBrain.RequestWarnings(14))
+                    'Debug.Print(MiaBrain.RequestWarnings(14))
 
-                OldmousePosition = 0
-                Me.WindowState = FormWindowState.Minimized
+                    OldmousePosition = 0
+                    Me.WindowState = FormWindowState.Minimized
+                Else
+                    OldmousePosition = MousePosition.X 'pegar movimento
+                    Debug.Print("Posiçao do mouse: " + OldmousePosition.ToString)
+                End If
             Else
                 OldmousePosition = MousePosition.X 'pegar movimento
+                Debug.Print("Painel de interação está aberto")
                 Debug.Print("Posiçao do mouse: " + OldmousePosition.ToString)
             End If
         End If
@@ -126,6 +134,7 @@ Public Class Main
     End Sub
 
     Sub ShowWarning()
+        'mostra o alerta de HUD
         Me.Alert.Visible = True
     End Sub
 
@@ -283,7 +292,6 @@ Public Class Main
 
     Private Sub Config_Click(sender As Object, e As EventArgs) Handles Config.Click
         'Oculta o botão para abrir o menu
-        InteractForm.Show()
         Config.Visible = False
     End Sub
 
