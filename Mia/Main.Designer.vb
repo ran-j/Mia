@@ -32,11 +32,11 @@ Partial Class Main
         Me.RestaurarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FecharToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CMSVazio = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Alert = New System.Windows.Forms.PictureBox()
         Me.Config = New System.Windows.Forms.PictureBox()
         Me.CloseForm = New System.Windows.Forms.Timer(Me.components)
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.UI, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CMS.SuspendLayout()
         Me.CMSVazio.SuspendLayout()
@@ -86,6 +86,13 @@ Partial Class Main
         Me.CMSVazio.Name = "CMS"
         resources.ApplyResources(Me.CMSVazio, "CMSVazio")
         '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.ToolStripMenuItem1.ForeColor = System.Drawing.Color.DeepPink
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        resources.ApplyResources(Me.ToolStripMenuItem1, "ToolStripMenuItem1")
+        '
         'Alert
         '
         resources.ApplyResources(Me.Alert, "Alert")
@@ -109,13 +116,6 @@ Partial Class Main
         Me.ToolTip.IsBalloon = True
         Me.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTip.UseFading = False
-        '
-        'ToolStripMenuItem1
-        '
-        Me.ToolStripMenuItem1.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.ToolStripMenuItem1.ForeColor = System.Drawing.Color.DeepPink
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        resources.ApplyResources(Me.ToolStripMenuItem1, "ToolStripMenuItem1")
         '
         'Main
         '

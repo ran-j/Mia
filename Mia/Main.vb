@@ -39,6 +39,8 @@ Public Class Main
         Dim Dbcv_Unitmask As Integer
         Dim Dbcv_Flags As Short
     End Structure
+    'Posiçao do form
+    Dim FormPosition As Point
 #End Region
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -47,7 +49,7 @@ Public Class Main
             Dim procs() As Process = Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName)
             If procs.Length > 1 Then
                 MsgBox("A Aplicação já está sendo executada")
-                Debug.Print("Ja esta aberta")
+                Debug.Print("Ja está aberta")
                 CloseForm.Enabled = True
             Else
                 OldmousePosition = MousePosition.X 'pega a posição do mouse
@@ -111,8 +113,10 @@ Public Class Main
         End Select
 
         'Iniciar o monitoramento da net
-        Net.StartMonitoring()
-        'Net.StopMonitoring
+        Net.StartMonitoring() 'Net.StopMonitoring
+
+        'Carrega a posiçao do form
+        FormPosition = Me.Location
     End Sub
 
     Sub ScanCompleted(Results As List(Of String))
@@ -237,6 +241,13 @@ Public Class Main
         If e.Button = Windows.Forms.MouseButtons.Left Then
             ReleaseCapture()
             SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0)
+
+            If Not (FormPosition.X <> Me.Location.X Or FormPosition.Y <> Me.Location.Y) Then
+                InteractForm.Show()
+            Else
+                Debug.Print("Só mudou de posicao")
+                FormPosition = Me.Location
+            End If
         End If
     End Sub
 
@@ -270,7 +281,7 @@ Public Class Main
     Private Sub Alert_Click(sender As Object, e As EventArgs) Handles Alert.Click
         'Dispara o alerta salvo
         Dim text = MiaBrain.GetAlertText()
-
+        'pega sempre o primeiro alerta
         MsgBox(text(0), MsgBoxStyle.Exclamation)
 
         MiaBrain.ClearAlertTextTextbyName(text(0))
