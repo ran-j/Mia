@@ -5,8 +5,20 @@
         RichTextBox1.ScrollToCaret()
     End Sub
 
+    Private Sub ProcessText(text As String)
+        'processa e responde o usuário na tela
+        Dim VerifyText As String = MiaBr.RequestVerifyText(text)
+
+        If (VerifyText.Contains("oi")) Then
+            RichTextBox1.AppendText(vbNewLine)
+            RichTextBox1.AppendText(vbNewLine & "Mia:>" + MiaBr.RequestConversation(1))
+        End If
+
+    End Sub
 
 #Region "RichBox Control"
+
+    Dim MiaBr As Brain = Main.GetMiaBraind()
 
     Private Sub RichTextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles RichTextBox1.KeyDown
         'RichTextBox1.Lines.Length - 1
@@ -20,6 +32,8 @@
                     e.Handled = True
                 Else
                     Dim col As Integer = RichTextBox1.SelectionStart - RichTextBox1.GetFirstCharIndexFromLine(line)
+
+                    ProcessText(Texto)
 
                     RichTextBox1.AppendText(vbNewLine)
                     Dim caretPosition = RichTextBox1.SelectionStart
@@ -69,6 +83,5 @@
             RichTextBox1.ScrollToCaret()
         End If
     End Sub
-
 #End Region
 End Class

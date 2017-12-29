@@ -16,6 +16,7 @@ Public Class Brain
     Dim PW As New Power 'Classe para interação com energia
     Dim AlertSet As New AlertClass
     Dim Scan As New Scanner(My.Settings.VirusTotalKey) 'Classe responsavel por scanear arquivos
+    Dim ConversationClass As New Conversation 'Classe que e reponsavel por responder usuario
 
     Public Event LoadCompleted()
 
@@ -24,6 +25,16 @@ Public Class Brain
         Thinking.ReceiveQuestions(TheMemory.LoadQuestions)
         Thinking.Dates(TheMemory.LoadDates())
         Thinking.Preferences(TheMemory.LoadPreferences())
+
+
+        'Desconmentar somente quando liberar a alpha
+        If (My.Settings.WindowsStart = 1) Then
+            'Adiciona o programa ao start do windowns 
+            'AddtoWindowsStart()
+        Else
+            'Remove o iniciar com o windows
+            'RemovetoWindowsStart()
+        End If
 
         RaiseEvent LoadCompleted() 'termiona o processamento e avisa
     End Sub
@@ -53,11 +64,6 @@ Public Class Brain
     Function RequestQuestion() As String
         'retorna uma pergunta rando pro usuário
         Return Thinking.RequestQuestion()
-    End Function
-
-    Function RequestVerifyText(text) As String
-        'verifica o texto corrige e retorna ele redondo
-        Return Interpreter.VerifyText(text)
     End Function
 
     Function RequestWeather() As String
@@ -151,6 +157,8 @@ Public Class Brain
         Sys.SetMouseSpeed(Speed)
     End Sub
 
+#Region "Alert HUD"
+
     Sub SetAlertText(Text As String)
         'Seta um alerta para o texto
         AlertSet.AppendValue(Text)
@@ -170,6 +178,8 @@ Public Class Brain
         'Retorna o tamanho do array
         Return AlertSet.GetArraySize
     End Function
+#End Region
+
 
 #Disable Warning
     Function AddtoWindowsStart()
@@ -185,6 +195,8 @@ Public Class Brain
             End Using
         Catch ex As Exception
             Return 3 'erro
+            SetAlertText("Erro ao adiconar o programa ao iniciar")
+            Main.ShowWarning()
             Debug.Print(ex.Message)
         Finally
             My.Computer.Registry.CurrentUser.Close()
@@ -205,6 +217,8 @@ Public Class Brain
             End Using
         Catch ex As Exception
             Return 3 'erro
+            SetAlertText("Erro ao remover o programa ao iniciar")
+            Main.ShowWarning()
             Debug.Print(ex.Message)
         Finally
             My.Computer.Registry.CurrentUser.Close()
@@ -286,6 +300,17 @@ Public Class Brain
             Return "TCP e UDP"
         End If
 
+    End Function
+
+    Function RequestVerifyText(text As String) As String
+        Debug.Print("Processando texto: " + text)
+        'verifica o texto corrige e retorna ele redondo
+        Return Interpreter.VerifyText(text)
+    End Function
+
+    Function RequestConversation(Number As Integer)
+        'Responde uma pergunta do usuário
+        Return ConversationClass.AnwserConversation(Number)
     End Function
 
 End Class

@@ -5,7 +5,7 @@ Imports Microsoft.Win32
 Public Class Main
 
 #Region "Variaveis"
-    Public Shared MiaBrain As Brain 'Cria instancia do controlador principal do cerebro
+    Dim MiaBrain As Brain 'Cria instancia do controlador principal do cerebro
     Private WithEvents Net As MyNetwork
     Dim scan As Scanner
     Dim Voz As New Voice 'Inicia sistema de voz
@@ -125,6 +125,15 @@ Public Class Main
         Next
     End Sub
 
+    Sub ShowWarning()
+        Me.Alert.Visible = True
+    End Sub
+
+    Public Function GetMiaBraind() As Brain
+        'Retorna Instancia do Brains
+        Return MiaBrain
+    End Function
+
 
 #Region "Net"
 
@@ -163,7 +172,7 @@ Public Class Main
                 Voz.SpeechMoreThanOnce(avisos)
                 'alerta no programa
                 MiaBrain.SetAlertText(avisos + " em " + Now)
-                Alert.Visible = True
+                ShowWarning()
                 'alerta popup
                 Dim TH As Thread = New Thread(AddressOf MiaBrain.ShowCustonsNotification)
                 TH.SetApartmentState(ApartmentState.STA)
@@ -195,7 +204,7 @@ Public Class Main
                     Voz.SpeechMoreThanOnce(avisos)
                     'alerta no programa
                     MiaBrain.SetAlertText(avisos + " em " + Now)
-                    Alert.Visible = True
+                    ShowWarning()
                     'alerta popup
                     Dim TH As Thread = New Thread(AddressOf MiaBrain.ShowCustonsNotification)
                     TH.SetApartmentState(ApartmentState.STA)

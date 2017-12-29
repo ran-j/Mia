@@ -4,7 +4,7 @@
     Dim ValueGerated As Integer
     Dim CacheValue As Integer
 
-    Dim usu As String = "Rola"
+    Dim usu As String = My.Settings.User
 
     'Avisos
     Protected minimizadoav As String() = New String() {"Senhor estou ativa aqui no canto.", "Senhor estou aberta em em segundo plano se precisar", "Senhor se Precisar de algo estou em segundo plano"}

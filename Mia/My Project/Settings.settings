@@ -5,5 +5,11 @@
     <Setting Name="VirusTotalKey" Type="System.String" Scope="User">
       <Value Profile="(Default)">f9af76130ab62113a8ce2e022b9b61604a6717fdb0ca1d6cb2eb392835d4ea89</Value>
     </Setting>
+    <Setting Name="User" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Ranieri</Value>
+    </Setting>
+    <Setting Name="WindowsStart" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
