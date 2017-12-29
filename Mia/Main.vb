@@ -422,4 +422,33 @@ Public Class Main
 
 #End Region
 
+    Private Sub AltaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AltaToolStripMenuItem.Click
+        'volume maximo
+        Voz.Setvolume(100)
+    End Sub
+
+    Private Sub BaixaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BaixaToolStripMenuItem.Click
+        'voluem baixo
+        Voz.Setvolume(30)
+    End Sub
+
+    Private Sub MudaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MudaToolStripMenuItem.Click
+        'mudo
+        Voz.Setvolume(0)
+    End Sub
+
+    Private Sub ToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem3.Click
+        'volume maximo
+        Voz.Setvolume(100)
+    End Sub
+
+    Private Sub ToolStripMenuItem4_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem4.Click
+        'voluem baixo
+        Voz.Setvolume(30)
+    End Sub
+
+    Private Sub ToolStripMenuItem5_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem5.Click
+        'mudo
+        Voz.Setvolume(0)
+    End Sub
 End Class

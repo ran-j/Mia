@@ -1,5 +1,5 @@
 ﻿Public Class InteractForm
-
+    Dim Completed As Boolean = True 'se tiver pendencias o valor vai ser falso
     Private Sub InteractForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RichTextBox1.SelectionStart = RichTextBox1.TextLength
         RichTextBox1.ScrollToCaret()
@@ -9,7 +9,7 @@
         'processa e responde o usuário na tela
         Dim VerifyText As String = MiaBr.RequestVerifyText(text)
 
-        If (VerifyText.Contains("oi")) Then
+        If (Completed And VerifyText.Contains("oi")) Then
             RichTextBox1.AppendText(vbNewLine)
             RichTextBox1.AppendText(vbNewLine & "Mia:>" + MiaBr.RequestConversation(1))
         End If

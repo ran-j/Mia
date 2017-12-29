@@ -37,6 +37,14 @@ Partial Class Main
         Me.Config = New System.Windows.Forms.PictureBox()
         Me.CloseForm = New System.Windows.Forms.Timer(Me.components)
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.VozToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AltaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BaixaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MudaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.UI, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CMS.SuspendLayout()
         Me.CMSVazio.SuspendLayout()
@@ -62,7 +70,7 @@ Partial Class Main
         'CMS
         '
         Me.CMS.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.CMS.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RestaurarToolStripMenuItem, Me.FecharToolStripMenuItem})
+        Me.CMS.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RestaurarToolStripMenuItem, Me.FecharToolStripMenuItem, Me.VozToolStripMenuItem})
         Me.CMS.Name = "CMS"
         resources.ApplyResources(Me.CMS, "CMS")
         '
@@ -82,7 +90,7 @@ Partial Class Main
         '
         'CMSVazio
         '
-        Me.CMSVazio.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1})
+        Me.CMSVazio.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2, Me.ToolStripMenuItem1})
         Me.CMSVazio.Name = "CMS"
         resources.ApplyResources(Me.CMSVazio, "CMSVazio")
         '
@@ -116,6 +124,64 @@ Partial Class Main
         Me.ToolTip.IsBalloon = True
         Me.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTip.UseFading = False
+        '
+        'VozToolStripMenuItem
+        '
+        Me.VozToolStripMenuItem.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.VozToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AltaToolStripMenuItem, Me.BaixaToolStripMenuItem, Me.MudaToolStripMenuItem})
+        Me.VozToolStripMenuItem.ForeColor = System.Drawing.Color.DeepPink
+        Me.VozToolStripMenuItem.Name = "VozToolStripMenuItem"
+        resources.ApplyResources(Me.VozToolStripMenuItem, "VozToolStripMenuItem")
+        '
+        'AltaToolStripMenuItem
+        '
+        Me.AltaToolStripMenuItem.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.AltaToolStripMenuItem.ForeColor = System.Drawing.Color.DeepPink
+        Me.AltaToolStripMenuItem.Name = "AltaToolStripMenuItem"
+        resources.ApplyResources(Me.AltaToolStripMenuItem, "AltaToolStripMenuItem")
+        '
+        'BaixaToolStripMenuItem
+        '
+        Me.BaixaToolStripMenuItem.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.BaixaToolStripMenuItem.ForeColor = System.Drawing.Color.DeepPink
+        Me.BaixaToolStripMenuItem.Name = "BaixaToolStripMenuItem"
+        resources.ApplyResources(Me.BaixaToolStripMenuItem, "BaixaToolStripMenuItem")
+        '
+        'MudaToolStripMenuItem
+        '
+        Me.MudaToolStripMenuItem.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.MudaToolStripMenuItem.ForeColor = System.Drawing.Color.DeepPink
+        Me.MudaToolStripMenuItem.Name = "MudaToolStripMenuItem"
+        resources.ApplyResources(Me.MudaToolStripMenuItem, "MudaToolStripMenuItem")
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.ToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem3, Me.ToolStripMenuItem4, Me.ToolStripMenuItem5})
+        Me.ToolStripMenuItem2.ForeColor = System.Drawing.Color.DeepPink
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        resources.ApplyResources(Me.ToolStripMenuItem2, "ToolStripMenuItem2")
+        '
+        'ToolStripMenuItem3
+        '
+        Me.ToolStripMenuItem3.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.ToolStripMenuItem3.ForeColor = System.Drawing.Color.DeepPink
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        resources.ApplyResources(Me.ToolStripMenuItem3, "ToolStripMenuItem3")
+        '
+        'ToolStripMenuItem4
+        '
+        Me.ToolStripMenuItem4.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.ToolStripMenuItem4.ForeColor = System.Drawing.Color.DeepPink
+        Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
+        resources.ApplyResources(Me.ToolStripMenuItem4, "ToolStripMenuItem4")
+        '
+        'ToolStripMenuItem5
+        '
+        Me.ToolStripMenuItem5.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.ToolStripMenuItem5.ForeColor = System.Drawing.Color.DeepPink
+        Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
+        resources.ApplyResources(Me.ToolStripMenuItem5, "ToolStripMenuItem5")
         '
         'Main
         '
@@ -153,4 +219,12 @@ Partial Class Main
     Friend WithEvents CloseForm As Timer
     Friend WithEvents ToolTip As ToolTip
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents VozToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AltaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents BaixaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MudaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem2 As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem3 As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem4 As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem5 As ToolStripMenuItem
 End Class

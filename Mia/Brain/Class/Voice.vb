@@ -12,6 +12,8 @@ Public Class Voice
 
         AddHandler Voice.SpeakCompleted, AddressOf SpeakCompleted
         AddHandler Voice.SpeakProgress, AddressOf SpeakImprogres
+
+        Setvolume(My.Settings.Volume)
     End Sub
 
     Sub SpeechMoreThanOnce(Word As String)
@@ -25,6 +27,10 @@ Public Class Voice
     End Sub
 
     Sub Setvolume(Vol As Integer)
+        'salva o voluem no array
+        If (Vol <> My.Settings.Volume) Then
+            My.Settings.Volume = Vol
+        End If
         'aumenta o volume
         Voice.Volume = (Vol)
     End Sub
