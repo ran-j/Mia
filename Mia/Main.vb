@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
+Imports System.Threading
 Imports Microsoft.Win32
 
 Public Class Main
@@ -59,6 +60,7 @@ Public Class Main
                 scan = MiaBrain.RequestIstanceOfScanClass()
                 AddHandler MiaBrain.LoadCompleted, AddressOf LoadC 'adiciona evento de carregamento
                 AddHandler scan.ScanCompleted, AddressOf ScanCompleted 'adiciona evento de scan de virus
+                AddHandler Net.IpsCaptured, AddressOf IPsConected
 
                 MiaBrain.Init1() 'Starta o processamento
 
@@ -156,11 +158,22 @@ Public Class Main
 
             If Not (ConnectionState.ToString().Equals("Connected")) Then
                 UmaVez = 1
-                Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(3))
+                Dim avisos As String = MiaBrain.RequestWarnings(3)
+                Voz.SpeechMoreThanOnce(avisos)
+                'alerta no programa
+                MiaBrain.SetAlertText(avisos + " em " + Now)
+                Alert.Visible = True
+                'alerta popup
+                Dim TH As Thread = New Thread(AddressOf MiaBrain.ShowCustonsNotification)
+                TH.SetApartmentState(ApartmentState.STA)
+                TH.Start(New Object() {"Atenção !", FrmNotification.Icons.Error, "Internet Caiu", "Sem conexão de internet"})
             Else
                 If (UmaVez = 1) Then
                     Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(2))
                     UmaVez = 0
+                    Dim TH As Thread = New Thread(AddressOf MiaBrain.ShowCustonsNotification)
+                    TH.SetApartmentState(ApartmentState.STA)
+                    TH.Start(New Object() {"Atenção !", FrmNotification.Icons.Clean, "Internet Retornou", "Com conexão de internet"})
                 End If
             End If
         End If
@@ -177,11 +190,22 @@ Public Class Main
 
             If Not (IsStable) Then
                 If (UmaVezStable = 0) Then
-                    Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(15))
+                    Dim avisos As String = MiaBrain.RequestWarnings(15)
+                    Voz.SpeechMoreThanOnce(avisos)
+                    'alerta no programa
+                    MiaBrain.SetAlertText(avisos + " em " + Now)
+                    Alert.Visible = True
+                    'alerta popup
+                    Dim TH As Thread = New Thread(AddressOf MiaBrain.ShowCustonsNotification)
+                    TH.SetApartmentState(ApartmentState.STA)
+                    TH.Start(New Object() {"Atenção !", FrmNotification.Icons.Error, "Internet Ocilando", "Detectado ocilação de internet"})
                 End If
             Else
                 If (UmaVezStable = 1) Then
                     Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(16))
+                    Dim TH As Thread = New Thread(AddressOf MiaBrain.ShowCustonsNotification)
+                    TH.SetApartmentState(ApartmentState.STA)
+                    TH.Start(New Object() {"Atenção !", FrmNotification.Icons.Clean, "Internet Normalizada", "Internet estabilizada"})
                 End If
             End If
         End If
@@ -199,6 +223,11 @@ Public Class Main
         NotifyIcon.Visible = False
         NotifyIcon.Dispose()
     End Sub
+
+    Private Sub IPsConected(IP As List(Of String))
+        MsgBox(IP.Count.ToString)
+    End Sub
+
 #End Region
 
 #Region " Form Control "
@@ -234,6 +263,7 @@ Public Class Main
 
     Private Sub Config_Click(sender As Object, e As EventArgs) Handles Config.Click
         'Oculta o botão para abrir o menu
+        InteractForm.Show()
         Config.Visible = False
     End Sub
 

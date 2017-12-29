@@ -13,11 +13,11 @@ Public Enum InternetConnectionState
     Disconnected
 End Enum
 
-
-
 Public Class MyNetwork
 
     Implements IDisposable
+
+    Public Event IpsCaptured(IP As List(Of String))
 
     Protected MACLIST As String() = New String() {"D0:17:c2", "F4:0E:22", "A8:96:75", "B8:27:EB", "DC:35:F1"}
     Protected MACVendedor As String() = New String() {"Asus", "Samsung", "Motorola", "Raspberry Pi", "Positivo"}
@@ -184,7 +184,30 @@ Public Class MyNetwork
 #End Region
 
 #Region "IPs"
-    Public Function IsPortOpen(ByVal PortNumber As Integer) As Boolean
+
+    Function PortOpen(ByVal PortNumber As Integer) As Integer
+        Dim UDP As Boolean = False
+        Dim TCP As Boolean = False
+
+        If (IsPortOpen(PortNumber)) Then
+            TCP = True
+        End If
+        If (IsPortOpen2(PortNumber)) Then
+            UDP = True
+        End If
+
+        If (TCP And UDP) Then
+            Return 3
+        ElseIf (TCP) Then
+            Return 2
+        ElseIf (UDP) Then
+            Return 1
+        Else
+            Return 0
+        End If
+    End Function
+
+    Private Function IsPortOpen(ByVal PortNumber As Integer) As Boolean
         Dim Client As TcpClient = Nothing
         Try
             Client = New TcpClient(Host, PortNumber)
@@ -198,7 +221,7 @@ Public Class MyNetwork
         End Try
     End Function
 
-    Public Function IsPortOpen2(ByVal PortNumber As Integer) As Boolean
+    Private Function IsPortOpen2(ByVal PortNumber As Integer) As Boolean
         Dim Client As UdpClient = Nothing
         Try
             Client = New UdpClient(Host, PortNumber)
@@ -212,28 +235,38 @@ Public Class MyNetwork
         End Try
     End Function
 
-    Function GetIPsConnected() As List(Of String)
+    Sub GetIPsConnected()
         Dim Ips As New List(Of String)()
 
         Dim IPFormat As String() = Host.Split(".")
         Dim Range As String = IPFormat(0) + "." + IPFormat(1) + "." + IPFormat(2) + ".{0}"
+        Dim Timeout As Integer = 7000
+        Dim count As Integer = 0
 
         For value As Integer = 2 To 254
             'Dim iap As String = range + value.ToString()
             Dim ip = String.Format(Range, value.ToString)
-
-            If My.Computer.Network.Ping(ip, 4000) Then
+            If (count > 6) Then
+                Debug.Print("TimeOut diminuido")
+                Timeout = 100
+            End If
+            If My.Computer.Network.Ping(ip, Timeout) Then
                 Debug.Print("O IP " + ip + " está conectado.")
                 Ips.Add(ip)
+            Else
+                count = count + 1
             End If
 
             Debug.Print("Ping " + ip)
         Next
 
-        Return Ips
+        RaiseEvent IpsCaptured(Ips)
 
-    End Function
+    End Sub
 
+    Sub Subir()
+
+    End Sub
 
     Function GetHostNameFromIP(ByRef IP As String) As String
         'Pega o nome do host por IP
@@ -259,6 +292,7 @@ Public Class MyNetwork
     End Function
 
     Private Function GetMACByIP(ip As String)
+        'Não utilizar fora dessa classe
         Try
             Dim Output As String
             Dim CMDprocess As New Process

@@ -171,6 +171,7 @@ Public Class Brain
         Return AlertSet.GetArraySize
     End Function
 
+#Disable Warning
     Function AddtoWindowsStart()
         'Adiciona a aplicaçao com o iniciar o windows
         Try
@@ -189,6 +190,7 @@ Public Class Brain
             My.Computer.Registry.CurrentUser.Close()
         End Try
     End Function
+#Enable Warning
 
     Function RemovetoWindowsStart()
         'Remove a aplicaçao com o iniciar o windows
@@ -258,5 +260,32 @@ Public Class Brain
         Return Sys.GetAudioCardList()
     End Function
 
+    Sub RequestGetIps()
+        'Retorna ips conectados na rede
+        Dim t12 As Thread
+        t12 = New Thread(AddressOf Net.GetIPsConnected)
+        t12.Start()
+    End Sub
+
+    Function RequestGetHostNameFromIP(IP As String) As String
+        'Retorna o nome do host por IP
+        Return Net.GetHostNameFromIP(IP)
+    End Function
+
+    Function RequestPortOpen(PortNumber As Integer)
+        'Retorna se a porta esta aberta
+        Dim out As Integer = Net.PortOpen(PortNumber)
+
+        If (out = 0) Then
+            Return "Nem uma"
+        ElseIf (out = 1) Then
+            Return "UDP"
+        ElseIf (out = 2) Then
+            Return "TCP"
+        Else
+            Return "TCP e UDP"
+        End If
+
+    End Function
 
 End Class

@@ -103,6 +103,12 @@
     <Compile Include="EspecialForm\FrmNotification.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="InteractForm.Designer.vb">
+      <DependentUpon>InteractForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="InteractForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +136,9 @@
     <Compile Include="Brain\Class\Voice.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="InteractForm.resx">
+      <DependentUpon>InteractForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.aa.resx">
       <DependentUpon>Main.vb</DependentUpon>
     </EmbeddedResource>

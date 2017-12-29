@@ -56,9 +56,9 @@ Partial Class FrmNotification
 
         G.DrawString(_Titulo, _TituloFont, New SolidBrush(ForeColor), 80, 12)
 
-        G.DrawString("Nome do Arquivo: " & _Nome, _DescricaoFont, New SolidBrush(_DescricaoColor), 82, 32)
+        G.DrawString(_Nome, _DescricaoFont, New SolidBrush(_DescricaoColor), 82, 32)
 
-        G.DrawString("Taxa de Detecção: " & _Deteccao, _DescricaoFont, New SolidBrush(_DescricaoColor), 82, 48)
+        G.DrawString(_Deteccao, _DescricaoFont, New SolidBrush(_DescricaoColor), 82, 48)
 
         Dim GD As New LinearGradientBrush(New Rectangle(-1, -1, Width + 1, 5), _LineColor, Color.Transparent, 90)
 

@@ -41,3 +41,4 @@ C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.Main.aa.re
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.Main.pt.resources
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\aa\Mia.resources.dll
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\pt\Mia.resources.dll
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.InteractForm.resources
