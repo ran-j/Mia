@@ -92,6 +92,7 @@
     <Compile Include="Brain\Class\MyNetwork.vb" />
     <Compile Include="Brain\Class\Power.vb" />
     <Compile Include="Brain\Class\Questions.vb" />
+    <Compile Include="Brain\Class\Spotify.vb" />
     <Compile Include="Brain\Class\SystemInteract.vb" />
     <Compile Include="Brain\Class\Warnings.vb" />
     <Compile Include="Brain\Memory.vb" />

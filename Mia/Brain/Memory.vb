@@ -3,6 +3,7 @@ Imports System.Text
 
 Public Class Memory
     Dim QuestionPath As String = Application.StartupPath & "\perlist.dll"
+    Dim GameListPath As String = Application.StartupPath & "\glist.dll"
 
     Sub SaveContent(Target As Object)
         'Salvar conteudo na memoria
@@ -26,7 +27,7 @@ Public Class Memory
         Return "arrayDeDatas"
     End Function
 
-    Friend Function LoadQuestions() As List(Of String)
+    Public Function LoadQuestions() As List(Of String)
         'carrega as perguntas de um txt
 
         Dim Questions As New List(Of String)()
@@ -56,6 +57,36 @@ Public Class Memory
         End Try
 
         Return Questions
+
+    End Function
+
+    Public Function LoadGamesList() As List(Of String)
+        'carrega as perguntas de um txt
+
+        Dim GameList As New List(Of String)()
+        Try
+            If System.IO.File.Exists(GameListPath) Then
+
+                Dim readText() As String = File.ReadAllLines(QuestionPath, Encoding.Default)
+
+                For Each line In readText
+                    If (Not line = Nothing) Then
+                        GameList.Add(line)
+                    End If
+
+                Next
+
+            Else
+                'Debug.Print("Erro ao procurar o dicionario")
+                'adiciona uma jogo basica
+                GameList.Add("Counter-Strike: Global Offensive")
+            End If
+        Catch ex As Exception
+            GameList.Add("Counter-Strike: Global Offensive")
+            'Debug.Print("Erro critico ao carregar a lista de jogos")
+        End Try
+
+        Return GameList
 
     End Function
 

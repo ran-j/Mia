@@ -313,4 +313,9 @@ Public Class Brain
         Return ConversationClass.AnwserConversation(Number)
     End Function
 
+    Function RequestGamelist() As List(Of String)
+        'Retorna array com lista de games
+        Return TheMemory.LoadGamesList()
+    End Function
+
 End Class

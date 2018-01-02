@@ -1,4 +1,5 @@
 ﻿Public Class InteractForm
+
     Dim Completed As Boolean = True 'se tiver pendencias o valor vai ser falso
     Private Sub InteractForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RichTextBox1.SelectionStart = RichTextBox1.TextLength
@@ -60,7 +61,7 @@
                 e.Handled = True
             End If
 
-        ElseIf (e.KeyCode = Keys.UP) Then
+        ElseIf (e.KeyCode = Keys.Up) Then
             e.Handled = True
         End If
         'Dim s As String = e.KeyCode.ToString

@@ -13,6 +13,7 @@ Public Class Voice
         AddHandler Voice.SpeakCompleted, AddressOf SpeakCompleted
         AddHandler Voice.SpeakProgress, AddressOf SpeakImprogres
 
+        Debug.Print("Iniciando e setando o volume da voz para " + My.Settings.Volume.ToString)
         Setvolume(My.Settings.Volume)
     End Sub
 
@@ -27,12 +28,18 @@ Public Class Voice
     End Sub
 
     Sub Setvolume(Vol As Integer)
-        'salva o voluem no array
+        'salva o volume no array
         If (Vol <> My.Settings.Volume) Then
             My.Settings.Volume = Vol
+            Voice.Volume = (Vol)
+
+            If (Vol = 0) Then
+                CancelSpeeck()
+            End If
         End If
         'aumenta o volume
         Voice.Volume = (Vol)
+        Debug.Print("Setando o volume para " + Vol.ToString)
     End Sub
 
     Sub CancelSpeeck()

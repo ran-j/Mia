@@ -21,8 +21,6 @@ Public Class Main
     Public Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal Msg As Integer, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
     End Function
 
-    Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
-
     <DllImportAttribute("user32.dll")>
     Public Shared Function ReleaseCapture() As Boolean
     End Function
@@ -43,6 +41,20 @@ Public Class Main
     End Structure
     'Posiçao do form
     Dim FormPosition As Point
+    'Para saber se o usuário está jogando
+    Dim IniciouJogo = 0
+
+#Region " win32 "
+    Private Declare Auto Function FindWindow Lib "user32" (ByVal lpClassName As String, ByVal lpWindowName As String) As IntPtr
+    Private Declare Auto Function SendMessage Lib "user32" (ByVal hWnd As IntPtr, ByVal Msg As UInteger, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
+    Private Declare Auto Function SetForegroundWindow Lib "user32" (ByVal hWnd As IntPtr) As Boolean
+    Private Declare Auto Function keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Integer, ByVal dwExtraInfo As Integer) As Boolean
+    Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+    Private Declare Auto Function GetWindowText Lib "user32" (ByVal hwnd As IntPtr, ByVal lpString As String, ByVal cch As IntPtr) As IntPtr
+    Private Declare Auto Function SetWindowText Lib "user32" (ByVal hwnd As IntPtr, ByVal lpString As String) As Boolean
+    Private Declare Auto Function EnumChildWindows Lib "user32" (ByVal hWndParent As Long, ByVal lpEnumFunc As Long, ByVal lParam As Long) As Long
+#End Region
+
 #End Region
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -450,5 +462,26 @@ Public Class Main
     Private Sub ToolStripMenuItem5_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem5.Click
         'mudo
         Voz.Setvolume(0)
+    End Sub
+
+    Private Sub GamerVerify_Tick(sender As Object, e As EventArgs) Handles GamerVerify.Tick
+        'Verifica se algum jogo foi aberto
+        Dim GameCount As Integer
+        Dim GameList = MiaBrain.RequestGamelist()
+
+        For Each Game In GameList
+            GameCount = FindWindow(vbNullString, Game)
+            If (GameCount > 0 And IniciouJogo = 0) Then
+                'Abriu jogo
+                IniciouJogo = 1
+                NetSpeed()
+            Else
+                'Fechou o jogo
+                If (IniciouJogo = 1 And GameCount <= 0) Then
+                    IniciouJogo = 0
+                    MsgBox("Bom jogo")
+                End If
+            End If
+        Next
     End Sub
 End Class
