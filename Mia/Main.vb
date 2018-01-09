@@ -42,7 +42,10 @@ Public Class Main
     'Posiçao do form
     Dim FormPosition As Point
     'Para saber se o usuário está jogando
-    Dim IniciouJogo = 0
+    Dim GameOpen = 0
+
+    Dim HasNet As Integer = 0
+    Dim NetStable As Integer = 0
 
 #Region " win32 "
     Private Declare Auto Function FindWindow Lib "user32" (ByVal lpClassName As String, ByVal lpWindowName As String) As IntPtr
@@ -97,8 +100,6 @@ Public Class Main
 
                     AFKDetector.Enabled = False
 
-                    'Debug.Print(MiaBrain.RequestWarnings(14))
-
                     OldmousePosition = 0
                     Me.WindowState = FormWindowState.Minimized
                 Else
@@ -109,6 +110,9 @@ Public Class Main
                 OldmousePosition = MousePosition.X 'pegar movimento
                 Debug.Print("Painel de interação está aberto")
                 Debug.Print("Posiçao do mouse: " + OldmousePosition.ToString)
+                Dim avisotext As String = MiaBrain.RequestWarnings(14)
+                Voz.SpeechMoreThanOnce(avisotext)
+                InteractForm.SetText(avisotext)
             End If
         End If
     End Sub
@@ -158,27 +162,25 @@ Public Class Main
 
 #Region "Net"
 
-    Private Sub NetSpeed()
+    Private Function NetSpeed()
         Dim resp As Integer = MiaBrain.RequestNetSpeed()
 
         If (resp = 0) Then
-            MsgBox("net otima")
+            Return "ótima"
         ElseIf (resp = 1) Then
-            MsgBox("net razoavel")
+            Return "razoavel"
         ElseIf (resp = 2) Then
-            MsgBox("net bem ruim")
+            Return "bem ruim"
         ElseIf (resp = 3) Then
-            MsgBox("net muito ruim")
+            Return "muito ruim"
         Else
-            MsgBox("carai maluco muito fucking alto")
+            Return "absurdamente ruim"
         End If
-    End Sub
+
+    End Function
 
     Delegate Sub AddToList1Callback(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
     Delegate Sub AddToList2Callback(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
-
-    Dim UmaVez As Integer = 0
-    Dim UmaVezStable As Integer = 0
 
     Sub AddToList1(ByVal ConnectionState As InternetConnectionState, ByVal IsStable As Boolean)
         If Me.InvokeRequired = True Then
@@ -188,7 +190,7 @@ Public Class Main
             Debug.Print(Now & " - State: " & ConnectionState.ToString())
 
             If Not (ConnectionState.ToString().Equals("Connected")) Then
-                UmaVez = 1
+                HasNet = 1
                 Dim avisos As String = MiaBrain.RequestWarnings(3)
                 Voz.SpeechMoreThanOnce(avisos)
                 'alerta no programa
@@ -199,9 +201,9 @@ Public Class Main
                 TH.SetApartmentState(ApartmentState.STA)
                 TH.Start(New Object() {"Atenção !", FrmNotification.Icons.Error, "Internet Caiu", "Sem conexão de internet"})
             Else
-                If (UmaVez = 1) Then
+                If (HasNet = 1) Then
+                    HasNet = 0
                     Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(2))
-                    UmaVez = 0
                     Dim TH As Thread = New Thread(AddressOf MiaBrain.ShowCustonsNotification)
                     TH.SetApartmentState(ApartmentState.STA)
                     TH.Start(New Object() {"Atenção !", FrmNotification.Icons.Clean, "Internet Retornou", "Com conexão de internet"})
@@ -220,7 +222,8 @@ Public Class Main
             Debug.Print(Now & " - Connection Stable: " & IsStable)
 
             If Not (IsStable) Then
-                If (UmaVezStable = 0) Then
+                If (NetStable = 0) Then
+                    NetStable = 1
                     Dim avisos As String = MiaBrain.RequestWarnings(15)
                     Voz.SpeechMoreThanOnce(avisos)
                     'alerta no programa
@@ -232,7 +235,8 @@ Public Class Main
                     TH.Start(New Object() {"Atenção !", FrmNotification.Icons.Error, "Internet Ocilando", "Detectado ocilação de internet"})
                 End If
             Else
-                If (UmaVezStable = 1) Then
+                If (NetStable = 1) Then
+                    NetStable = 0
                     Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(16))
                     Dim TH As Thread = New Thread(AddressOf MiaBrain.ShowCustonsNotification)
                     TH.SetApartmentState(ApartmentState.STA)
@@ -471,14 +475,14 @@ Public Class Main
 
         For Each Game In GameList
             GameCount = FindWindow(vbNullString, Game)
-            If (GameCount > 0 And IniciouJogo = 0) Then
+            If (GameCount > 0 And GameOpen = 0) Then
                 'Abriu jogo
-                IniciouJogo = 1
-                NetSpeed()
+                GameOpen = 1
+                Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(10) + ", e o ping está " + NetSpeed())
             Else
                 'Fechou o jogo
-                If (IniciouJogo = 1 And GameCount <= 0) Then
-                    IniciouJogo = 0
+                If (GameOpen = 1 And GameCount <= 0) Then
+                    GameOpen = 0
                     MsgBox("Bom jogo")
                 End If
             End If

@@ -84,6 +84,11 @@
             RichTextBox1.ScrollToCaret()
         End If
     End Sub
+
+    Sub SetText(Text As String)
+        RichTextBox1.AppendText(vbNewLine)
+        RichTextBox1.AppendText(vbNewLine & "Mia:>" + Text)
+    End Sub
 #End Region
 
 End Class
