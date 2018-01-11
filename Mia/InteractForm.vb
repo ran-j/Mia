@@ -12,7 +12,6 @@
         RichTextBox1.SelectionStart = RichTextBox1.TextLength
         RichTextBox1.ScrollToCaret()
 
-
         AFKDETECTORI.Enabled = True
     End Sub
 
@@ -23,6 +22,7 @@
 
         If (NoPendence And VerifyText.Contains("oi")) Then
             SetText(MiaBr.RequestConversation(1))
+
         ElseIf (NoPendence) Then
             'Caso o programa não saiba o mesmo pesquisa no google kkkkk
             Dim GoogleCheckText As String = Google.CheckWord(VerifyText)
@@ -71,30 +71,19 @@
 
     Private Sub RichTextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles RichTextBox1.KeyDown
         'RichTextBox1.Lines.Length - 1
-        If (e.KeyCode = Keys.Enter) Then
+        If (e.KeyCode = Keys.Enter) And Not RichTextBox1.ReadOnly Then
 
             Dim line As Integer = RichTextBox1.GetLineFromCharIndex(RichTextBox1.SelectionStart)
 
-            Dim Texto As String = ""
-            Dim TextoVeiry As String = ""
-
-            Try
-                Texto = RichTextBox1.Lines(line).ToString.Substring(6)
-                TextoVeiry = RichTextBox1.Lines(line).ToString.Substring(6).Replace(" ", "")
-            Catch ex As Exception
-                Try
-                    Texto = RichTextBox1.Lines(line - 3).ToString.Substring(6)
-                    TextoVeiry = RichTextBox1.Lines(line - 3).ToString.Substring(6).Replace(" ", "")
-                Catch ex2 As Exception
-                    ClearRichTextBox1()
-                    SetText("Pode repitir ?")
-                    Debug.Print(line)
-                End Try
-            End Try
+            Dim Texto As String = RichTextBox1.Lines(RichTextBox1.Lines.Length - 1).Substring(6)
+            Dim TextoVeiry As String = RichTextBox1.Lines(RichTextBox1.Lines.Length - 1).Substring(6).Replace(" ", "")
 
             If Not (TextoVeiry <> "") Then
                 e.Handled = True
             Else
+
+                RichTextBox1.ReadOnly = True
+
                 Dim col As Integer = RichTextBox1.SelectionStart - RichTextBox1.GetFirstCharIndexFromLine(line)
 
                 ProcessText(Texto)
@@ -156,6 +145,8 @@
             RichTextBox1.AppendText("Mia:>" + Text & vbNewLine)
             RichTextBox1.AppendText(vbNewLine & "Voce:>")
         End If
+
+        RichTextBox1.ReadOnly = False
 
     End Sub
 

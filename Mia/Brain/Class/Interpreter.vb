@@ -40,14 +40,12 @@
                 Debug.Print("Texto processado: " + result)
                 Return result
             Else
-                Debug.Print("Dicionaro não carregado")
                 Return text
             End If
         Catch ex As Exception
             Debug.Print("Erro ao processar o texto:" + ex.Message)
             Return text
         End Try
-
 
     End Function
 

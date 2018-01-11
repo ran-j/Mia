@@ -53,7 +53,6 @@ Partial Class InteractForm
         '
         'AFKDETECTORI
         '
-        Me.AFKDETECTORI.Enabled = True
         Me.AFKDETECTORI.Interval = 200000
         '
         'InteractForm
