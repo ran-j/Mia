@@ -103,7 +103,10 @@ Public Class Main
                 AFKDetector.Enabled = False
 
                 OldmousePosition = 0
+
                 Me.WindowState = FormWindowState.Minimized
+
+                Debug.Print("Usuário AFK")
             Else
                 OldmousePosition = MousePosition.X 'pegar movimento
                 Debug.Print("Posiçao do mouse: " + OldmousePosition.ToString)

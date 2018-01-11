@@ -2,7 +2,8 @@
 
     Dim Google As GoogleEngine
     Dim NoPendence As Boolean = True 'se tiver pendencias o valor vai ser falso
-    Public OldmousePosition As Integer = 0
+    Dim OldmousePosition As Integer = 0
+    Dim AFKTimes As Integer = 0
 
     Private Sub InteractForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Cria uma instancia da Minha Api do google
@@ -182,6 +183,17 @@
                 Dim avisotext As String = MiaBr.RequestWarnings(14)
                 Main.Voz.SpeechMoreThanOnce(avisotext)
                 SetText(avisotext)
+
+                If (AFKTimes = 3) Then
+                    Debug.Print("Usuário AFK")
+                    AFKTimes = 0
+                    Me.Close()
+                End If
+
+                AFKTimes = AFKTimes + 1
+            Else
+                OldmousePosition = MousePosition.X 'pegar movimento
+                Debug.Print("Posiçao do mouse: " + OldmousePosition.ToString)
             End If
         End If
     End Sub

@@ -21300,15 +21300,6 @@
   <metadata name="CMS.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>351, 17</value>
   </metadata>
-  <data name="CMS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 70</value>
-  </data>
-  <data name="&gt;&gt;CMS.Name" xml:space="preserve">
-    <value>CMS</value>
-  </data>
-  <data name="&gt;&gt;CMS.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="RestaurarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>123, 22</value>
   </data>
@@ -21320,12 +21311,6 @@
   </data>
   <data name="FecharToolStripMenuItem.Text" xml:space="preserve">
     <value>Fechar</value>
-  </data>
-  <data name="VozToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>123, 22</value>
-  </data>
-  <data name="VozToolStripMenuItem.Text" xml:space="preserve">
-    <value>Voz</value>
   </data>
   <data name="AltaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>105, 22</value>
@@ -21345,24 +21330,24 @@
   <data name="MudaToolStripMenuItem.Text" xml:space="preserve">
     <value>Muda</value>
   </data>
+  <data name="VozToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>123, 22</value>
+  </data>
+  <data name="VozToolStripMenuItem.Text" xml:space="preserve">
+    <value>Voz</value>
+  </data>
+  <data name="CMS.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 70</value>
+  </data>
+  <data name="&gt;&gt;CMS.Name" xml:space="preserve">
+    <value>CMS</value>
+  </data>
+  <data name="&gt;&gt;CMS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <metadata name="CMSVazio.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>416, 18</value>
   </metadata>
-  <data name="CMSVazio.Size" type="System.Drawing.Size, System.Drawing">
-    <value>110, 48</value>
-  </data>
-  <data name="&gt;&gt;CMSVazio.Name" xml:space="preserve">
-    <value>CMSVazio</value>
-  </data>
-  <data name="&gt;&gt;CMSVazio.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 22</value>
-  </data>
-  <data name="ToolStripMenuItem2.Text" xml:space="preserve">
-    <value>Voz</value>
-  </data>
   <data name="ToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
     <value>105, 22</value>
   </data>
@@ -21381,11 +21366,26 @@
   <data name="ToolStripMenuItem5.Text" xml:space="preserve">
     <value>Muda</value>
   </data>
+  <data name="ToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 22</value>
+  </data>
+  <data name="ToolStripMenuItem2.Text" xml:space="preserve">
+    <value>Voz</value>
+  </data>
   <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>109, 22</value>
   </data>
   <data name="ToolStripMenuItem1.Text" xml:space="preserve">
     <value>Fechar</value>
+  </data>
+  <data name="CMSVazio.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 48</value>
+  </data>
+  <data name="&gt;&gt;CMSVazio.Name" xml:space="preserve">
+    <value>CMSVazio</value>
+  </data>
+  <data name="&gt;&gt;CMSVazio.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Alert.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
