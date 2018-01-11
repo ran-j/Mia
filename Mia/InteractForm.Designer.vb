@@ -22,8 +22,11 @@ Partial Class InteractForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(InteractForm))
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
+        Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
+        Me.AFKDETECTORI = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'RichTextBox1
@@ -38,12 +41,27 @@ Partial Class InteractForm
         Me.RichTextBox1.TabIndex = 0
         Me.RichTextBox1.Text = "Voce:>"
         '
+        'WebBrowser1
+        '
+        Me.WebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WebBrowser1.Location = New System.Drawing.Point(0, 0)
+        Me.WebBrowser1.MinimumSize = New System.Drawing.Size(20, 20)
+        Me.WebBrowser1.Name = "WebBrowser1"
+        Me.WebBrowser1.Size = New System.Drawing.Size(626, 302)
+        Me.WebBrowser1.TabIndex = 1
+        Me.WebBrowser1.Visible = False
+        '
+        'AFKDETECTORI
+        '
+        Me.AFKDETECTORI.Interval = 500000
+        '
         'InteractForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(626, 302)
         Me.Controls.Add(Me.RichTextBox1)
+        Me.Controls.Add(Me.WebBrowser1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "InteractForm"
@@ -54,4 +72,6 @@ Partial Class InteractForm
     End Sub
 
     Friend WithEvents RichTextBox1 As RichTextBox
+    Friend WithEvents WebBrowser1 As WebBrowser
+    Friend WithEvents AFKDETECTORI As Timer
 End Class

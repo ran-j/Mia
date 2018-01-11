@@ -46,6 +46,7 @@ Partial Class Main
         Me.CloseForm = New System.Windows.Forms.Timer(Me.components)
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.GamerVerify = New System.Windows.Forms.Timer(Me.components)
+        Me.HideUIicons = New System.Windows.Forms.Timer(Me.components)
         CType(Me.UI, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CMS.SuspendLayout()
         Me.CMSVazio.SuspendLayout()
@@ -55,7 +56,7 @@ Partial Class Main
         '
         'AFKDetector
         '
-        Me.AFKDetector.Interval = 50000
+        Me.AFKDetector.Interval = 500000
         '
         'UI
         '
@@ -188,6 +189,10 @@ Partial Class Main
         '
         Me.GamerVerify.Enabled = True
         '
+        'HideUIicons
+        '
+        Me.HideUIicons.Interval = 5000
+        '
         'Main
         '
         resources.ApplyResources(Me, "$this")
@@ -233,4 +238,5 @@ Partial Class Main
     Friend WithEvents ToolStripMenuItem4 As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem5 As ToolStripMenuItem
     Friend WithEvents GamerVerify As Timer
+    Friend WithEvents HideUIicons As Timer
 End Class

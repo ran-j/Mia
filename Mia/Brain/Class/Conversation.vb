@@ -8,12 +8,15 @@
 
     'Respostas Prontas
     Protected comprimento As String() = New String() {"Olá senhor " + usu, "Oi senhor " + usu + ", tudo bom ?", "Oi :)"}
+    Protected naoentendi As String() = New String() {"Desculpe-me senhor, porém não entendi o que foi pedido", "Não compreendi senhor " + usu, "Sinto muito porém não entendi senhor " + usu, "Não entendi senhor"}
 
     Public Function AnwserConversation(ByVal operaçao As Integer)
         Dim Output = "Não entendi"
 
         If (operaçao = 1) Then
             Output = comprimento(GenerateNunber(comprimento.Length))
+        ElseIf (operaçao = 2) Then
+            Output = naoentendi(GenerateNunber(naoentendi.Length))
         End If
 
         Return Output

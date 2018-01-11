@@ -51,6 +51,9 @@
     <ApplicationIcon>giphy.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.6.13.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.6.13\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -95,6 +98,8 @@
     <Compile Include="Brain\Class\Spotify.vb" />
     <Compile Include="Brain\Class\SystemInteract.vb" />
     <Compile Include="Brain\Class\Warnings.vb" />
+    <Compile Include="Brain\Google\GoogleEngine.vb" />
+    <Compile Include="Brain\Google\GoogleSpellChecker.vb" />
     <Compile Include="Brain\Memory.vb" />
     <Compile Include="Brain\Brain.vb" />
     <Compile Include="Brain\Think.vb" />

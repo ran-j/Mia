@@ -6,9 +6,11 @@ Public Class Main
 
 #Region "Variaveis"
     Dim MiaBrain As Brain 'Cria instancia do controlador principal do cerebro
+
     Private WithEvents Net As MyNetwork
     Dim scan As Scanner
-    Dim Voz As New Voice 'Inicia sistema de voz
+
+    Public Voz As New Voice 'Inicia sistema de voz
 
     Dim Arguments As String() = Environment.GetCommandLineArgs() 'pega os argumentos
 
@@ -95,25 +97,18 @@ Public Class Main
 
     Private Sub AFKDetector_Tick(sender As Object, e As EventArgs) Handles AFKDetector.Tick
         If (Me.WindowState = FormWindowState.Normal) Then
-            If Not (Application.OpenForms().OfType(Of InteractForm).Any) Then
-                If (OldmousePosition = MousePosition.X) Then 'verificar se o mouse esta no mesmo lugar ou ele se movimento.
 
-                    AFKDetector.Enabled = False
+            If (OldmousePosition = MousePosition.X) Then 'verificar se o mouse esta no mesmo lugar ou ele se movimento.
 
-                    OldmousePosition = 0
-                    Me.WindowState = FormWindowState.Minimized
-                Else
-                    OldmousePosition = MousePosition.X 'pegar movimento
-                    Debug.Print("Posiçao do mouse: " + OldmousePosition.ToString)
-                End If
+                AFKDetector.Enabled = False
+
+                OldmousePosition = 0
+                Me.WindowState = FormWindowState.Minimized
             Else
                 OldmousePosition = MousePosition.X 'pegar movimento
-                Debug.Print("Painel de interação está aberto")
                 Debug.Print("Posiçao do mouse: " + OldmousePosition.ToString)
-                Dim avisotext As String = MiaBrain.RequestWarnings(14)
-                Voz.SpeechMoreThanOnce(avisotext)
-                InteractForm.SetText(avisotext)
             End If
+
         End If
     End Sub
 
@@ -274,6 +269,7 @@ Public Class Main
             SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0)
 
             If Not (FormPosition.X <> Me.Location.X Or FormPosition.Y <> Me.Location.Y) Then
+                AFKDetector.Enabled = False
                 InteractForm.Show()
             Else
                 Debug.Print("Só mudou de posicao")
@@ -301,13 +297,16 @@ Public Class Main
         'Mostra o botão para abrir o menu
         If (Config.Visible) Then
             Config.Visible = False
+            HideUIicons.Enabled = False
         Else
+            HideUIicons.Enabled = True
             Config.Visible = True
         End If
     End Sub
 
     Private Sub Config_Click(sender As Object, e As EventArgs) Handles Config.Click
         'Oculta o botão para abrir o menu
+        HideUIicons.Enabled = False
         Config.Visible = False
     End Sub
 
@@ -438,6 +437,8 @@ Public Class Main
 
 #End Region
 
+
+#Region "Voz vol"
     Private Sub AltaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AltaToolStripMenuItem.Click
         'volume maximo
         Voz.Setvolume(100)
@@ -467,6 +468,7 @@ Public Class Main
         'mudo
         Voz.Setvolume(0)
     End Sub
+#End Region
 
     Private Sub GamerVerify_Tick(sender As Object, e As EventArgs) Handles GamerVerify.Tick
         'Verifica se algum jogo foi aberto
@@ -487,5 +489,11 @@ Public Class Main
                 End If
             End If
         Next
+    End Sub
+
+    Private Sub HideUIicons_Tick(sender As Object, e As EventArgs) Handles HideUIicons.Tick
+        Debug.Print("Ocultando icons do UI")
+        HideUIicons.Enabled = False
+        Config.Visible = False
     End Sub
 End Class

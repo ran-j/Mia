@@ -1,21 +1,68 @@
 ﻿Public Class InteractForm
 
-    Dim Completed As Boolean = True 'se tiver pendencias o valor vai ser falso
+    Dim Google As GoogleEngine
+    Dim NoPendence As Boolean = True 'se tiver pendencias o valor vai ser falso
+    Public OldmousePosition As Integer = 0
+
     Private Sub InteractForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'Cria uma instancia da Minha Api do google
+        Google = New GoogleEngine(GoogleEngine.GoogleLang.Portuguese, WebBrowser1)
+        'Impedir de selecionar + C nos testos
         RichTextBox1.SelectionStart = RichTextBox1.TextLength
         RichTextBox1.ScrollToCaret()
+
+
+        AFKDETECTORI.Enabled = True
     End Sub
 
     Private Sub ProcessText(text As String)
         'processa e responde o usuário na tela
+
         Dim VerifyText As String = MiaBr.RequestVerifyText(text)
 
-        If (Completed And VerifyText.Contains("oi")) Then
-            RichTextBox1.AppendText(vbNewLine)
-            RichTextBox1.AppendText(vbNewLine & "Mia:>" + MiaBr.RequestConversation(1))
+        If (NoPendence And VerifyText.Contains("oi")) Then
+            SetText(MiaBr.RequestConversation(1))
+        ElseIf (NoPendence) Then
+            'Caso o programa não saiba o mesmo pesquisa no google kkkkk
+            Dim GoogleCheckText As String = Google.CheckWord(VerifyText)
+
+            If (GoogleCheckText.Equals("0.")) Then 'Verifica se o texto entrante está correto
+
+                Dim QUERY As String = "https://www.google.com.br" + "/search?q=" + VerifyText.Replace(" ", "+")
+                WebBrowser1.Navigate(QUERY)
+                Google.WaitForPageLoad()
+                Dim Output = Google.ResponsiveAnwser(WebBrowser1.Document)
+
+                If Not (Output.Equals("1.")) Then
+                    SetText(Output)
+                Else
+                    Debug.Print("Texto correto")
+                    Debug.Print(QUERY)
+                    Debug.Print(Output)
+                    SetText(MiaBr.RequestConversation(2))
+                End If
+
+            Else
+                'se não estiver o google tenta corrigir
+                Dim QUERY As String = "https://www.google.com.br" + "/search?q=" + GoogleCheckText.Replace(" ", "+")
+                WebBrowser1.Navigate(QUERY)
+                Google.WaitForPageLoad()
+                Dim Output = Google.ResponsiveAnwser(WebBrowser1.Document)
+
+                If Not (Output.Equals("1.")) Then
+                    SetText(Output)
+                Else
+                    Debug.Print("Texto incorreto")
+                    Debug.Print(QUERY)
+                    Debug.Print(Output)
+                    SetText(MiaBr.RequestConversation(2))
+                End If
+
+            End If
         End If
 
     End Sub
+
 
 #Region "RichBox Control"
 
@@ -26,31 +73,43 @@
         If (e.KeyCode = Keys.Enter) Then
 
             Dim line As Integer = RichTextBox1.GetLineFromCharIndex(RichTextBox1.SelectionStart)
+
+            Dim Texto As String = ""
+            Dim TextoVeiry As String = ""
+
             Try
-                Dim Texto As String = RichTextBox1.Lines(line).ToString.Substring(6).Replace(" ", "")
-
-                If Not (Texto <> "") Then
-                    e.Handled = True
-                Else
-                    Dim col As Integer = RichTextBox1.SelectionStart - RichTextBox1.GetFirstCharIndexFromLine(line)
-
-                    ProcessText(Texto)
-
-                    RichTextBox1.AppendText(vbNewLine)
-                    Dim caretPosition = RichTextBox1.SelectionStart
-                    RichTextBox1.AppendText("Voce:>")
-                    RichTextBox1.Select(caretPosition, 0)
-                    RichTextBox1.ScrollToCaret()
-
-                    If (col = 0) Then
-                        RichTextBox1.SelectionStart = RichTextBox1.TextLength
-                        RichTextBox1.ScrollToCaret()
-                    End If
-
-                End If
+                Texto = RichTextBox1.Lines(line).ToString.Substring(6)
+                TextoVeiry = RichTextBox1.Lines(line).ToString.Substring(6).Replace(" ", "")
             Catch ex As Exception
-                e.Handled = True
+                Try
+                    Texto = RichTextBox1.Lines(line - 3).ToString.Substring(6)
+                    TextoVeiry = RichTextBox1.Lines(line - 3).ToString.Substring(6).Replace(" ", "")
+                Catch ex2 As Exception
+                    ClearRichTextBox1()
+                    SetText("Pode repitir ?")
+                    Debug.Print(line)
+                End Try
             End Try
+
+            If Not (TextoVeiry <> "") Then
+                e.Handled = True
+            Else
+                Dim col As Integer = RichTextBox1.SelectionStart - RichTextBox1.GetFirstCharIndexFromLine(line)
+
+                ProcessText(Texto)
+
+                RichTextBox1.AppendText(vbNewLine)
+                Dim caretPosition = RichTextBox1.SelectionStart
+                RichTextBox1.AppendText("Voce:>")
+                RichTextBox1.Select(caretPosition, 0)
+                RichTextBox1.ScrollToCaret()
+
+                If (col = 0) Then
+                    RichTextBox1.SelectionStart = RichTextBox1.TextLength
+                    RichTextBox1.ScrollToCaret()
+                End If
+
+            End If
 
         ElseIf (e.KeyCode = Keys.Back) Or (e.KeyCode = Keys.Left) Then
 
@@ -86,9 +145,49 @@
     End Sub
 
     Sub SetText(Text As String)
-        RichTextBox1.AppendText(vbNewLine)
-        RichTextBox1.AppendText(vbNewLine & "Mia:>" + Text)
+        Dim line As Integer = RichTextBox1.GetLineFromCharIndex(RichTextBox1.SelectionStart)
+        Dim col As Integer = RichTextBox1.SelectionStart - RichTextBox1.GetFirstCharIndexFromLine(line)
+
+        If (col > 0) Then
+            RichTextBox1.AppendText(vbNewLine)
+            RichTextBox1.AppendText(vbNewLine & "Mia:>" + Text)
+        Else
+            RichTextBox1.AppendText("Mia:>" + Text & vbNewLine)
+            RichTextBox1.AppendText(vbNewLine & "Voce:>")
+        End If
+
     End Sub
+
+    Private Sub RichTextBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles RichTextBox1.MouseClick
+        'Impedir de selecionar + C nos testos
+        RichTextBox1.SelectionStart = RichTextBox1.TextLength
+        RichTextBox1.ScrollToCaret()
+    End Sub
+
+    Sub ClearRichTextBox1()
+        'limpa o richtextbox
+        RichTextBox1.Clear()
+        RichTextBox1.Update()
+    End Sub
+
+
 #End Region
+
+    Private Sub AFKDETECTORI_Tick(sender As Object, e As EventArgs) Handles AFKDETECTORI.Tick
+        If (Me.WindowState = FormWindowState.Normal) Then
+            If (OldmousePosition = MousePosition.X) Then
+                OldmousePosition = MousePosition.X 'pegar movimento
+                Debug.Print("Painel de interação está aberto")
+                Debug.Print("Posiçao do mouse: " + OldmousePosition.ToString)
+                Dim avisotext As String = MiaBr.RequestWarnings(14)
+                Main.Voz.SpeechMoreThanOnce(avisotext)
+                SetText(avisotext)
+            End If
+        End If
+    End Sub
+
+    Private Sub InteractForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        Main.AFKDetector.Enabled = True
+    End Sub
 
 End Class
