@@ -14,9 +14,10 @@ Public Class Brain
     Dim Sys As New SystemInteract 'interaçao com o sistema
     Dim Net As New MyNetwork 'Interaçao com internet como verificaçoes e velocidade
     Dim PW As New Power 'Classe para interação com energia
-    Dim AlertSet As New AlertClass
+    Dim AlertSet As New AlertClass 'Classe responsavel pelos alertas
     Dim Scan As New Scanner(My.Settings.VirusTotalKey) 'Classe responsavel por scanear arquivos
     Dim ConversationClass As New Conversation 'Classe que e reponsavel por responder usuario
+    Dim PS1Emu As New PS1 'Classe de emulador de PS1
 
     Public Event LoadCompleted()
 
@@ -90,6 +91,11 @@ Public Class Brain
     Function RequestIstanceOfScanClass() As Scanner
         'Retorna instancia da classe Scanner
         Return Scan
+    End Function
+
+    Function RequestIstanceOfPS1Emu() As PS1
+        'Retorna instancia da classe network
+        Return PS1Emu
     End Function
 
     Function RequestIstanceOfNetClass() As MyNetwork
@@ -180,9 +186,8 @@ Public Class Brain
     End Function
 #End Region
 
-
-#Disable Warning
     Function AddtoWindowsStart()
+#Disable Warning
         'Adiciona a aplicaçao com o iniciar o windows
         Try
             Using key As RegistryKey = My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Run", True)
@@ -201,8 +206,9 @@ Public Class Brain
         Finally
             My.Computer.Registry.CurrentUser.Close()
         End Try
-    End Function
 #Enable Warning
+    End Function
+
 
     Function RemovetoWindowsStart()
         'Remove a aplicaçao com o iniciar o windows
@@ -317,5 +323,10 @@ Public Class Brain
         'Retorna array com lista de games
         Return TheMemory.LoadGamesList()
     End Function
+
+    Sub RequestRunGame(Gamespath As String)
+        'inicia uma emulação de jogo de ps1
+        PS1Emu.RunGame(Gamespath)
+    End Sub
 
 End Class

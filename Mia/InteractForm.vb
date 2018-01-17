@@ -4,6 +4,7 @@
     Dim NoPendence As Boolean = True 'se tiver pendencias o valor vai ser falso
     Dim OldmousePosition As Integer = 0
     Dim AFKTimes As Integer = 0
+    Dim MiaBr As Brain = Main.GetMiaBraind()
 
     Private Sub InteractForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Cria uma instancia da Minha Api do google
@@ -23,39 +24,47 @@
         If (NoPendence And VerifyText.Contains("oi")) Then
             SetText(MiaBr.RequestConversation(1))
 
+        ElseIf (NoPendence And VerifyText.Contains("emular ps1") Or VerifyText.Contains("emular jogo de ps1")) Then
+            SetText("Selecione o jogo de PS1.")
+
+            Me.OpenFileDialog1.Multiselect = False
+            Me.OpenFileDialog1.FileName = "Selecionar o jogo"
+            Me.OpenFileDialog1.InitialDirectory = "C:\"
+            Me.OpenFileDialog1.Filter = "Jogos|*.bin;*.iso;*.cdz"
+            Me.OpenFileDialog1.CheckFileExists = True
+            Me.OpenFileDialog1.CheckPathExists = True
+
+            Dim dr As DialogResult = Me.OpenFileDialog1.ShowDialog()
+
+            If dr = System.Windows.Forms.DialogResult.OK Then
+                MiaBr.RequestRunGame(Me.OpenFileDialog1.FileNames.First.ToString)
+                Main.WindowState = FormWindowState.Minimized
+            Else
+                SetText("Operação cancelada.")
+            End If
+
         ElseIf (NoPendence) Then
             'Caso o programa não saiba o mesmo pesquisa no google kkkkk
             Dim GoogleCheckText As String = Google.CheckWord(VerifyText)
 
             If (GoogleCheckText.Equals("0.")) Then 'Verifica se o texto entrante está correto
 
-                Dim QUERY As String = "https://www.google.com.br" + "/search?q=" + VerifyText.Replace(" ", "+")
-                WebBrowser1.Navigate(QUERY)
-                Google.WaitForPageLoad()
-                Dim Output = Google.ResponsiveAnwser(WebBrowser1.Document)
+                Dim Output As String = DoGoogleQuery(VerifyText)
 
                 If Not (Output.Equals("1.")) Then
                     SetText(Output)
                 Else
                     Debug.Print("Texto correto")
-                    Debug.Print(QUERY)
-                    Debug.Print(Output)
                     SetText(MiaBr.RequestConversation(2))
                 End If
 
             Else
-                'se não estiver o google tenta corrigir
-                Dim QUERY As String = "https://www.google.com.br" + "/search?q=" + GoogleCheckText.Replace(" ", "+")
-                WebBrowser1.Navigate(QUERY)
-                Google.WaitForPageLoad()
-                Dim Output = Google.ResponsiveAnwser(WebBrowser1.Document)
+                Dim Output As String = DoGoogleQuery(VerifyText)
 
                 If Not (Output.Equals("1.")) Then
                     SetText(Output)
                 Else
                     Debug.Print("Texto incorreto")
-                    Debug.Print(QUERY)
-                    Debug.Print(Output)
                     SetText(MiaBr.RequestConversation(2))
                 End If
 
@@ -64,10 +73,21 @@
 
     End Sub
 
+    Function DoGoogleQuery(Text As String) As String
+        'se não estiver o google tenta corrigir
+        Dim QUERY As String = "https://www.google.com.br" + "/search?q=" + Text.Replace(" ", "+")
+        WebBrowser1.Navigate(QUERY)
+        Google.WaitForPageLoad()
+        Dim Output = Google.ResponsiveAnwser(WebBrowser1.Document)
+
+        Debug.Print(QUERY)
+        Debug.Print(Output)
+
+        Return Output
+    End Function
+
 
 #Region "RichBox Control"
-
-    Dim MiaBr As Brain = Main.GetMiaBraind()
 
     Private Sub RichTextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles RichTextBox1.KeyDown
         'RichTextBox1.Lines.Length - 1
@@ -88,6 +108,7 @@
 
                 ProcessText(Texto)
 
+                On Error Resume Next
                 RichTextBox1.AppendText(vbNewLine)
                 Dim caretPosition = RichTextBox1.SelectionStart
                 RichTextBox1.AppendText("Voce:>")

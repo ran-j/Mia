@@ -27,6 +27,7 @@ Partial Class InteractForm
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
         Me.AFKDETECTORI = New System.Windows.Forms.Timer(Me.components)
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.SuspendLayout()
         '
         'RichTextBox1
@@ -74,4 +75,5 @@ Partial Class InteractForm
     Friend WithEvents RichTextBox1 As RichTextBox
     Friend WithEvents WebBrowser1 As WebBrowser
     Friend WithEvents AFKDETECTORI As Timer
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
 End Class

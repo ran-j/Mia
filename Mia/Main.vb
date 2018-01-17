@@ -8,9 +8,12 @@ Public Class Main
     Dim MiaBrain As Brain 'Cria instancia do controlador principal do cerebro
 
     Private WithEvents Net As MyNetwork
+
     Dim scan As Scanner
 
     Public Voz As New Voice 'Inicia sistema de voz
+
+    Dim PS1EMULAITOR As PS1
 
     Dim Arguments As String() = Environment.GetCommandLineArgs() 'pega os argumentos
 
@@ -18,6 +21,8 @@ Public Class Main
 
     Public Const WM_NCLBUTTONDOWN As Integer = &HA1
     Public Const HT_CAPTION As Integer = &H2
+
+    Dim MouseclickUI As Integer = 0
 
     <DllImportAttribute("user32.dll")>
     Public Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal Msg As Integer, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
@@ -67,6 +72,7 @@ Public Class Main
             'So deixa abrir uma aplicação
             Dim procs() As Process = Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName)
             If procs.Length > 1 Then
+                Me.Visible = False
                 MsgBox("A Aplicação já está sendo executada")
                 Debug.Print("Ja está aberta")
                 CloseForm.Enabled = True
@@ -79,9 +85,12 @@ Public Class Main
                 MiaBrain = New Brain
                 Net = MiaBrain.RequestIstanceOfNetClass()
                 scan = MiaBrain.RequestIstanceOfScanClass()
+                PS1EMULAITOR = MiaBrain.RequestIstanceOfPS1Emu()
+
                 AddHandler MiaBrain.LoadCompleted, AddressOf LoadC 'adiciona evento de carregamento
                 AddHandler scan.ScanCompleted, AddressOf ScanCompleted 'adiciona evento de scan de virus
-                AddHandler Net.IpsCaptured, AddressOf IPsConected
+                AddHandler Net.IpsCaptured, AddressOf IPsConected 'retorna os ips capturados
+                AddHandler PS1EMULAITOR.ErroEmulator, AddressOf ErroEmu 'erro de emulador de ps1
 
                 MiaBrain.Init1() 'Starta o processamento
 
@@ -138,6 +147,8 @@ Public Class Main
         Net.StartMonitoring() 'Net.StopMonitoring
     End Sub
 
+
+#Region "Events"
     Sub ScanCompleted(Results As List(Of String))
         'Scan de virus completo
         MsgBox(Results.Count.ToString)
@@ -147,16 +158,18 @@ Public Class Main
         Next
     End Sub
 
-    Sub ShowWarning()
-        'mostra o alerta de HUD
-        Me.Alert.Visible = True
+    Private Sub ErroEmu(text As String)
+        'mostra o erro no alerta se o mesmo for por falta de arquivos do programa
+        If (text.Equals("Pasta do emulador não encontrada")) Then
+            MiaBrain.SetAlertText("Pasta do emulador não encontrada")
+            ShowWarning()
+        Else
+            MsgBox(text, MsgBoxStyle.Critical)
+        End If
+
     End Sub
 
-    Public Function GetMiaBraind() As Brain
-        'Retorna Instancia do Brains
-        Return MiaBrain
-    End Function
-
+#End Region
 
 #Region "Net"
 
@@ -263,6 +276,7 @@ Public Class Main
 
 #End Region
 
+
 #Region " Form Control "
 
     Private Sub Form1_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown, UI.MouseDown
@@ -272,8 +286,13 @@ Public Class Main
             SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0)
 
             If Not (FormPosition.X <> Me.Location.X Or FormPosition.Y <> Me.Location.Y) Then
-                AFKDetector.Enabled = False
-                InteractForm.Show()
+                If (MouseclickUI = 1) Then
+                    MouseclickUI = 0
+                    AFKDetector.Enabled = False
+                    InteractForm.Show()
+                Else
+                    MouseclickUI = MouseclickUI + 1
+                End If
             Else
                 Debug.Print("Só mudou de posicao")
                 FormPosition = Me.Location
@@ -329,6 +348,11 @@ Public Class Main
 
     Private Sub Main_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         If (Me.WindowState = FormWindowState.Minimized) Then
+
+            'FEcha o form de interação 
+            InteractForm.Close()
+
+
             'Cancela oque o programa esta falando
             Voz.CancelSpeeck()
 
@@ -438,6 +462,24 @@ Public Class Main
         MyBase.WndProc(M)
     End Sub
 
+    Public Function GetMiaBraind() As Brain
+        'Retorna Instancia do Brains
+        Return MiaBrain
+    End Function
+
+    Sub ShowWarning()
+        'mostra o alerta de HUD
+        If Me.InvokeRequired Then
+            Me.Invoke(New Action(AddressOf ShowWarning))
+        Else
+            Me.Alert.Visible = True
+        End If
+    End Sub
+
+    Private Sub UI_MouseHover(sender As Object, e As EventArgs) Handles UI.MouseHover
+        MouseclickUI = 0
+    End Sub
+
 #End Region
 
 
@@ -499,4 +541,6 @@ Public Class Main
         HideUIicons.Enabled = False
         Config.Visible = False
     End Sub
+
+
 End Class

@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="Brain\Act.vb" />
     <Compile Include="Brain\Class\AlertClass.vb" />
+    <Compile Include="Brain\Class\Arduino.vb" />
     <Compile Include="Brain\Class\Conversation.vb" />
     <Compile Include="Brain\Class\Interpreter.vb" />
     <Compile Include="Brain\Class\JsonClass.vb" />
@@ -98,6 +99,7 @@
     <Compile Include="Brain\Class\Spotify.vb" />
     <Compile Include="Brain\Class\SystemInteract.vb" />
     <Compile Include="Brain\Class\Warnings.vb" />
+    <Compile Include="Brain\Emuladores\PS1.vb" />
     <Compile Include="Brain\Google\GoogleEngine.vb" />
     <Compile Include="Brain\Google\GoogleSpellChecker.vb" />
     <Compile Include="Brain\Memory.vb" />
