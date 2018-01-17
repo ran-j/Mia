@@ -34,10 +34,16 @@ Public Class PS1
                 Using sw As StreamWriter = New StreamWriter(Emulador, False)
                     sw.WriteLine("@echo off")
                     sw.WriteLine("cd " + """" + Bin + """")
+                    sw.WriteLine("echo Nao fechar essa janela.")
                     sw.WriteLine("psxfin.exe " + """" + jogo + """")
                 End Using
 
-                Process.Start(Emulador)
+                Dim startInfo As New ProcessStartInfo(Emulador) With {
+                    .WindowStyle = ProcessWindowStyle.Minimized
+                }
+
+                Process.Start(startInfo)
+
                 Threading.Thread.Sleep(500)
 
                 My.Computer.FileSystem.DeleteFile(Emulador)

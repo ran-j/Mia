@@ -17,6 +17,10 @@ Public Class Main
 
     Dim Arguments As String() = Environment.GetCommandLineArgs() 'pega os argumentos
 
+    Dim Google As GoogleEngine
+
+    Dim NoPendence As Boolean = True 'se tiver pendencias o valor vai ser falso
+
     Public OldmousePosition As Integer = 0
 
     Public Const WM_NCLBUTTONDOWN As Integer = &HA1
@@ -83,6 +87,8 @@ Public Class Main
                 ToolTip.SetToolTip(Me.UI, "Olá")
 
                 MiaBrain = New Brain
+
+                Google = New GoogleEngine(GoogleEngine.GoogleLang.Portuguese, WebBrowser1) 'Cria uma instancia da Minha Api do google
                 Net = MiaBrain.RequestIstanceOfNetClass()
                 scan = MiaBrain.RequestIstanceOfScanClass()
                 PS1EMULAITOR = MiaBrain.RequestIstanceOfPS1Emu()
@@ -104,25 +110,6 @@ Public Class Main
         End Try
     End Sub
 
-    Private Sub AFKDetector_Tick(sender As Object, e As EventArgs) Handles AFKDetector.Tick
-        If (Me.WindowState = FormWindowState.Normal) Then
-
-            If (OldmousePosition = MousePosition.X) Then 'verificar se o mouse esta no mesmo lugar ou ele se movimento.
-
-                AFKDetector.Enabled = False
-
-                OldmousePosition = 0
-
-                Me.WindowState = FormWindowState.Minimized
-
-                Debug.Print("Usuário AFK")
-            Else
-                OldmousePosition = MousePosition.X 'pegar movimento
-                Debug.Print("Posiçao do mouse: " + OldmousePosition.ToString)
-            End If
-
-        End If
-    End Sub
 
     Private Sub LoadC()
         'evento de quando termina de carregar os arquivos
@@ -146,6 +133,76 @@ Public Class Main
         'Iniciar o monitoramento da net
         Net.StartMonitoring() 'Net.StopMonitoring
     End Sub
+
+    Public Sub ProcessText(text As String)
+        'processa e responde o usuário na tela
+
+        Dim VerifyText As String = MiaBrain.RequestVerifyText(text)
+
+        If (NoPendence And VerifyText.Contains("oi")) Then
+            InteractForm.SetText(MiaBrain.RequestConversation(1))
+
+        ElseIf (NoPendence And VerifyText.Contains("emular ps1") Or VerifyText.Contains("emular jogo de ps1")) Then
+            InteractForm.SetText("Selecione o jogo de PS1.")
+
+            Me.OpenFileDialog1.Multiselect = False
+            Me.OpenFileDialog1.FileName = "Selecionar o jogo"
+            Me.OpenFileDialog1.InitialDirectory = "C:\"
+            Me.OpenFileDialog1.Filter = "Jogos|*.bin;*.iso;*.cdz"
+            Me.OpenFileDialog1.CheckFileExists = True
+            Me.OpenFileDialog1.CheckPathExists = True
+
+            Dim dr As DialogResult = Me.OpenFileDialog1.ShowDialog()
+
+            If dr = System.Windows.Forms.DialogResult.OK Then
+                MiaBrain.RequestRunGame(Me.OpenFileDialog1.FileNames.First.ToString)
+                Me.WindowState = FormWindowState.Minimized
+            Else
+                InteractForm.SetText("Operação cancelada.")
+            End If
+
+        ElseIf (NoPendence) Then
+            'Caso o programa não saiba o mesmo pesquisa no google kkkkk
+            Dim GoogleCheckText As String = Google.CheckWord(VerifyText)
+
+            If (GoogleCheckText.Equals("0.")) Then 'Verifica se o texto entrante está correto
+
+                Dim Output As String = DoGoogleQuery(VerifyText)
+
+                If Not (Output.Equals("1.")) Then
+                    InteractForm.SetText(Output)
+                Else
+                    Debug.Print("Texto correto")
+                    InteractForm.SetText(MiaBrain.RequestConversation(2))
+                End If
+
+            Else
+                Dim Output As String = DoGoogleQuery(GoogleCheckText)
+
+                If Not (Output.Equals("1.")) Then
+                    InteractForm.SetText(Output)
+                Else
+                    Debug.Print("Texto incorreto")
+                    InteractForm.SetText(MiaBrain.RequestConversation(2))
+                End If
+
+            End If
+        End If
+
+    End Sub
+
+    Function DoGoogleQuery(Text As String) As String
+        'se não estiver o google tenta corrigir
+        Dim QUERY As String = "https://www.google.com.br" + "/search?q=" + Text.Replace(" ", "+")
+        WebBrowser1.Navigate(QUERY)
+        Google.WaitForPageLoad()
+        Dim Output = Google.ResponsiveAnwser(WebBrowser1.Document)
+
+        Debug.Print(QUERY)
+        Debug.Print(Output)
+
+        Return Output
+    End Function
 
 
 #Region "Events"
@@ -276,7 +333,6 @@ Public Class Main
 
 #End Region
 
-
 #Region " Form Control "
 
     Private Sub Form1_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown, UI.MouseDown
@@ -346,6 +402,26 @@ Public Class Main
 
     End Sub
 
+    Private Sub AFKDetector_Tick(sender As Object, e As EventArgs) Handles AFKDetector.Tick
+        If (Me.WindowState = FormWindowState.Normal) Then
+
+            If (OldmousePosition = MousePosition.X) Then 'verificar se o mouse esta no mesmo lugar ou ele se movimento.
+
+                AFKDetector.Enabled = False
+
+                OldmousePosition = 0
+
+                Me.WindowState = FormWindowState.Minimized
+
+                Debug.Print("Usuário AFK")
+            Else
+                OldmousePosition = MousePosition.X 'pegar movimento
+                Debug.Print("Posiçao do mouse: " + OldmousePosition.ToString)
+            End If
+
+        End If
+    End Sub
+
     Private Sub Main_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         If (Me.WindowState = FormWindowState.Minimized) Then
 
@@ -366,7 +442,7 @@ Public Class Main
             NotifyIcon.ShowBalloonTip("5000", "Aviso", MiaBrain.RequestWarnings(1), ToolTipIcon.Info)
 
             'Troca o contexte menu
-            NotifyIcon.ContextMenuStrip = CMS
+            NotifyIcon.ContextMenuStrip = CMSI1
 
             Debug.Print("Minimizou")
         ElseIf (Me.WindowState = FormWindowState.Normal) Then
@@ -482,8 +558,7 @@ Public Class Main
 
 #End Region
 
-
-#Region "Voz vol"
+#Region "Voice vol"
     Private Sub AltaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AltaToolStripMenuItem.Click
         'volume maximo
         Voz.Setvolume(100)
@@ -541,6 +616,4 @@ Public Class Main
         HideUIicons.Enabled = False
         Config.Visible = False
     End Sub
-
-
 End Class

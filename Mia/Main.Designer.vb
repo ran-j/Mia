@@ -28,13 +28,13 @@ Partial Class Main
         Me.UI = New System.Windows.Forms.PictureBox()
         Me.ToolTip2 = New System.Windows.Forms.ToolTip(Me.components)
         Me.NotifyIcon = New System.Windows.Forms.NotifyIcon(Me.components)
-        Me.CMS = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.RestaurarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.FecharToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CMSI1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.VozToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AltaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BaixaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MudaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RestaurarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FecharToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CMSVazio = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
@@ -47,8 +47,10 @@ Partial Class Main
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.GamerVerify = New System.Windows.Forms.Timer(Me.components)
         Me.HideUIicons = New System.Windows.Forms.Timer(Me.components)
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
         CType(Me.UI, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.CMS.SuspendLayout()
+        Me.CMSI1.SuspendLayout()
         Me.CMSVazio.SuspendLayout()
         CType(Me.Alert, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Config, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -69,26 +71,12 @@ Partial Class Main
         Me.NotifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info
         resources.ApplyResources(Me.NotifyIcon, "NotifyIcon")
         '
-        'CMS
+        'CMSI1
         '
-        Me.CMS.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.CMS.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RestaurarToolStripMenuItem, Me.FecharToolStripMenuItem, Me.VozToolStripMenuItem})
-        Me.CMS.Name = "CMS"
-        resources.ApplyResources(Me.CMS, "CMS")
-        '
-        'RestaurarToolStripMenuItem
-        '
-        Me.RestaurarToolStripMenuItem.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.RestaurarToolStripMenuItem.ForeColor = System.Drawing.Color.DeepPink
-        Me.RestaurarToolStripMenuItem.Name = "RestaurarToolStripMenuItem"
-        resources.ApplyResources(Me.RestaurarToolStripMenuItem, "RestaurarToolStripMenuItem")
-        '
-        'FecharToolStripMenuItem
-        '
-        Me.FecharToolStripMenuItem.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.FecharToolStripMenuItem.ForeColor = System.Drawing.Color.DeepPink
-        Me.FecharToolStripMenuItem.Name = "FecharToolStripMenuItem"
-        resources.ApplyResources(Me.FecharToolStripMenuItem, "FecharToolStripMenuItem")
+        Me.CMSI1.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.CMSI1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.VozToolStripMenuItem, Me.RestaurarToolStripMenuItem, Me.FecharToolStripMenuItem})
+        Me.CMSI1.Name = "CMS"
+        resources.ApplyResources(Me.CMSI1, "CMSI1")
         '
         'VozToolStripMenuItem
         '
@@ -118,6 +106,20 @@ Partial Class Main
         Me.MudaToolStripMenuItem.ForeColor = System.Drawing.Color.DeepPink
         Me.MudaToolStripMenuItem.Name = "MudaToolStripMenuItem"
         resources.ApplyResources(Me.MudaToolStripMenuItem, "MudaToolStripMenuItem")
+        '
+        'RestaurarToolStripMenuItem
+        '
+        Me.RestaurarToolStripMenuItem.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.RestaurarToolStripMenuItem.ForeColor = System.Drawing.Color.DeepPink
+        Me.RestaurarToolStripMenuItem.Name = "RestaurarToolStripMenuItem"
+        resources.ApplyResources(Me.RestaurarToolStripMenuItem, "RestaurarToolStripMenuItem")
+        '
+        'FecharToolStripMenuItem
+        '
+        Me.FecharToolStripMenuItem.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.FecharToolStripMenuItem.ForeColor = System.Drawing.Color.DeepPink
+        Me.FecharToolStripMenuItem.Name = "FecharToolStripMenuItem"
+        resources.ApplyResources(Me.FecharToolStripMenuItem, "FecharToolStripMenuItem")
         '
         'CMSVazio
         '
@@ -193,6 +195,15 @@ Partial Class Main
         '
         Me.HideUIicons.Interval = 5000
         '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        '
+        'WebBrowser1
+        '
+        resources.ApplyResources(Me.WebBrowser1, "WebBrowser1")
+        Me.WebBrowser1.Name = "WebBrowser1"
+        '
         'Main
         '
         resources.ApplyResources(Me, "$this")
@@ -201,6 +212,7 @@ Partial Class Main
         Me.Controls.Add(Me.Config)
         Me.Controls.Add(Me.Alert)
         Me.Controls.Add(Me.UI)
+        Me.Controls.Add(Me.WebBrowser1)
         Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "Main"
@@ -208,7 +220,7 @@ Partial Class Main
         Me.TopMost = True
         Me.TransparencyKey = System.Drawing.Color.Transparent
         CType(Me.UI, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.CMS.ResumeLayout(False)
+        Me.CMSI1.ResumeLayout(False)
         Me.CMSVazio.ResumeLayout(False)
         CType(Me.Alert, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Config, System.ComponentModel.ISupportInitialize).EndInit()
@@ -220,7 +232,7 @@ Partial Class Main
     Friend WithEvents UI As PictureBox
     Friend WithEvents ToolTip2 As ToolTip
     Friend WithEvents NotifyIcon As NotifyIcon
-    Friend WithEvents CMS As ContextMenuStrip
+    Friend WithEvents CMSI1 As ContextMenuStrip
     Friend WithEvents CMSVazio As ContextMenuStrip
     Friend WithEvents RestaurarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents FecharToolStripMenuItem As ToolStripMenuItem
@@ -239,4 +251,6 @@ Partial Class Main
     Friend WithEvents ToolStripMenuItem5 As ToolStripMenuItem
     Friend WithEvents GamerVerify As Timer
     Friend WithEvents HideUIicons As Timer
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
+    Friend WithEvents WebBrowser1 As WebBrowser
 End Class

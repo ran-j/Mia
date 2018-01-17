@@ -1,49 +1,80 @@
 ﻿Imports System.IO.Ports
 Public Class Arduino
-    Dim WithEvents SerialPort1 As SerialPort
-    Dim Str As String
-    Public Event ErroOpenConnection(erro As String)
-    Public Event TextReceived(text As String)
+    Dim WithEvents SerialPort1 As New IO.Ports.SerialPort
 
-    Sub New(Port As String, Optional BaudRate As Integer = 9600)
+    Dim _Port As String
+    Dim _BaudRate As Int32 = 9600
+    Private _Name As String
+
+    Sub New(Name As String, Port As String, Optional BaudRate As Int32 = 9600)
+        _Name = Name
+        _Port = Port
+        _BaudRate = BaudRate
+    End Sub
+
+    Public Function Getname()
+        'retorna name
+        Return _Name
+    End Function
+
+    Sub Connect()
+        Debug.Print("Aberto concexão com arduino")
+
+        If SerialPort1.IsOpen Then
+            SerialPort1.Close()
+        End If
+
         Try
-            If SerialPort1.IsOpen Then
-                SerialPort1.Close()
+            With SerialPort1
+                .PortName = _Port
+                .BaudRate = _BaudRate
+                .Encoding = Text.Encoding.ASCII
+                .NewLine = Chr(13) + Chr(10)
+            End With
 
-                With SerialPort1
-                    .PortName = Port
-                    .BaudRate = BaudRate
-                    .Parity = IO.Ports.Parity.None
-                    .DataBits = 8
-                    .StopBits = IO.Ports.StopBits.One
-                End With
-                SerialPort1.Open()
-            Else
-                RaiseEvent ErroOpenConnection("Port Close")
-                Debug.Print("Erro")
-            End If
-        Catch ex As Exception
-            RaiseEvent ErroOpenConnection(ex.Message)
-            MsgBox(ex.ToString)
+            'Open the port and clear any junck in the input buffer
+            SerialPort1.Open()
+            SerialPort1.DiscardInBuffer()
+
+        Catch Ex As Exception
+            'Handle any exceptions here
         End Try
     End Sub
 
-    Private Sub SerialPort1_DataReceived(ByVal sender As System.Object, ByVal e As System.IO.Ports.SerialDataReceivedEventArgs) Handles SerialPort1.DataReceived
-        Str = SerialPort1.ReadExisting()
-        Debug.Print(Str.ToString)
 
-        RaiseEvent TextReceived(Str)
-    End Sub
-
-    Function WriteCommand(Command)
+    Function WriteCommand(Command) As String
         Try
-            SerialPort1.Write(Command)
-            Return "Success"
+
+            SerialPort1.WriteLine(Command)
+
+            If SerialPort1.IsOpen Then
+                SerialPort1.Close()
+            End If
+
+            Return "1"
         Catch ex As Exception
             Debug.Print(ex.Message)
             Return "0"
         End Try
     End Function
 
+    Function ReceiveSerialData() As String
+        Dim Incoming As String
+        Try
+            If Not SerialPort1.IsOpen Then
+                Connect()
+            End If
+
+            Incoming = SerialPort1.ReadExisting()
+            If Incoming Is Nothing Then
+                Return "nothing" & vbCrLf
+            Else
+                Return Incoming
+            End If
+        Catch ex As TimeoutException
+            Return "Error: Serial Port read timed out."
+        End Try
+
+    End Function
 
 End Class

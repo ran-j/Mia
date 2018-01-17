@@ -19,6 +19,8 @@ Public Class Brain
     Dim ConversationClass As New Conversation 'Classe que e reponsavel por responder usuario
     Dim PS1Emu As New PS1 'Classe de emulador de PS1
 
+    Dim ArduinoList As New List(Of Arduino)() 'Lista de arduinos salvo
+
     Public Event LoadCompleted()
 
     Sub Init1() 'Starta o processamento
@@ -328,5 +330,16 @@ Public Class Brain
         'inicia uma emulação de jogo de ps1
         PS1Emu.RunGame(Gamespath)
     End Sub
+
+    Function RequestArduinoList() As List(Of Arduino)
+        'Retorna array com arduinos setados
+        Return ArduinoList
+    End Function
+
+    Sub RequestregisterArduino(ArduinoOBJ As Arduino)
+        'Adiciona arduino no array
+        ArduinoList.Add(ArduinoOBJ)
+    End Sub
+
 
 End Class

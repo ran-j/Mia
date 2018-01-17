@@ -21297,17 +21297,41 @@
   <data name="NotifyIcon.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <metadata name="CMS.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="CMSI1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>351, 17</value>
   </metadata>
-  <data name="CMS.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="CMSI1.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 70</value>
   </data>
-  <data name="&gt;&gt;CMS.Name" xml:space="preserve">
-    <value>CMS</value>
+  <data name="&gt;&gt;CMSI1.Name" xml:space="preserve">
+    <value>CMSI1</value>
   </data>
-  <data name="&gt;&gt;CMS.Type" xml:space="preserve">
+  <data name="&gt;&gt;CMSI1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="VozToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="VozToolStripMenuItem.Text" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="AltaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="AltaToolStripMenuItem.Text" xml:space="preserve">
+    <value>Alto</value>
+  </data>
+  <data name="BaixaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="BaixaToolStripMenuItem.Text" xml:space="preserve">
+    <value>Baixo</value>
+  </data>
+  <data name="MudaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="MudaToolStripMenuItem.Text" xml:space="preserve">
+    <value>Mudo</value>
   </data>
   <data name="RestaurarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>123, 22</value>
@@ -21321,35 +21345,11 @@
   <data name="FecharToolStripMenuItem.Text" xml:space="preserve">
     <value>Fechar</value>
   </data>
-  <data name="VozToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>123, 22</value>
-  </data>
-  <data name="VozToolStripMenuItem.Text" xml:space="preserve">
-    <value>Voz</value>
-  </data>
-  <data name="AltaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>105, 22</value>
-  </data>
-  <data name="AltaToolStripMenuItem.Text" xml:space="preserve">
-    <value>Alta</value>
-  </data>
-  <data name="BaixaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>105, 22</value>
-  </data>
-  <data name="BaixaToolStripMenuItem.Text" xml:space="preserve">
-    <value>Baixa</value>
-  </data>
-  <data name="MudaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>105, 22</value>
-  </data>
-  <data name="MudaToolStripMenuItem.Text" xml:space="preserve">
-    <value>Muda</value>
-  </data>
   <metadata name="CMSVazio.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>416, 18</value>
   </metadata>
   <data name="CMSVazio.Size" type="System.Drawing.Size, System.Drawing">
-    <value>110, 48</value>
+    <value>115, 48</value>
   </data>
   <data name="&gt;&gt;CMSVazio.Name" xml:space="preserve">
     <value>CMSVazio</value>
@@ -21358,31 +21358,31 @@
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 22</value>
+    <value>114, 22</value>
   </data>
   <data name="ToolStripMenuItem2.Text" xml:space="preserve">
-    <value>Voz</value>
+    <value>Volume</value>
   </data>
   <data name="ToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>105, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="ToolStripMenuItem3.Text" xml:space="preserve">
-    <value>Alta</value>
+    <value>Alto</value>
   </data>
   <data name="ToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>105, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="ToolStripMenuItem4.Text" xml:space="preserve">
-    <value>Baixa</value>
+    <value>Baixo</value>
   </data>
   <data name="ToolStripMenuItem5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>105, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="ToolStripMenuItem5.Text" xml:space="preserve">
-    <value>Muda</value>
+    <value>Mudo</value>
   </data>
   <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="ToolStripMenuItem1.Text" xml:space="preserve">
     <value>Fechar</value>
@@ -22932,6 +22932,36 @@
   <metadata name="HideUIicons.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>751, 18</value>
   </metadata>
+  <metadata name="OpenFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 57</value>
+  </metadata>
+  <data name="WebBrowser1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="WebBrowser1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="WebBrowser1.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="WebBrowser1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>284, 261</value>
+  </data>
+  <data name="WebBrowser1.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;WebBrowser1.Name" xml:space="preserve">
+    <value>WebBrowser1</value>
+  </data>
+  <data name="&gt;&gt;WebBrowser1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.WebBrowser, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;WebBrowser1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;WebBrowser1.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -29134,18 +29164,6 @@
   <data name="&gt;&gt;NotifyIcon.Type" xml:space="preserve">
     <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;RestaurarToolStripMenuItem.Name" xml:space="preserve">
-    <value>RestaurarToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;RestaurarToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;FecharToolStripMenuItem.Name" xml:space="preserve">
-    <value>FecharToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;FecharToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;VozToolStripMenuItem.Name" xml:space="preserve">
     <value>VozToolStripMenuItem</value>
   </data>
@@ -29168,6 +29186,18 @@
     <value>MudaToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;MudaToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RestaurarToolStripMenuItem.Name" xml:space="preserve">
+    <value>RestaurarToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;RestaurarToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;FecharToolStripMenuItem.Name" xml:space="preserve">
+    <value>FecharToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;FecharToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ToolStripMenuItem2.Name" xml:space="preserve">
@@ -29223,6 +29253,12 @@
   </data>
   <data name="&gt;&gt;HideUIicons.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;OpenFileDialog1.Name" xml:space="preserve">
+    <value>OpenFileDialog1</value>
+  </data>
+  <data name="&gt;&gt;OpenFileDialog1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Main</value>
