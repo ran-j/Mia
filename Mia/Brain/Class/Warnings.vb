@@ -10,7 +10,7 @@
     Protected minimizadoav As String() = New String() {"Senhor estou ativa aqui no canto.", "Senhor estou aberta em em segundo plano se precisar", "Senhor se Precisar de algo estou em segundo plano"}
     Protected avisanetvoltou As String() = New String() {"Senhor " + usu + " a conexção com a internet foi restabelecida", "Senhor" + usu + "a conexção com a internet foi restaurada", "Senhor" + usu + "a conexção com a internet retornou"}
     Protected avisanetcaiu As String() = New String() {"Senhor " + usu + " a conexção com a internet foi perdida", "Senhor" + usu + "a conexção com a internet caiu", "Senhor" + usu + "a internet caiu"}
-    Protected boamadrugada As String() = New String() {"Bom dia senhor " + usu + ", poise já e dia", "Bom dia senhor " + usu + ", acordou cedo hoje", "Bom dia senhor " + usu + ", apesar de ainda está um pocuo escuro"}
+    Protected boamadrugada As String() = New String() {"Bom dia senhor " + usu + ", poise já e dia", "Bom dia senhor " + usu + ", está um pouco cedo não ?", "Bom dia senhor " + usu + ", apesar de ainda está um pocuo escuro"}
     Protected bomdiaavisa As String() = New String() {"Bom dia senhor " + usu + ", espero que tenho tido uma boa noite de sono", "Bom dia senhor " + usu + ", e bom falar com o senhor novamente", "Bom dia senhor " + usu + ", é vamos para mais um dia"}
     Protected boatardeavisa As String() = New String() {"Boa tarde senhor " + usu + "e um prazer em ter o senhor aqui", "Boa tarde senhor " + usu + ", estou feliz em vê lo", "Boa Tarde senhor " + usu}
     Protected boanoiteavisa As String() = New String() {"Boa noite senhor " + usu + ", mais um dia chegando ao fim", "Boa noite e bom descanço senhor " + usu, "Boa noite senhor " + usu + ", dia cheio hoje em"}

@@ -23,6 +23,8 @@ Public Class Main
 
     Public OldmousePosition As Integer = 0
 
+    Dim Recog As RecognizerEngine
+
     Public Const WM_NCLBUTTONDOWN As Integer = &HA1
     Public Const HT_CAPTION As Integer = &H2
 
@@ -57,6 +59,7 @@ Public Class Main
 
     Dim HasNet As Integer = 0
     Dim NetStable As Integer = 0
+    Dim Listen As Integer = 1
 
 #Region " win32 "
     Private Declare Auto Function FindWindow Lib "user32" (ByVal lpClassName As String, ByVal lpWindowName As String) As IntPtr
@@ -93,11 +96,23 @@ Public Class Main
                 scan = MiaBrain.RequestIstanceOfScanClass()
                 PS1EMULAITOR = MiaBrain.RequestIstanceOfPS1Emu()
 
+                Try
+                    Recog = New RecognizerEngine() 'Carrega os comandos de voz
+                Catch ex As Exception
+                    Debug.Print(ex.Message)
+                    Throwalert("Erro ao iniciar o modulo de voz")
+                End Try
+
                 AddHandler MiaBrain.LoadCompleted, AddressOf LoadC 'adiciona evento de carregamento
                 AddHandler scan.ScanCompleted, AddressOf ScanCompleted 'adiciona evento de scan de virus
                 AddHandler Net.IpsCaptured, AddressOf IPsConected 'retorna os ips capturados
                 AddHandler PS1EMULAITOR.ErroEmulator, AddressOf ErroEmu 'erro de emulador de ps1
 
+                AddHandler Voz.VoiceSpeakImprogres, AddressOf VoiceInprogress 'evento de quando o programa esta falando  
+                AddHandler Voz.VoiceSpeakCompleted, AddressOf VoiceCompleted 'evento de quando o programa terminou de falar
+
+
+                AddHandler Recog.TextRecognized, AddressOf SpeechText 'reconhece um comando de voz
                 MiaBrain.Init1() 'Starta o processamento
 
                 'Quando o sistema bloquear
@@ -110,6 +125,14 @@ Public Class Main
         End Try
     End Sub
 
+    Private Sub SpeechText(Text As String)
+        'Recebe o texto da escrita
+        If (Listen = 1) Then
+            ProcessText(Text)
+        Else
+            Debug.Print("Reconhecido testo " + Text)
+        End If
+    End Sub
 
     Private Sub LoadC()
         'evento de quando termina de carregar os arquivos
@@ -120,12 +143,16 @@ Public Class Main
         Select Case TimeOfDay
 
             Case "00:00" To "5:30"
+                Debug.Print("Madrugrada")
                 Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(4))
             Case "00:00 " To "11:59"
+                Debug.Print("Manhã")
                 Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(5))
             Case "12:00" To "17:59"
+                Debug.Print("Tarde")
                 Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(6))
-            Case "16:00" To "23:59"
+            Case "18:00" To "23:59"
+                Debug.Print("Noite")
                 Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(7))
 
         End Select
@@ -136,19 +163,20 @@ Public Class Main
 
     Public Sub ProcessText(text As String)
         'processa e responde o usuário na tela
+        On Error Resume Next
 
         Dim VerifyText As String = MiaBrain.RequestVerifyText(text)
 
         If (NoPendence And VerifyText.Contains("oi")) Then
             InteractForm.SetText(MiaBrain.RequestConversation(1))
 
-        ElseIf (NoPendence And VerifyText.Contains("emular ps1") Or VerifyText.Contains("emular jogo de ps1")) Then
+        ElseIf (NoPendence And VerifyText.Contains("emular ps1") Or VerifyText.Contains("emular jogo de ps1") Or VerifyText.Contains("emular jogo de play station")) Then
             InteractForm.SetText("Selecione o jogo de PS1.")
 
             Me.OpenFileDialog1.Multiselect = False
-            Me.OpenFileDialog1.FileName = "Selecionar o jogo"
+            Me.OpenFileDialog1.FileName = "Selecione o jogo"
             Me.OpenFileDialog1.InitialDirectory = "C:\"
-            Me.OpenFileDialog1.Filter = "Jogos|*.bin;*.iso;*.cdz"
+            Me.OpenFileDialog1.Filter = "Jogo|*.bin;*.iso;*.cdz"
             Me.OpenFileDialog1.CheckFileExists = True
             Me.OpenFileDialog1.CheckPathExists = True
 
@@ -218,12 +246,23 @@ Public Class Main
     Private Sub ErroEmu(text As String)
         'mostra o erro no alerta se o mesmo for por falta de arquivos do programa
         If (text.Equals("Pasta do emulador não encontrada")) Then
-            MiaBrain.SetAlertText("Pasta do emulador não encontrada")
-            ShowWarning()
+            Throwalert("Pasta do emulador não encontrada")
         Else
             MsgBox(text, MsgBoxStyle.Critical)
         End If
 
+    End Sub
+
+    Private Sub VoiceCompleted()
+        'libera para escutar de novo
+        Debug.Print("Programa terminou de falar")
+        Listen = 1
+    End Sub
+
+    Private Sub VoiceInprogress()
+        'tarva a escuta enquanto o programa fala
+        Debug.Print("Programa falando")
+        Listen = 0
     End Sub
 
 #End Region
@@ -438,8 +477,10 @@ Public Class Main
             'Ocultar o programa
             Me.Hide()
 
-            'Solta notificação
-            NotifyIcon.ShowBalloonTip("5000", "Aviso", MiaBrain.RequestWarnings(1), ToolTipIcon.Info)
+            If (GameOpen = 0) Then
+                'Solta notificação
+                NotifyIcon.ShowBalloonTip("5000", "Aviso", MiaBrain.RequestWarnings(1), ToolTipIcon.Info)
+            End If
 
             'Troca o contexte menu
             NotifyIcon.ContextMenuStrip = CMSI1
@@ -553,7 +594,14 @@ Public Class Main
     End Sub
 
     Private Sub UI_MouseHover(sender As Object, e As EventArgs) Handles UI.MouseHover
+        'zera os clicks ao mover pela UI
         MouseclickUI = 0
+    End Sub
+
+    Public Sub Throwalert(Alert As String)
+        'Mostra o alerta
+        MiaBrain.SetAlertText(Alert)
+        ShowWarning()
     End Sub
 
 #End Region
@@ -601,6 +649,7 @@ Public Class Main
                 'Abriu jogo
                 GameOpen = 1
                 Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(10) + ", e o ping está " + NetSpeed())
+                Me.WindowState = FormWindowState.Minimized
             Else
                 'Fechou o jogo
                 If (GameOpen = 1 And GameCount <= 0) Then

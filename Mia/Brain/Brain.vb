@@ -29,7 +29,6 @@ Public Class Brain
         Thinking.Dates(TheMemory.LoadDates())
         Thinking.Preferences(TheMemory.LoadPreferences())
 
-
         'Desconmentar somente quando liberar a alpha
         If (My.Settings.WindowsStart = 1) Then
             'Adiciona o programa ao start do windowns 
@@ -340,6 +339,4 @@ Public Class Brain
         'Adiciona arduino no array
         ArduinoList.Add(ArduinoOBJ)
     End Sub
-
-
 End Class

@@ -44,7 +44,7 @@ Public Class Arduino
 
     Function WriteCommand(Command) As String
         Try
-
+            'Manda comando para o arduino
             SerialPort1.WriteLine(Command)
 
             If SerialPort1.IsOpen Then

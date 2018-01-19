@@ -1,7 +1,7 @@
 ﻿Public Class Think
-    Dim TimeStarted
-    Dim QuestionHandle As Questions
-    Dim WarningsHandles As New Warnings
+    Private TimeStarted
+    Private QuestionHandle As Questions
+    Private WarningsHandles As New Warnings
 
     Sub New(time As String)
         TimeStarted = time
@@ -22,11 +22,6 @@
     Sub Preferences(Preferences)
         'recebe as preferencias
     End Sub
-
-
-
-
-
 
     Function RequestQuestion() As String
         'retorna uma question pro usuário

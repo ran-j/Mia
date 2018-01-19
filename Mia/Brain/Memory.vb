@@ -4,6 +4,7 @@ Imports System.Text
 Public Class Memory
     Dim QuestionPath As String = Application.StartupPath & "\perlist.dll"
     Dim GameListPath As String = Application.StartupPath & "\glist.dll"
+    Dim CommandsPath As String = Application.StartupPath & "\clist.dll"
 
     Sub SaveContent(Target As Object)
         'Salvar conteudo na memoria
@@ -61,7 +62,7 @@ Public Class Memory
     End Function
 
     Public Function LoadGamesList() As List(Of String)
-        'carrega as perguntas de um txt
+        'carrega a lista de jogos
 
         Dim GameList As New List(Of String)()
         Try
@@ -89,6 +90,36 @@ Public Class Memory
         Return GameList
 
     End Function
+
+    Sub SaveGamesList(SaveGamesListArray)
+        'Atualizar a lista de jogos salvos
+        Try
+            Using sw As StreamWriter = New StreamWriter(GameListPath, True)
+                For Each Game In SaveGamesListArray
+                    sw.WriteLine(Game)
+                Next
+            End Using
+        Catch ex As Exception
+            Main.Throwalert("Erro ao salvar")
+            Debug.Print(ex.Message)
+        End Try
+    End Sub
+
+    Sub SaveCommandsList(SaveCommandsArray)
+        'Salvar comandos
+        Try
+            Using sw As StreamWriter = New StreamWriter(CommandsPath, True)
+                For Each NewCommand In SaveCommandsArray
+                    sw.WriteLine(NewCommand)
+                Next
+            End Using
+        Catch ex As Exception
+            Main.Throwalert("Erro ao salvar")
+            Debug.Print(ex.Message)
+        End Try
+    End Sub
+
+
 
     Function LoadCache()
         'Carregar para memoria alguma coisa q o programa precisa lembrar

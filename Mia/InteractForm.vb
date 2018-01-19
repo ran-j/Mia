@@ -96,6 +96,8 @@
             RichTextBox1.AppendText(vbNewLine & "Voce:>")
         End If
 
+        Main.Voz.SpeechMoreThanOnce(Text)
+
         RichTextBox1.ReadOnly = False
 
     End Sub

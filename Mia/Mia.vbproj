@@ -24,6 +24,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>Mia.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -104,6 +105,7 @@
     <Compile Include="Brain\Google\GoogleSpellChecker.vb" />
     <Compile Include="Brain\Memory.vb" />
     <Compile Include="Brain\Brain.vb" />
+    <Compile Include="Brain\RecognizerEngine.vb" />
     <Compile Include="Brain\Think.vb" />
     <Compile Include="Brain\Class\Fixer\FixNet.vb" />
     <Compile Include="EspecialForm\FrmNotification.Designer.vb">
