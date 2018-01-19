@@ -44,6 +44,7 @@
             End If
         Catch ex As Exception
             Debug.Print("Erro ao processar o texto:" + ex.Message)
+            My.Settings.Erros = My.Settings.Erros + 1
             Return text
         End Try
 

@@ -85,6 +85,12 @@ Public Class RecognizerEngine
             Commands.Add("emular jogo de ps1")
             Commands.Add("previão do tempo")
             Commands.Add("qual é a previão do tempo")
+            Commands.Add("como está a internet")
+            Commands.Add("velocidade da internet")
+            Commands.Add("como está o seu sistema")
+            Commands.Add("status do seu sistem")
+            Commands.Add("como voce está")
+
             Debug.Print("Erro ao procurar o dicionario de comandos")
         End Try
 

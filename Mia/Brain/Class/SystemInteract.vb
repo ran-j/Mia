@@ -47,8 +47,13 @@ Public Class SystemInteract
 
     Public Sub EmptyRecycleBin(Handle) 'precisa passar o handle Me.Handle
         'exclui tudo da lixeira
-        SHEmptyRecycleBin(Handle.ToInt32, "", SHERB_NOCONFIRMATION + SHERB_NOSOUND)
-        SHUpdateRecycleBinIcon()
+        Try
+            SHEmptyRecycleBin(Handle.ToInt32, "", SHERB_NOCONFIRMATION + SHERB_NOSOUND)
+            SHUpdateRecycleBinIcon()
+        Catch ex As Exception
+            Debug.Print("Erro " + ex.Message)
+            My.Settings.Erros = My.Settings.Erros + 1
+        End Try
     End Sub
 
     Public Function GetAvailableMemory() As Single
@@ -62,25 +67,30 @@ Public Class SystemInteract
     End Function
 
     Public Function GetCPUTemperature()
-        'pegar cpu temp
-        Dim computer As New Computer()
-        computer.Open()
-        computer.CPUEnabled = True
-
         Dim saida = 0
+        Try
+            'pegar cpu temp
+            Dim computer As New Computer()
+            computer.Open()
+            computer.CPUEnabled = True
 
-        Dim cpu = computer.Hardware.Where(Function(h) h.HardwareType = HardwareType.CPU).FirstOrDefault()
+            Dim cpu = computer.Hardware.Where(Function(h) h.HardwareType = HardwareType.CPU).FirstOrDefault()
 
-        If cpu IsNot Nothing Then
-            cpu.Update()
+            If cpu IsNot Nothing Then
+                cpu.Update()
 
-            Dim tempSensors = cpu.Sensors.Where(Function(s) s.SensorType = SensorType.Temperature)
-            tempSensors.ToList.ForEach(Sub(s) If (s.Name.Equals("CPU Package")) Then saida = s.Value)
-        End If
-        's.Value.ToString + " . " + s.Name
+                Dim tempSensors = cpu.Sensors.Where(Function(s) s.SensorType = SensorType.Temperature)
+                tempSensors.ToList.ForEach(Sub(s) If (s.Name.Equals("CPU Package")) Then saida = s.Value)
+            End If
+            's.Value.ToString + " . " + s.Name
+
+
+        Catch ex As Exception
+            My.Settings.Erros = My.Settings.Erros + 1
+            Debug.Print("Erro " + ex.Message)
+        End Try
 
         Return saida
-
     End Function
 
     Function GetResolution() As String
@@ -113,6 +123,7 @@ Public Class SystemInteract
 
             Return WidthMonitor.ToString + "," + HeightMonitor.ToString
         Catch ex As Exception
+            My.Settings.Erros = My.Settings.Erros + 1
             Return "530,550"
         End Try
 
@@ -120,18 +131,24 @@ Public Class SystemInteract
 
 
     Function GetTempSize()
-        'pegar o tamanho da pasta temp
-        Dim temp As String = Path.GetTempPath() 'pasta temp
+        Try
+            'pegar o tamanho da pasta temp
+            Dim temp As String = Path.GetTempPath() 'pasta temp
 
-        Dim tamanhopasta As String = FormatBytes(DirectorySize(temp, True))
-        Dim tamanho As Integer = tamanhopasta.Substring(3)
-        Dim tipo As String = tamanhopasta.Substring(0, 2)
+            Dim tamanhopasta As String = FormatBytes(DirectorySize(temp, True))
+            Dim tamanho As Integer = tamanhopasta.Substring(3)
+            Dim tipo As String = tamanhopasta.Substring(0, 2)
 
-        If ((tamanho > 1) And (tipo.Contains("GB")) Or (tipo.Contains("TB"))) Then
-            Return 0
-        Else
-            Return 1
-        End If
+            If ((tamanho > 1) And (tipo.Contains("GB")) Or (tipo.Contains("TB"))) Then
+                Return 0
+            Else
+                Return 1
+            End If
+        Catch ex As Exception
+            My.Settings.Erros = My.Settings.Erros + 1
+            Debug.Print("Erro " + ex.Message)
+        End Try
+
     End Function
 
     Default Public Property FormatBytes(ByVal BytesCaller As ULong) As String

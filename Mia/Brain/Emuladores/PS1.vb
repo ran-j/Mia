@@ -48,6 +48,7 @@ Public Class PS1
 
                 My.Computer.FileSystem.DeleteFile(Emulador)
             Catch ex As Exception
+                My.Settings.Erros = My.Settings.Erros + 1
                 Debug.Print(ex.Message)
             End Try
 

@@ -31,10 +31,11 @@ Public Class Act
                 Dim CelsiusValue = (5 / 9) * (Convert.ToInt32(weatherObject.query.results.channel.item.condition.temp) - 32)
                 CelsiusValue = Math.Round(CelsiusValue, 0)
 
-                Return CelsiusValue.ToString + "," + weatherObject.query.results.channel.item.condition.text.Replace("Mostly Cloudy", "Parcialmente nublado")
+                Return CelsiusValue.ToString + "," + weatherObject.query.results.channel.item.condition.text.Replace("Mostly Cloudy", "Parcialmente nublado").Replace("Partly Cloudy", "parcialmente nublado")
 
             End Using
         Catch ex As Exception
+            My.Settings.Erros = My.Settings.Erros + 1
             Return "Vazio"
         End Try
 

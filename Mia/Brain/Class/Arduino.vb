@@ -38,6 +38,7 @@ Public Class Arduino
 
         Catch Ex As Exception
             'Handle any exceptions here
+            My.Settings.Erros = My.Settings.Erros + 1
         End Try
     End Sub
 
@@ -54,6 +55,7 @@ Public Class Arduino
             Return "1"
         Catch ex As Exception
             Debug.Print(ex.Message)
+            My.Settings.Erros = My.Settings.Erros + 1
             Return "0"
         End Try
     End Function
@@ -73,6 +75,7 @@ Public Class Arduino
             End If
         Catch ex As TimeoutException
             Return "Error: Serial Port read timed out."
+            My.Settings.Erros = My.Settings.Erros + 1
         End Try
 
     End Function

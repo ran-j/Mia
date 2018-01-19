@@ -19,11 +19,11 @@ Public Class Main
 
     Dim Google As GoogleEngine
 
-    Dim NoPendence As Boolean = True 'se tiver pendencias o valor vai ser falso
+    Dim NoPendence As Integer = 0 'se tiver pendencias ele para na função corresopondente
 
-    Public OldmousePosition As Integer = 0
+    Public OldmousePosition As Integer = 0 'posiçãodo mouse
 
-    Dim Recog As RecognizerEngine
+    Dim Recog As RecognizerEngine 'reconhecimento de voz
 
     Public Const WM_NCLBUTTONDOWN As Integer = &HA1
     Public Const HT_CAPTION As Integer = &H2
@@ -57,7 +57,7 @@ Public Class Main
     'Para saber se o usuário está jogando
     Dim GameOpen = 0
 
-    Dim HasNet As Integer = 0
+    Dim HasNet As Boolean = True
     Dim NetStable As Integer = 0
     Dim Listen As Integer = 1
 
@@ -89,12 +89,18 @@ Public Class Main
                 'Tooltip com saldaçao
                 ToolTip.SetToolTip(Me.UI, "Olá")
 
-                MiaBrain = New Brain
+                Try
+                    MiaBrain = New Brain
 
-                Google = New GoogleEngine(GoogleEngine.GoogleLang.Portuguese, WebBrowser1) 'Cria uma instancia da Minha Api do google
-                Net = MiaBrain.RequestIstanceOfNetClass()
-                scan = MiaBrain.RequestIstanceOfScanClass()
-                PS1EMULAITOR = MiaBrain.RequestIstanceOfPS1Emu()
+                    Google = New GoogleEngine(GoogleEngine.GoogleLang.Portuguese, WebBrowser1) 'Cria uma instancia da Minha Api do google
+                    Net = MiaBrain.RequestIstanceOfNetClass()
+                    scan = MiaBrain.RequestIstanceOfScanClass()
+                    PS1EMULAITOR = MiaBrain.RequestIstanceOfPS1Emu()
+                Catch ex As Exception
+                    Debug.Print(ex.Message)
+                    Throwalert("Erro de kernel")
+                    My.Settings.Erros = My.Settings.Erros + 15
+                End Try
 
                 Try
                     Recog = New RecognizerEngine() 'Carrega os comandos de voz
@@ -103,20 +109,27 @@ Public Class Main
                 Catch ex As Exception
                     Debug.Print(ex.Message)
                     Throwalert("Erro ao iniciar o modulo de voz")
+                    My.Settings.Erros = My.Settings.Erros + 1
                 End Try
 
-                AddHandler MiaBrain.LoadCompleted, AddressOf LoadC 'adiciona evento de carregamento
-                AddHandler scan.ScanCompleted, AddressOf ScanCompleted 'adiciona evento de scan de virus
-                AddHandler Net.IpsCaptured, AddressOf IPsConected 'retorna os ips capturados
-                AddHandler PS1EMULAITOR.ErroEmulator, AddressOf ErroEmu 'erro de emulador de ps1
+                Try
+                    AddHandler MiaBrain.LoadCompleted, AddressOf LoadC 'adiciona evento de carregamento
+                    AddHandler scan.ScanCompleted, AddressOf ScanCompleted 'adiciona evento de scan de virus
+                    AddHandler Net.IpsCaptured, AddressOf IPsConected 'retorna os ips capturados
+                    AddHandler PS1EMULAITOR.ErroEmulator, AddressOf ErroEmu 'erro de emulador de ps1
 
-                AddHandler Voz.VoiceSpeakImprogres, AddressOf VoiceInprogress 'evento de quando o programa esta falando  
-                AddHandler Voz.VoiceSpeakCompleted, AddressOf VoiceCompleted 'evento de quando o programa terminou de falar
+                    AddHandler Voz.VoiceSpeakImprogres, AddressOf VoiceInprogress 'evento de quando o programa esta falando  
+                    AddHandler Voz.VoiceSpeakCompleted, AddressOf VoiceCompleted 'evento de quando o programa terminou de falar
+
+                    'Quando o sistema bloquear
+                    AddHandler SystemEvents.SessionSwitch, AddressOf CheckLockUnlock
+                Catch ex As Exception
+                    Debug.Print(ex.Message)
+                    Throwalert("Erro ao adicionar enventos")
+                    My.Settings.Erros = My.Settings.Erros + 1
+                End Try
 
                 MiaBrain.Init1() 'Starta o processamento
-
-                'Quando o sistema bloquear
-                AddHandler SystemEvents.SessionSwitch, AddressOf CheckLockUnlock
 
             End If
         Catch ex As Exception
@@ -167,10 +180,11 @@ Public Class Main
 
         Dim VerifyText As String = MiaBrain.RequestVerifyText(text)
 
-        If (NoPendence And VerifyText.Contains("oi")) Then
+        If (NoPendence = 1 Or VerifyText.Contains("oi")) Then
+
             InteractForm.SetText(MiaBrain.RequestConversation(1))
 
-        ElseIf (NoPendence And VerifyText.Contains("emular ps1") Or VerifyText.Contains("emular jogo de ps1") Or VerifyText.Contains("emular jogo de play station")) Then
+        ElseIf (NoPendence = 2 Or VerifyText.Contains("emular ps1") Or VerifyText.Contains("emular jogo de ps1") Or VerifyText.Contains("emular jogo de play station")) Then
             InteractForm.SetText("Selecione o jogo de PS1.")
 
             Me.OpenFileDialog1.Multiselect = False
@@ -192,55 +206,88 @@ Public Class Main
                 InteractForm.SetText("Operação cancelada.")
             End If
 
-        ElseIf (NoPendence And VerifyText.Contains("previão do tempo")) Then
+        ElseIf (NoPendence = 3 Or VerifyText.Contains("previão do tempo")) Then
+            If (HasNet) Then
+                InteractForm.SetText(MiaBrain.RequestWarnings(17))
 
-            InteractForm.SetText(MiaBrain.RequestWarnings(17))
+                Dim Temp As String() = MiaBrain.RequestWeather().Split(",")
 
-            Dim Temp As String() = MiaBrain.RequestWeather().Split(",")
+                Dim graus As String = Temp(0)
 
-            Dim graus As String = Temp(0)
+                If (graus > 28) Then
+                    InteractForm.SetText("Hoje está muito quente, a temperatura é de " + graus + " graus, e o céu está " + Temp(1))
 
-            If (graus > 28) Then
-                InteractForm.SetText("Hoje está muito quente, a temperatura é de " + graus + " graus, e o céu está " + Temp(1))
+                    InteractForm.SetText(MiaBrain.RequestWarnings(18))
 
-                InteractForm.SetText(MiaBrain.RequestWarnings(18))
+                ElseIf (graus < 18) Then
+                    InteractForm.SetText("Hoje está muito frio, a temperatura é de " + graus + " graus, e o céu está " + Temp(1))
 
-            ElseIf (graus < 18) Then
-                InteractForm.SetText("Hoje está muito frio, a temperatura é de " + graus + " graus, e o céu está " + Temp(1))
+                    InteractForm.SetText(MiaBrain.RequestWarnings(19))
+                Else
+                    InteractForm.SetText("Hoje está com um clima agradavel, a temperatura é de " + graus + " graus, e o céu está " + Temp(1))
 
-                InteractForm.SetText(MiaBrain.RequestWarnings(19))
+                    InteractForm.SetText(MiaBrain.RequestWarnings(18))
+                End If
             Else
-                InteractForm.SetText("Hoje está com um clima agradavel, a temperatura é de " + graus + " graus, e o céu está " + Temp(1))
-
-                InteractForm.SetText(MiaBrain.RequestWarnings(18))
+                InteractForm.SetText(MiaBrain.RequestWarnings(20))
             End If
 
-        ElseIf (NoPendence) Then
-            'Caso o programa não saiba o mesmo pesquisa no google kkkkk
-            Dim GoogleCheckText As String = Google.CheckWord(VerifyText)
+        ElseIf (NoPendence = 4 Or VerifyText.Contains("como está a internet") Or VerifyText.Contains("como esta a internet") Or VerifyText.Contains("velocidade da internet")) Then
 
-            If (GoogleCheckText.Equals("0.")) Then 'Verifica se o texto entrante está correto
-
-                Dim Output As String = DoGoogleQuery(VerifyText)
-
-                If Not (Output.Equals("1.")) Then
-                    InteractForm.SetText(Output)
-                Else
-                    Debug.Print("Texto correto")
-                    InteractForm.SetText(MiaBrain.RequestConversation(2))
-                End If
-
+            If (HasNet) Then
+                InteractForm.SetText("A velocidade da internet está " + NetSpeed())
             Else
-                Dim Output As String = DoGoogleQuery(GoogleCheckText)
-
-                If Not (Output.Equals("1.")) Then
-                    InteractForm.SetText(Output)
-                Else
-                    Debug.Print("Texto incorreto")
-                    InteractForm.SetText(MiaBrain.RequestConversation(2))
-                End If
-
+                InteractForm.SetText(MiaBrain.RequestWarnings(20))
             End If
+
+        ElseIf (NoPendence = 5 Or VerifyText.Contains("como está o seu sistema") Or VerifyText.Contains("status do seu sistem") Or VerifyText.Contains("como voce está")) Then
+
+            Dim MiaStatus = My.Settings.Erros
+
+            Debug.Print("Erros no sistema " + MiaStatus.ToString)
+
+            If (MiaStatus = 0) Then
+                InteractForm.SetText("Eu estou ótima, meu sistema está todo operacional e sem erros")
+            ElseIf (MiaStatus < 3) Then
+                InteractForm.SetText("Eu estou um pouco ruim , meu sistema está com alguns erros")
+            ElseIf (MiaStatus < 6) Then
+                InteractForm.SetText("Eu estou ruim, meu sistema está com cinquenta porcento de erros")
+            ElseIf (MiaStatus < 8) Then
+                InteractForm.SetText("Eu estou bem ruim, mais da metade do meu sistema está erros")
+            ElseIf (MiaStatus > 12) Then
+                InteractForm.SetText("Eu estou muito ruim, meu sistema está com mais de 90 porcento de erros")
+            End If
+
+            InteractForm.SetText(MiaBrain.RequestConversation(3))
+
+        ElseIf (NoPendence = 0 And HasNet) Then
+                'Caso o programa não saiba o mesmo pesquisa no google kkkkk
+                Dim GoogleCheckText As String = Google.CheckWord(VerifyText)
+
+                If (GoogleCheckText.Equals("0.")) Then 'Verifica se o texto entrante está correto
+
+                    Dim Output As String = DoGoogleQuery(VerifyText)
+
+                    If Not (Output.Equals("1.")) Then
+                        InteractForm.SetText(Output)
+                    Else
+                        Debug.Print("Texto correto")
+                        InteractForm.SetText(MiaBrain.RequestConversation(2))
+                    End If
+
+                Else
+                    Dim Output As String = DoGoogleQuery(GoogleCheckText)
+
+                    If Not (Output.Equals("1.")) Then
+                        InteractForm.SetText(Output)
+                    Else
+                        Debug.Print("Texto incorreto")
+                        InteractForm.SetText(MiaBrain.RequestConversation(2))
+                    End If
+
+                End If
+            Else
+            InteractForm.SetText(MiaBrain.RequestConversation(2))
         End If
 
     End Sub
@@ -291,6 +338,10 @@ Public Class Main
         Listen = 0
     End Sub
 
+    Private Sub IPsConected(IP As List(Of String))
+        MsgBox(IP.Count.ToString)
+    End Sub
+
 #End Region
 
 #Region "Net"
@@ -323,7 +374,7 @@ Public Class Main
             Debug.Print(Now & " - State: " & ConnectionState.ToString())
 
             If Not (ConnectionState.ToString().Equals("Connected")) Then
-                HasNet = 1
+                HasNet = False
                 Dim avisos As String = MiaBrain.RequestWarnings(3)
                 Voz.SpeechMoreThanOnce(avisos)
                 'alerta no programa
@@ -334,8 +385,8 @@ Public Class Main
                 TH.SetApartmentState(ApartmentState.STA)
                 TH.Start(New Object() {"Atenção !", FrmNotification.Icons.Error, "Internet Caiu", "Sem conexão de internet"})
             Else
-                If (HasNet = 1) Then
-                    HasNet = 0
+                If (HasNet = False) Then
+                    HasNet = True
                     Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(2))
                     Dim TH As Thread = New Thread(AddressOf MiaBrain.ShowCustonsNotification)
                     TH.SetApartmentState(ApartmentState.STA)
@@ -385,15 +436,6 @@ Public Class Main
 
     Private Sub Conn_InternetConnectionStateChanged(ConnectionState As InternetConnectionState) Handles Net.InternetConnectionStateChanged
         AddToList1(ConnectionState, False)
-    End Sub
-
-    Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        NotifyIcon.Visible = False
-        NotifyIcon.Dispose()
-    End Sub
-
-    Private Sub IPsConected(IP As List(Of String))
-        MsgBox(IP.Count.ToString)
     End Sub
 
 #End Region
@@ -628,6 +670,12 @@ Public Class Main
         'Mostra o alerta
         MiaBrain.SetAlertText(Alert)
         ShowWarning()
+    End Sub
+
+    Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        My.Settings.Erros = 0
+        NotifyIcon.Visible = False
+        NotifyIcon.Dispose()
     End Sub
 
 #End Region

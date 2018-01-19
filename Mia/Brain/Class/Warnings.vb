@@ -8,8 +8,8 @@
 
     'Avisos
     Protected minimizadoav As String() = New String() {"Senhor estou ativa aqui no canto.", "Senhor estou aberta em em segundo plano se precisar", "Senhor se Precisar de algo estou em segundo plano"}
-    Protected avisanetvoltou As String() = New String() {"Senhor " + usu + " a conexção com a internet foi restabelecida", "Senhor" + usu + "a conexção com a internet foi restaurada", "Senhor" + usu + "a conexção com a internet retornou"}
-    Protected avisanetcaiu As String() = New String() {"Senhor " + usu + " a conexção com a internet foi perdida", "Senhor" + usu + "a conexção com a internet caiu", "Senhor" + usu + "a internet caiu"}
+    Protected avisanetvoltou As String() = New String() {"Senhor " + usu + " a conexção com a internet foi restabelecida", "Senhor " + usu + " a conexção com a internet foi restaurada", "Senhor " + usu + " a conexção com a internet retornou"}
+    Protected avisanetcaiu As String() = New String() {"Senhor " + usu + " a conexção com a internet foi perdida", "Senhor " + usu + " a conexção com a internet caiu", "Senhor " + usu + "a internet caiu"}
     Protected boamadrugada As String() = New String() {"Bom dia senhor " + usu + ", poise já e dia", "Bom dia senhor " + usu + ", está um pouco cedo não ?", "Bom dia senhor " + usu + ", apesar de ainda está um pocuo escuro"}
     Protected bomdiaavisa As String() = New String() {"Bom dia senhor " + usu + ", espero que tenho tido uma boa noite de sono", "Bom dia senhor " + usu + ", e bom falar com o senhor novamente", "Bom dia senhor " + usu + ", é vamos para mais um dia"}
     Protected boatardeavisa As String() = New String() {"Boa tarde senhor " + usu + "e um prazer em ter o senhor aqui", "Boa tarde senhor " + usu + ", estou feliz em vê lo", "Boa Tarde senhor " + usu}
@@ -19,16 +19,17 @@
     Protected vaijogar As String() = New String() {"Reparei que o senhor vai jogar e verifiquei o ping para o senhor.", "Senhor " + usu + " já que o senhor vai jogar eu verifiquei o ping para o senhor", "Senhor " + usu + " verifiquei o ping para o senhor"}
     Protected oususaiu As String() = New String() {"Até mais senhor " + usu, "Espero o seu retorno senhor " + usu, "Até logo mais senhor " + usu}
     Protected ousuvoltou As String() = New String() {"Olá senhor " + usu, "Bem vindo de volta senhor " + usu, "Bom ter o senhor de volta senhor " + usu}
-    Protected avisatempo As String() = New String() {"Certo senho r" + usu + " estou consultando a previsão do tempo agora", "Tudo bem estou verificando a previsão do tempo para o senhor", "Entendido senhor " + usu + " estou baixando a previsão de hoje"}
+    Protected avisatempo As String() = New String() {"Certo senhor " + usu + " estou consultando a previsão do tempo agora", "Tudo bem estou verificando a previsão do tempo para o senhor", "Entendido senhor " + usu + " estou baixando a previsão de hoje"}
     Protected avisaAFK As String() = New String() {"Está ai senhor " + usu + "?", "Senhor " + usu + ", o senhor está ae ?", "Senhor ?"}
     Protected InternetInstavel As String() = New String() {"Senhor " + usu + " a internet está instavel", "Senhor " + usu + ", verifiquei que a internet está instavel", "Senhor " + usu + " a internet ficou instavel"}
     Protected InternetEnstavel As String() = New String() {"Senhor " + usu + " a internet está estavel de novo", "Senhor " + usu + ", a internet está normalizada", "Internet normalizada Senhor " + usu}
     Protected PegandoPrevisaoTempo As String() = New String() {"Certo senhor " + usu + ", estou consultando a previsão do tempo agora", "Entendido, estou verificando a previsão do tempo para o senhor", "Ok senhor " + usu + ", estou baixando a previsão de hoje"}
     Protected RecomendaQuente As String() = New String() {"Recomendo muita agua e protetor solar", "Recomendo colocar recipiente com água ou pano molhado nos ambientes, isso ajuda a amenizar a baixa umidade e seus efeitos, assim como passar pano úmido sobre os móveis.", "Recomendo evitar exercícios físicos em locais de poluição atmosférica acentuada, como em vias de alto trânsito de veículos"}
     Protected RecomendaFrio As String() = New String() {"Recomendo promover boa circulação de ar, principalmente durante a noite, não fechando completamente os aposentos mas evitando correntes de ar frio", "Recomendo não fazer exercício físico intenso ou ao ar livre e evite arrefecer com a roupa transpirada no corpo", "Recomendo que comer com mais frequência: encurte as horas entre as refeições"}
+    Protected NegaPorInternet As String() = New String() {"Sinto muito, mas estou sem acesso a internet", "Não consigo, estou sem acesso a internet", "Não posso, sem internet"}
 
     Public Function AnwserWarning(ByVal operaçao As Integer)
-        Dim Output = "Erro interno"
+        Dim Output = "Desculpe, não sei responder isso"
 
         If (operaçao = 1) Then
             Output = minimizadoav(GenerateNunber(minimizadoav.Length))
@@ -68,8 +69,8 @@
             Output = RecomendaQuente(GenerateNunber(RecomendaQuente.Length))
         ElseIf (operaçao = 19) Then
             Output = RecomendaFrio(GenerateNunber(RecomendaFrio.Length))
-        Else
-            Output = "Erro de código"
+        ElseIf (operaçao = 20) Then
+            Output = NegaPorInternet(GenerateNunber(NegaPorInternet.Length))
         End If
 
         Return Output

@@ -13,7 +13,7 @@ Public Class Voice
         AddHandler Voice.SpeakCompleted, AddressOf SpeakCompleted
         AddHandler Voice.SpeakProgress, AddressOf SpeakImprogres
 
-        Debug.Print("Iniciando e setando o volume da voz para " + My.Settings.Volume.ToString)
+        Debug.Print("Iniciando sistema de voz e setando o volume da voz para " + My.Settings.Volume.ToString)
         Setvolume(My.Settings.Volume)
     End Sub
 

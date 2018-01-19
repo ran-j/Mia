@@ -55,6 +55,8 @@ Public Class Memory
             Questions.Add("Como se chama o seu pai ?")
             Questions.Add("Voce gosta de animais ?")
             MsgBox("Erro critico ao carregar o dicionario", MsgBoxStyle.Critical)
+
+            My.Settings.Erros = My.Settings.Erros + 1
         End Try
 
         Return Questions
@@ -102,6 +104,7 @@ Public Class Memory
         Catch ex As Exception
             Main.Throwalert("Erro ao salvar")
             Debug.Print(ex.Message)
+            My.Settings.Erros = My.Settings.Erros + 1
         End Try
     End Sub
 
@@ -116,6 +119,7 @@ Public Class Memory
         Catch ex As Exception
             Main.Throwalert("Erro ao salvar")
             Debug.Print(ex.Message)
+            My.Settings.Erros = My.Settings.Erros + 1
         End Try
     End Sub
 
