@@ -83,6 +83,8 @@ Public Class RecognizerEngine
             Commands.Add("oi")
             Commands.Add("emular jogo de play station")
             Commands.Add("emular jogo de ps1")
+            Commands.Add("previão do tempo")
+            Commands.Add("qual é a previão do tempo")
             Debug.Print("Erro ao procurar o dicionario de comandos")
         End Try
 

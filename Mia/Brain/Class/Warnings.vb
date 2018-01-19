@@ -23,7 +23,9 @@
     Protected avisaAFK As String() = New String() {"Está ai senhor " + usu + "?", "Senhor " + usu + ", o senhor está ae ?", "Senhor ?"}
     Protected InternetInstavel As String() = New String() {"Senhor " + usu + " a internet está instavel", "Senhor " + usu + ", verifiquei que a internet está instavel", "Senhor " + usu + " a internet ficou instavel"}
     Protected InternetEnstavel As String() = New String() {"Senhor " + usu + " a internet está estavel de novo", "Senhor " + usu + ", a internet está normalizada", "Internet normalizada Senhor " + usu}
-
+    Protected PegandoPrevisaoTempo As String() = New String() {"Certo senhor " + usu + ", estou consultando a previsão do tempo agora", "Entendido, estou verificando a previsão do tempo para o senhor", "Ok senhor " + usu + ", estou baixando a previsão de hoje"}
+    Protected RecomendaQuente As String() = New String() {"Recomendo muita agua e protetor solar", "Recomendo colocar recipiente com água ou pano molhado nos ambientes, isso ajuda a amenizar a baixa umidade e seus efeitos, assim como passar pano úmido sobre os móveis.", "Recomendo evitar exercícios físicos em locais de poluição atmosférica acentuada, como em vias de alto trânsito de veículos"}
+    Protected RecomendaFrio As String() = New String() {"Recomendo promover boa circulação de ar, principalmente durante a noite, não fechando completamente os aposentos mas evitando correntes de ar frio", "Recomendo não fazer exercício físico intenso ou ao ar livre e evite arrefecer com a roupa transpirada no corpo", "Recomendo que comer com mais frequência: encurte as horas entre as refeições"}
 
     Public Function AnwserWarning(ByVal operaçao As Integer)
         Dim Output = "Erro interno"
@@ -60,6 +62,12 @@
             Output = InternetInstavel(GenerateNunber(InternetInstavel.Length))
         ElseIf (operaçao = 16) Then
             Output = InternetEnstavel(GenerateNunber(InternetEnstavel.Length))
+        ElseIf (operaçao = 17) Then
+            Output = PegandoPrevisaoTempo(GenerateNunber(PegandoPrevisaoTempo.Length))
+        ElseIf (operaçao = 18) Then
+            Output = RecomendaQuente(GenerateNunber(RecomendaQuente.Length))
+        ElseIf (operaçao = 19) Then
+            Output = RecomendaFrio(GenerateNunber(RecomendaFrio.Length))
         Else
             Output = "Erro de código"
         End If

@@ -184,9 +184,35 @@ Public Class Main
 
             If dr = System.Windows.Forms.DialogResult.OK Then
                 MiaBrain.RequestRunGame(Me.OpenFileDialog1.FileNames.First.ToString)
+
+                InteractForm.SetText("Abrindo emulador.")
+
                 Me.WindowState = FormWindowState.Minimized
             Else
                 InteractForm.SetText("Operação cancelada.")
+            End If
+
+        ElseIf (NoPendence And VerifyText.Contains("previão do tempo")) Then
+
+            InteractForm.SetText(MiaBrain.RequestWarnings(17))
+
+            Dim Temp As String() = MiaBrain.RequestWeather().Split(",")
+
+            Dim graus As String = Temp(0)
+
+            If (graus > 28) Then
+                InteractForm.SetText("Hoje está muito quente, a temperatura é de " + graus + " graus, e o céu está " + Temp(1))
+
+                InteractForm.SetText(MiaBrain.RequestWarnings(18))
+
+            ElseIf (graus < 18) Then
+                InteractForm.SetText("Hoje está muito frio, a temperatura é de " + graus + " graus, e o céu está " + Temp(1))
+
+                InteractForm.SetText(MiaBrain.RequestWarnings(19))
+            Else
+                InteractForm.SetText("Hoje está com um clima agradavel, a temperatura é de " + graus + " graus, e o céu está " + Temp(1))
+
+                InteractForm.SetText(MiaBrain.RequestWarnings(18))
             End If
 
         ElseIf (NoPendence) Then
