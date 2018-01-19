@@ -98,6 +98,8 @@ Public Class Main
 
                 Try
                     Recog = New RecognizerEngine() 'Carrega os comandos de voz
+
+                    AddHandler Recog.TextRecognized, AddressOf SpeechText 'reconhece um comando de voz
                 Catch ex As Exception
                     Debug.Print(ex.Message)
                     Throwalert("Erro ao iniciar o modulo de voz")
@@ -111,8 +113,6 @@ Public Class Main
                 AddHandler Voz.VoiceSpeakImprogres, AddressOf VoiceInprogress 'evento de quando o programa esta falando  
                 AddHandler Voz.VoiceSpeakCompleted, AddressOf VoiceCompleted 'evento de quando o programa terminou de falar
 
-
-                AddHandler Recog.TextRecognized, AddressOf SpeechText 'reconhece um comando de voz
                 MiaBrain.Init1() 'Starta o processamento
 
                 'Quando o sistema bloquear
