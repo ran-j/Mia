@@ -83,6 +83,7 @@ Public Class RecognizerEngine
             Commands.Add("oi")
             Commands.Add("emular jogo de play station")
             Commands.Add("emular jogo de ps1")
+            Commands.Add("como está o tempo hoje")
             Commands.Add("previão do tempo")
             Commands.Add("qual é a previão do tempo")
             Commands.Add("como está a internet")

@@ -84,14 +84,16 @@ Public Class Main
                 Debug.Print("Ja está aberta")
                 CloseForm.Enabled = True
             Else
+                My.Settings.Erros = 0
+
                 OldmousePosition = MousePosition.X 'pega a posição do mouse
 
                 'Tooltip com saldaçao
                 ToolTip.SetToolTip(Me.UI, "Olá")
 
-                Try
-                    MiaBrain = New Brain
+                CreateInstanceofBrain()
 
+                Try
                     Google = New GoogleEngine(GoogleEngine.GoogleLang.Portuguese, WebBrowser1) 'Cria uma instancia da Minha Api do google
                     Net = MiaBrain.RequestIstanceOfNetClass()
                     scan = MiaBrain.RequestIstanceOfScanClass()
@@ -136,6 +138,11 @@ Public Class Main
             Debug.Print("Erro: " + ex.Message)
             CloseForm.Enabled = True
         End Try
+    End Sub
+
+    Sub CreateInstanceofBrain()
+        On Error Resume Next
+        MiaBrain = New Brain
     End Sub
 
     Private Sub SpeechText(Text As String)
@@ -224,7 +231,7 @@ Public Class Main
 
                     InteractForm.SetText(MiaBrain.RequestWarnings(19))
                 Else
-                    InteractForm.SetText("Hoje está com um clima agradavel, a temperatura é de " + graus + " graus, e o céu está " + Temp(1))
+                    InteractForm.SetText("Hoje está com um clima agradável, a temperatura é de " + graus + " graus, e o céu está " + Temp(1))
 
                     InteractForm.SetText(MiaBrain.RequestWarnings(18))
                 End If
