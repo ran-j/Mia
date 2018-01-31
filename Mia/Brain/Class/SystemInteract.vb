@@ -325,7 +325,8 @@ Public Class SystemInteract
         Return audioDivices
     End Function
 
-    Private Sub ExecutCMDcomand(Comand As String)
+    Sub ExecutCMDcomand(Comand As String)
+        'executa comando no cmd
         Dim CMDprocess As New Process
         Dim StartInfo As New System.Diagnostics.ProcessStartInfo With {
             .FileName = "cmd", 'starts cmd window
@@ -346,6 +347,25 @@ Public Class SystemInteract
         MsgBox(SR.ReadToEnd) 'returns results of the command window
         SW.Close()
         SR.Close()
+    End Sub
+
+    Sub ChangeDigitalVibrance(Arg As String)
+        'troca o Digital Vibrance da tela
+        Dim path As String = Application.StartupPath + "\DVChange.exe"
+
+        If File.Exists(path) Then
+            Dim startInfo As New ProcessStartInfo With {
+                 .FileName = path,
+                 .Arguments = Arg,
+                 .WindowStyle = ProcessWindowStyle.Hidden
+            }
+            Process.Start(startInfo)
+        Else
+            Debug.Print("Não achou o arquivo")
+            Main.Throwalert("Não foi localizado um arquivo do sistema")
+            My.Settings.Erros = My.Settings.Erros + 1
+        End If
+
     End Sub
 
 

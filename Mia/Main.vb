@@ -213,7 +213,7 @@ Public Class Main
                 InteractForm.SetText("Operação cancelada.")
             End If
 
-        ElseIf (NoPendence = 3 Or VerifyText.Contains("previão do tempo")) Then
+        ElseIf (NoPendence = 3 Or VerifyText.Contains("previão do tempo") Or VerifyText.Contains("como está o tempo hoje")) Then
             If (HasNet) Then
                 InteractForm.SetText(MiaBrain.RequestWarnings(17))
 
@@ -261,8 +261,10 @@ Public Class Main
                 InteractForm.SetText("Eu estou ruim, meu sistema está com cinquenta porcento de erros")
             ElseIf (MiaStatus < 8) Then
                 InteractForm.SetText("Eu estou bem ruim, mais da metade do meu sistema está erros")
+                InteractForm.SetText("Recomendo me reiniciar")
             ElseIf (MiaStatus > 12) Then
                 InteractForm.SetText("Eu estou muito ruim, meu sistema está com mais de 90 porcento de erros")
+                InteractForm.SetText("Poderia me reiniciar ?")
             End If
 
             InteractForm.SetText(MiaBrain.RequestConversation(3))
@@ -723,6 +725,7 @@ Public Class Main
         'Verifica se algum jogo foi aberto
         Dim GameCount As Integer
         Dim GameList = MiaBrain.RequestGamelist()
+        Dim EspecialGame = MiaBrain.RequestEspecialGamelist() 'para setar o Digital Vibrance
 
         For Each Game In GameList
             GameCount = FindWindow(vbNullString, Game)
@@ -730,12 +733,26 @@ Public Class Main
                 'Abriu jogo
                 GameOpen = 1
                 Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(10) + ", e o ping está " + NetSpeed())
+
+                For Each EPgame In EspecialGame
+                    If (Game.Equals(EPgame)) Then
+                        Debug.Print("Setando Digital Vibrance para 100%")
+                        MiaBrain.RequestChangeDigitalVibrance("63")
+                    End If
+                Next
+
                 Me.WindowState = FormWindowState.Minimized
             Else
-                'Fechou o jogo
-                If (GameOpen = 1 And GameCount <= 0) Then
+                    'Fechou o jogo
+                    If (GameOpen = 1 And GameCount <= 0) Then
                     GameOpen = 0
-                    MsgBox("Bom jogo")
+                    Voz.SpeechMoreThanOnce("Bom jogo senhor")
+                    For Each EPgame In EspecialGame
+                        If (Game.Equals(EPgame)) Then
+                            Debug.Print("Setando Digital Vibrance para 0")
+                            MiaBrain.RequestChangeDigitalVibrance("0")
+                        End If
+                    Next
                 End If
             End If
         Next

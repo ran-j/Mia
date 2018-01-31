@@ -92,6 +92,7 @@ Public Class RecognizerEngine
             Commands.Add("status do seu sistem")
             Commands.Add("como voce está")
 
+
             Debug.Print("Erro ao procurar o dicionario de comandos")
         End Try
 

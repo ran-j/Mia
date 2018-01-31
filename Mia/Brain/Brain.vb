@@ -325,6 +325,11 @@ Public Class Brain
         Return TheMemory.LoadGamesList()
     End Function
 
+    Function RequestEspecialGamelist() As List(Of String)
+        'Retorna array com lista de games que vão ter o Digital Vibrance mudado
+        Return TheMemory.LoadGamesEspecialList()
+    End Function
+
     Sub RequestRunGame(Gamespath As String)
         'inicia uma emulação de jogo de ps1
         PS1Emu.RunGame(Gamespath)
@@ -338,5 +343,10 @@ Public Class Brain
     Sub RequestregisterArduino(ArduinoOBJ As Arduino)
         'Adiciona arduino no array
         ArduinoList.Add(ArduinoOBJ)
+    End Sub
+
+    Sub RequestChangeDigitalVibrance(Arg As String)
+        'Muda o valor do Digital Vibrance
+        Sys.ChangeDigitalVibrance(Arg)
     End Sub
 End Class

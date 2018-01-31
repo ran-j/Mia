@@ -93,6 +93,36 @@ Public Class Memory
 
     End Function
 
+    Public Function LoadGamesEspecialList() As List(Of String)
+        'carrega a lista de jogos
+
+        Dim GameEspecialList As New List(Of String)()
+        Try
+            If System.IO.File.Exists(GameListPath) Then
+
+                Dim readText() As String = File.ReadAllLines(QuestionPath, Encoding.Default)
+
+                For Each line In readText
+                    If (Not line = Nothing) Then
+                        GameEspecialList.Add(line)
+                    End If
+
+                Next
+
+            Else
+                'Debug.Print("Erro ao procurar o dicionario")
+                'adiciona uma jogo basica
+                GameEspecialList.Add("Counter-Strike: Global Offensive")
+            End If
+        Catch ex As Exception
+            GameEspecialList.Add("Counter-Strike: Global Offensive")
+            'Debug.Print("Erro critico ao carregar a lista de jogos")
+        End Try
+
+        Return GameEspecialList
+
+    End Function
+
     Sub SaveGamesList(SaveGamesListArray)
         'Atualizar a lista de jogos salvos
         Try
