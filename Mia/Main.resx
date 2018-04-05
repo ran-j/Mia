@@ -15101,6 +15101,9 @@
   <data name="UI.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
+  <data name="UI.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="&gt;&gt;UI.Name" xml:space="preserve">
     <value>UI</value>
   </data>
@@ -21300,38 +21303,29 @@
   <metadata name="CMSI1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>351, 17</value>
   </metadata>
-  <data name="CMSI1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 70</value>
-  </data>
-  <data name="&gt;&gt;CMSI1.Name" xml:space="preserve">
-    <value>CMSI1</value>
-  </data>
-  <data name="&gt;&gt;CMSI1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="VozToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="VozToolStripMenuItem.Text" xml:space="preserve">
-    <value>Volume</value>
-  </data>
   <data name="AltaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>106, 22</value>
   </data>
   <data name="AltaToolStripMenuItem.Text" xml:space="preserve">
     <value>Alto</value>
   </data>
   <data name="BaixaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>106, 22</value>
   </data>
   <data name="BaixaToolStripMenuItem.Text" xml:space="preserve">
     <value>Baixo</value>
   </data>
   <data name="MudaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>106, 22</value>
   </data>
   <data name="MudaToolStripMenuItem.Text" xml:space="preserve">
     <value>Mudo</value>
+  </data>
+  <data name="VozToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>123, 22</value>
+  </data>
+  <data name="VozToolStripMenuItem.Text" xml:space="preserve">
+    <value>Volume</value>
   </data>
   <data name="RestaurarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>123, 22</value>
@@ -21345,9 +21339,48 @@
   <data name="FecharToolStripMenuItem.Text" xml:space="preserve">
     <value>Fechar</value>
   </data>
+  <data name="CMSI1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 70</value>
+  </data>
+  <data name="&gt;&gt;CMSI1.Name" xml:space="preserve">
+    <value>CMSI1</value>
+  </data>
+  <data name="&gt;&gt;CMSI1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <metadata name="CMSVazio.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>416, 18</value>
   </metadata>
+  <data name="ToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 22</value>
+  </data>
+  <data name="ToolStripMenuItem3.Text" xml:space="preserve">
+    <value>Alto</value>
+  </data>
+  <data name="ToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 22</value>
+  </data>
+  <data name="ToolStripMenuItem4.Text" xml:space="preserve">
+    <value>Baixo</value>
+  </data>
+  <data name="ToolStripMenuItem5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 22</value>
+  </data>
+  <data name="ToolStripMenuItem5.Text" xml:space="preserve">
+    <value>Mudo</value>
+  </data>
+  <data name="ToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 22</value>
+  </data>
+  <data name="ToolStripMenuItem2.Text" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 22</value>
+  </data>
+  <data name="ToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Fechar</value>
+  </data>
   <data name="CMSVazio.Size" type="System.Drawing.Size, System.Drawing">
     <value>115, 48</value>
   </data>
@@ -21356,36 +21389,6 @@
   </data>
   <data name="&gt;&gt;CMSVazio.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 22</value>
-  </data>
-  <data name="ToolStripMenuItem2.Text" xml:space="preserve">
-    <value>Volume</value>
-  </data>
-  <data name="ToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="ToolStripMenuItem3.Text" xml:space="preserve">
-    <value>Alto</value>
-  </data>
-  <data name="ToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="ToolStripMenuItem4.Text" xml:space="preserve">
-    <value>Baixo</value>
-  </data>
-  <data name="ToolStripMenuItem5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="ToolStripMenuItem5.Text" xml:space="preserve">
-    <value>Mudo</value>
-  </data>
-  <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="ToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Fechar</value>
   </data>
   <data name="Alert.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

@@ -14,6 +14,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,6 +54,12 @@
     <ApplicationIcon>giphy.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.6.13.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.6.13\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -62,7 +70,17 @@
       <HintPath>..\packages\OpenHardwareMonitor.0.7.1\lib\net40\OpenHardwareMonitorLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.108.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.108.0\lib\net46\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.108.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.108.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.108.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.108.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
@@ -88,26 +106,27 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Brain\Act.vb" />
-    <Compile Include="Brain\Class\AlertClass.vb" />
-    <Compile Include="Brain\Class\Arduino.vb" />
-    <Compile Include="Brain\Class\Conversation.vb" />
-    <Compile Include="Brain\Class\Interpreter.vb" />
-    <Compile Include="Brain\Class\JsonClass.vb" />
-    <Compile Include="Brain\Class\MyNetwork.vb" />
-    <Compile Include="Brain\Class\Power.vb" />
-    <Compile Include="Brain\Class\Questions.vb" />
-    <Compile Include="Brain\Class\Spotify.vb" />
-    <Compile Include="Brain\Class\SystemInteract.vb" />
-    <Compile Include="Brain\Class\Warnings.vb" />
-    <Compile Include="Brain\Emuladores\PS1.vb" />
-    <Compile Include="Brain\Google\GoogleEngine.vb" />
-    <Compile Include="Brain\Google\GoogleSpellChecker.vb" />
-    <Compile Include="Brain\Memory.vb" />
-    <Compile Include="Brain\Brain.vb" />
-    <Compile Include="Brain\RecognizerEngine.vb" />
-    <Compile Include="Brain\Think.vb" />
-    <Compile Include="Brain\Class\Fixer\FixNet.vb" />
+    <Compile Include="Kernel\ProcessAction.vb" />
+    <Compile Include="Kernel\Class\System\AlertClass.vb" />
+    <Compile Include="Kernel\Class\Others\Arduino.vb" />
+    <Compile Include="Kernel\Class\Modules\Conversation.vb" />
+    <Compile Include="Kernel\Class\Modules\Interpreter.vb" />
+    <Compile Include="Kernel\Class\Others\JsonClass.vb" />
+    <Compile Include="Kernel\Class\System\MyNetwork.vb" />
+    <Compile Include="Kernel\Class\System\MyRegex.vb" />
+    <Compile Include="Kernel\Class\Others\Power.vb" />
+    <Compile Include="Kernel\Class\Modules\Questions.vb" />
+    <Compile Include="Kernel\Class\Others\Spotify.vb" />
+    <Compile Include="Kernel\Class\Others\SystemInteract.vb" />
+    <Compile Include="Kernel\Class\Modules\Warnings.vb" />
+    <Compile Include="Kernel\Emuladores\PS1.vb" />
+    <Compile Include="Kernel\Google\GoogleEngine.vb" />
+    <Compile Include="Kernel\Google\GoogleSpellChecker.vb" />
+    <Compile Include="Kernel\Memory.vb" />
+    <Compile Include="Kernel\Mia_Kernel.vb" />
+    <Compile Include="Kernel\RecognizerEngine.vb" />
+    <Compile Include="Kernel\Controller.vb" />
+    <Compile Include="Kernel\Class\Fixer\FixNet.vb" />
     <Compile Include="EspecialForm\FrmNotification.Designer.vb">
       <DependentUpon>FrmNotification.vb</DependentUpon>
     </Compile>
@@ -142,9 +161,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Brain\Class\Protection\Defender.vb" />
-    <Compile Include="Brain\Class\Protection\Scanner.vb" />
-    <Compile Include="Brain\Class\Voice.vb" />
+    <Compile Include="Kernel\Class\Protection\Defender.vb" />
+    <Compile Include="Kernel\Class\Protection\Scanner.vb" />
+    <Compile Include="Kernel\Class\System\Voice.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="InteractForm.resx">
@@ -189,4 +208,11 @@
     <Folder Include="System\Management\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets'))" />
+  </Target>
 </Project>

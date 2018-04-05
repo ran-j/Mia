@@ -24,7 +24,6 @@ C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\Mia.exe.config
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\Mia.exe
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\Mia.pdb
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\Mia.xml
-C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.vbprojResolveAssemblyReference.cache
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.Main.resources
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.Resources.resources
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.vbproj.GenerateResource.Cache
@@ -45,3 +44,12 @@ C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\obj\Debug\Mia.InteractFo
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\HtmlAgilityPack.dll
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\HtmlAgilityPack.pdb
 C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\HtmlAgilityPack.xml
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\EntityFramework.dll
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\System.Data.SQLite.dll
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\System.Data.SQLite.EF6.dll
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\EntityFramework.xml
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\System.Data.SQLite.xml
+C:\Users\Ran-pc\Documents\Gitprojects\Projetoia\Mia\Mia\bin\Debug\System.Data.SQLite.dll.config

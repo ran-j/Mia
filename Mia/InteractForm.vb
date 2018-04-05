@@ -4,7 +4,7 @@
 
     Dim AFKTimes As Integer = 0
 
-    Dim MiaBr As Brain = Main.GetMiaBraind()
+    Dim MiaBr As Mia_kernel = Main.GetMiaBraind()
 
     Private Sub InteractForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Impedir de selecionar + C nos testos

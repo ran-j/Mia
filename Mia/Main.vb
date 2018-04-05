@@ -1,11 +1,12 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Threading
 Imports Microsoft.Win32
+Imports Mia.MyRegex
 
 Public Class Main
 
 #Region "Variaveis"
-    Dim MiaBrain As Brain 'Cria instancia do controlador principal do cerebro
+    Dim MiaBrain As Mia_kernel 'Cria instancia do controlador principal do cerebro
 
     Private WithEvents Net As MyNetwork
 
@@ -55,7 +56,7 @@ Public Class Main
     'Posiçao do form
     Dim FormPosition As Point
     'Para saber se o usuário está jogando
-    Dim GameOpen = 0
+    Dim GameOpen = 9
 
     Dim HasNet As Boolean = True
     Dim NetStable As Integer = 0
@@ -76,6 +77,14 @@ Public Class Main
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
+            'Deixar transparente
+            Me.BackColor = Color.FromArgb(255, 255, 255)
+            'Spaw position
+            Me.Location = New Point(Screen.PrimaryScreen.WorkingArea.Width - 280, Screen.PrimaryScreen.WorkingArea.Height - 270)
+
+            'Carrega a posiçao do form
+            FormPosition = Me.Location
+
             'So deixa abrir uma aplicação
             Dim procs() As Process = Process.GetProcessesByName(Process.GetCurrentProcess.ProcessName)
             If procs.Length > 1 Then
@@ -142,7 +151,7 @@ Public Class Main
 
     Sub CreateInstanceofBrain()
         On Error Resume Next
-        MiaBrain = New Brain
+        MiaBrain = New Mia_kernel
     End Sub
 
     Private Sub SpeechText(Text As String)
@@ -158,7 +167,7 @@ Public Class Main
         'evento de quando termina de carregar os arquivos
         AFKDetector.Enabled = True
         Debug.Print("Carregamento completo")
-
+        UI.Visible = True
         'Comprimento inicial
         Select Case TimeOfDay
 
@@ -187,11 +196,11 @@ Public Class Main
 
         Dim VerifyText As String = MiaBrain.RequestVerifyText(text)
 
-        If (NoPendence = 1 Or VerifyText.Contains("oi")) Then
+        If (NoPendence = 1 Or ContainsRegex("oi", VerifyText)) Then
 
             InteractForm.SetText(MiaBrain.RequestConversation(1))
 
-        ElseIf (NoPendence = 2 Or VerifyText.Contains("emular ps1") Or VerifyText.Contains("emular jogo de ps1") Or VerifyText.Contains("emular jogo de play station")) Then
+        ElseIf (NoPendence = 2 Or ContainsRegex("emular ps1", VerifyText) Or ContainsRegex("emular jogo de ps1", VerifyText) Or ContainsRegex("emular jogo de play station", VerifyText)) Then
             InteractForm.SetText("Selecione o jogo de PS1.")
 
             Me.OpenFileDialog1.Multiselect = False
@@ -213,7 +222,7 @@ Public Class Main
                 InteractForm.SetText("Operação cancelada.")
             End If
 
-        ElseIf (NoPendence = 3 Or VerifyText.Contains("previão do tempo") Or VerifyText.Contains("como está o tempo hoje")) Then
+        ElseIf (NoPendence = 3 Or ContainsRegex("previão do tempo", VerifyText) Or ContainsRegex("como está o tempo hoje", VerifyText)) Then
             If (HasNet) Then
                 InteractForm.SetText(MiaBrain.RequestWarnings(17))
 
@@ -239,7 +248,7 @@ Public Class Main
                 InteractForm.SetText(MiaBrain.RequestWarnings(20))
             End If
 
-        ElseIf (NoPendence = 4 Or VerifyText.Contains("como está a internet") Or VerifyText.Contains("como esta a internet") Or VerifyText.Contains("velocidade da internet")) Then
+        ElseIf (NoPendence = 4 Or ContainsRegex("como está a internet", VerifyText) Or ContainsRegex("como esta a internet", VerifyText) Or ContainsRegex("velocidade da internet", VerifyText)) Then
 
             If (HasNet) Then
                 InteractForm.SetText("A velocidade da internet está " + NetSpeed())
@@ -247,7 +256,7 @@ Public Class Main
                 InteractForm.SetText(MiaBrain.RequestWarnings(20))
             End If
 
-        ElseIf (NoPendence = 5 Or VerifyText.Contains("como está o seu sistema") Or VerifyText.Contains("status do seu sistem") Or VerifyText.Contains("como voce está")) Then
+        ElseIf (NoPendence = 5 Or ContainsRegex("como está o seu sistema", VerifyText) Or ContainsRegex("status do seu sistem", VerifyText) Or ContainsRegex("como voce está", VerifyText)) Then
 
             Dim MiaStatus = My.Settings.Erros
 
@@ -270,35 +279,39 @@ Public Class Main
             InteractForm.SetText(MiaBrain.RequestConversation(3))
 
         ElseIf (NoPendence = 0 And HasNet) Then
-                'Caso o programa não saiba o mesmo pesquisa no google kkkkk
-                Dim GoogleCheckText As String = Google.CheckWord(VerifyText)
-
-                If (GoogleCheckText.Equals("0.")) Then 'Verifica se o texto entrante está correto
-
-                    Dim Output As String = DoGoogleQuery(VerifyText)
-
-                    If Not (Output.Equals("1.")) Then
-                        InteractForm.SetText(Output)
-                    Else
-                        Debug.Print("Texto correto")
-                        InteractForm.SetText(MiaBrain.RequestConversation(2))
-                    End If
-
-                Else
-                    Dim Output As String = DoGoogleQuery(GoogleCheckText)
-
-                    If Not (Output.Equals("1.")) Then
-                        InteractForm.SetText(Output)
-                    Else
-                        Debug.Print("Texto incorreto")
-                        InteractForm.SetText(MiaBrain.RequestConversation(2))
-                    End If
-
-                End If
-            Else
+            'Caso o programa não saiba o mesmo pesquisa no google kkkkk
+            'AskGoogle
+        Else
             InteractForm.SetText(MiaBrain.RequestConversation(2))
         End If
 
+    End Sub
+
+    Sub AskGoogle(VerifyText As String)
+        Dim GoogleCheckText As String = Google.CheckWord(VerifyText)
+
+        If (GoogleCheckText.Equals("0.")) Then 'Verifica se o texto entrante está correto
+
+            Dim Output As String = DoGoogleQuery(VerifyText)
+
+            If Not (Output.Equals("1.")) Then
+                InteractForm.SetText(Output)
+            Else
+                Debug.Print("Texto correto")
+                InteractForm.SetText(MiaBrain.RequestConversation(2))
+            End If
+
+        Else
+            Dim Output As String = DoGoogleQuery(GoogleCheckText)
+
+            If Not (Output.Equals("1.")) Then
+                InteractForm.SetText(Output)
+            Else
+                Debug.Print("Texto incorreto")
+                InteractForm.SetText(MiaBrain.RequestConversation(2))
+            End If
+
+        End If
     End Sub
 
     Function DoGoogleQuery(Text As String) As String
@@ -473,13 +486,7 @@ Public Class Main
     End Sub
 
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-        'Deixar transparente
-        Me.BackColor = Color.FromArgb(255, 255, 255)
-        'Spaw position
-        Me.Location = New Point(Screen.PrimaryScreen.WorkingArea.Width - 280, Screen.PrimaryScreen.WorkingArea.Height - 270)
 
-        'Carrega a posiçao do form
-        FormPosition = Me.Location
     End Sub
 
     Private Sub UI_DoubleClick(sender As Object, e As EventArgs) Handles UI.DoubleClick
@@ -544,7 +551,6 @@ Public Class Main
             'FEcha o form de interação 
             InteractForm.Close()
 
-
             'Cancela oque o programa esta falando
             Voz.CancelSpeeck()
 
@@ -591,13 +597,17 @@ Public Class Main
 
     Private Sub RestaurarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RestaurarToolStripMenuItem.Click
         'Restaura o programa
+        Me.Show()
         Me.WindowState = FormWindowState.Normal
+        Me.Activate()
+        Me.Focus()
     End Sub
 
     Private Sub FecharToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FecharToolStripMenuItem.Click
         'fechar o programa
         Me.Close()
     End Sub
+
     Private Sub Closer_Tick(sender As Object, e As EventArgs) Handles CloseForm.Tick
         'Fecha o form
         On Error Resume Next
@@ -656,7 +666,7 @@ Public Class Main
         MyBase.WndProc(M)
     End Sub
 
-    Public Function GetMiaBraind() As Brain
+    Public Function GetMiaBraind() As Mia_kernel
         'Retorna Instancia do Brains
         Return MiaBrain
     End Function
@@ -675,10 +685,11 @@ Public Class Main
         MouseclickUI = 0
     End Sub
 
-    Public Sub Throwalert(Alert As String)
+    Shared Sub Throwalert(Alert As String)
         'Mostra o alerta
-        MiaBrain.SetAlertText(Alert)
-        ShowWarning()
+        My.Settings.Erros = My.Settings.Erros + 1
+        Main.GetMiaBraind().SetAlertText(Alert)
+        Main.ShowWarning()
     End Sub
 
     Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
@@ -725,34 +736,20 @@ Public Class Main
         'Verifica se algum jogo foi aberto
         Dim GameCount As Integer
         Dim GameList = MiaBrain.RequestGamelist()
-        Dim EspecialGame = MiaBrain.RequestEspecialGamelist() 'para setar o Digital Vibrance
 
         For Each Game In GameList
-            GameCount = FindWindow(vbNullString, Game)
+            GameCount = FindWindow(vbNullString, Game.GetName())
             If (GameCount > 0 And GameOpen = 0) Then
                 'Abriu jogo
                 GameOpen = 1
                 Voz.SpeechMoreThanOnce(MiaBrain.RequestWarnings(10) + ", e o ping está " + NetSpeed())
 
-                For Each EPgame In EspecialGame
-                    If (Game.Equals(EPgame)) Then
-                        Debug.Print("Setando Digital Vibrance para 100%")
-                        MiaBrain.RequestChangeDigitalVibrance("63")
-                    End If
-                Next
-
                 Me.WindowState = FormWindowState.Minimized
             Else
-                    'Fechou o jogo
-                    If (GameOpen = 1 And GameCount <= 0) Then
+                'Fechou o jogo
+                If (GameOpen = 1 And GameCount <= 0) Then
                     GameOpen = 0
                     Voz.SpeechMoreThanOnce("Bom jogo senhor")
-                    For Each EPgame In EspecialGame
-                        If (Game.Equals(EPgame)) Then
-                            Debug.Print("Setando Digital Vibrance para 0")
-                            MiaBrain.RequestChangeDigitalVibrance("0")
-                        End If
-                    Next
                 End If
             End If
         Next
