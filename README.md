@@ -1,4 +1,4 @@
-<p align="center"><a href="#" target="_blank" rel="noopener noreferrer"><img width="500" src="./mia/giphy.ico" alt="Mia logo"></a></p>
+<p align="center"><a href="#" target="_blank" rel="noopener noreferrer"><img width="500" src="https://raw.githubusercontent.com/ran-j/Mia/master/Mia/giphy.ico" alt="Mia logo"></a></p>
 
 <p align="center">
 
@@ -27,7 +27,7 @@ And more
 
 # Some screenshots
 
-<img width="500" src="./mia/screenshots/Screen_Shot7.PNG" alt="sshot"></p>
-<img width="500" src="./mia/screenshots/Screen_Shot6.PNG" alt="sshot"></p>
-<img width="500" src="./mia/screenshots/Screen_Shot5.PNG" alt="sshot"></p>
-<img width="500" src="./mia/screenshots/Screen_Shot4.PNG" alt="sshot"></p>
+<img width="500" src="https://raw.githubusercontent.com/ran-j/Mia/master/Mia/screenshots/Screen_Shot7.PNG" alt="sshot"></p>
+<img width="500" src="https://raw.githubusercontent.com/ran-j/Mia/master/Mia/screenshots/Screen_Shot6.PNG" alt="sshot"></p>
+<img width="500" src="https://raw.githubusercontent.com/ran-j/Mia/master/Mia/screenshots/Screen_Shot5.PNG" alt="sshot"></p>
+<img width="500" src="https://raw.githubusercontent.com/ran-j/Mia/master/Mia/screenshots/Screen_Shot4.PNG" alt="sshot"></p>
