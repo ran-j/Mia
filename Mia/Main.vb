@@ -114,9 +114,8 @@ Public Class Main
                 End Try
 
                 Try
-                    Recog = New RecognizerEngine() 'Carrega os comandos de voz
-
-                    AddHandler Recog.TextRecognized, AddressOf SpeechText 'reconhece um comando de voz
+                    'Recog = New RecognizerEngine() 'Carrega os comandos de voz
+                    'AddHandler Recog.TextRecognized, AddressOf SpeechText 'reconhece um comando de voz
                 Catch ex As Exception
                     Debug.Print(ex.Message)
                     Throwalert("Erro ao iniciar o modulo de voz")
